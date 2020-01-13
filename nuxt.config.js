@@ -41,7 +41,10 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+
   ],
+  router :{
+  },
   scripts: [
     '~/assets/vendor/jquery/jquery.min.js',
     '~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
