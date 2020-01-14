@@ -10,21 +10,22 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
+           <nuxt-link to="/" class="nav-link">
+           Home
+           <span class="sr-only">(current)</span>
+           </nuxt-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Inbox</a>
+            <nuxt-link to="/inbox" class="nav-link">Inbox</nuxt-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Search</a>
+            <nuxt-link to="/basicsearch" class="nav-link">Search</nuxt-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Login </a>
+            <nuxt-link to="/login" class="nav-link">Login</nuxt-link>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="#">Sign Up</a>
+            <nuxt-link to="/signup" class="nav-link">Sign Up</nuxt-link>
           </li>
         </ul>
       </div>

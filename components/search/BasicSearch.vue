@@ -67,10 +67,10 @@ import StateList from '../../data/states.js'
 
           datingIntents: [
             {name: "I'm looking for Casual dating/No Commitment", value: ""},
-            {name: "I want to date but nothing serious.", value: ""},
-            {name: "I want to date but nothing serious.", value: ""},
-            {name: "I am putting in serious effort to find someone.", value: ""},
-            {name: "I am serious and I want to find someone to marry.", value: ""},
+            {name: "I want to date but nothing serious", value: ""},
+            {name: "I am putting in serious effort to find someone", value: ""},
+            {name: "I am serious and I want to find someone to marry", value: ""},
+
           ],
 
           educations: [
@@ -119,7 +119,6 @@ import StateList from '../../data/states.js'
               {name: 'Thin', value: ''},
               {name: 'Athletic', value: ''},
               {name: 'Average', value: ''},
-              {name: 'A Few Extra Pounds', value: ''},
               {name: 'A Few Extra Pounds', value: ''},
 
 
