@@ -80,7 +80,7 @@ import StateList from '../../data/states.js'
             {name: "Associates degree", value: ""},
             {name: "Bachelors degree", value: ""},
             {name: "Masters degree", value: ""},
-            {name: "PhD / Post Doctoral", value: ""},
+            {name: "PhD/Post Doctoral", value: ""},
           ],
 
            ethnicities: [
