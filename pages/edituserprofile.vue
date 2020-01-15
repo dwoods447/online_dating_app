@@ -1,12 +1,13 @@
 <template>
   <div>
-      <UpdateUserProfile></UpdateUserProfile>
+      <UpdateUserProfile :userId="this.$store.state.userId"></UpdateUserProfile>
   </div>
 </template>
 
 <script>
 import UpdateUserProfile from '../components/profile/UpdateUserProfile'
   export default {
+    middleware: ['check-auth', 'auth'],
     components: { UpdateUserProfile },
     data(){
       return {

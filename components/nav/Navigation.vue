@@ -22,10 +22,16 @@
             <nuxt-link to="/basicsearch" class="nav-link">Search</nuxt-link>
           </li>
           <li class="nav-item">
-            <nuxt-link to="/login" class="nav-link">Login</nuxt-link>
+            <nuxt-link to="/login" class="nav-link " v-if="!this.$store.getters.isAutheticated">Login</nuxt-link>
           </li>
            <li class="nav-item">
-            <nuxt-link to="/signup" class="nav-link">Sign Up</nuxt-link>
+            <nuxt-link to="/signup" class="nav-link" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
+          </li>
+           <li class="nav-item">
+            <nuxt-link to="/edituserprofile" class="nav-link" v-if="this.$store.getters.isAutheticated" >Edit Profile</nuxt-link>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" v-if="this.$store.getters.isAutheticated" @click="logOut">Log Out</a>
           </li>
         </ul>
       </div>
@@ -38,6 +44,14 @@
 export default {
   data(){
     return {
+
+    }
+  },
+  methods: {
+    logOut(){
+       console.log('Loggin user out....')
+      this.$store.dispatch('setLogOutAction');
+      this.$router.push({name: '/login'});
 
     }
   }

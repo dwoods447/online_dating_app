@@ -10,5 +10,7 @@ export default {
     const user = {userId: userId};
     console.log(`Sending User ${JSON.stringify(user)}`);
     return api.post('/profile/view/user', user)
-  }
+  },
+
+
 }
