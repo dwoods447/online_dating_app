@@ -6,7 +6,7 @@ export default {
     return token;
   },
 
-  getUserDetails(userId, token){
+  getUserDetails(userId){
     const user = {userId: userId};
     console.log(`Sending User ${JSON.stringify(user)}`);
     return api.post('/profile/view/user', user)

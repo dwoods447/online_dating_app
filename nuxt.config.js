@@ -32,6 +32,12 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
+//  axios: {
+//    baseURL: 'http://localhost:3535/',
+//    headers: {
+
+//    }
+//  },
   plugins: [
 
   ],

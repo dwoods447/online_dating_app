@@ -43,11 +43,13 @@ const createStore = () =>{
       actions :{
           async loadUserAction(context, userToken){
             let user;
-            const setToken = await UserProfileService.setAuthHeaderToken(userToken.token);
+            const setToken = await UserProfileService.setAuthHeaderToken(userToken.token, null, 2);
+            console.log(`Token rec'vd in loadUserAction ${JSON.stringify(userToken.token, null, 2)}`);
+            console.log(`Token set in header returned: ${setToken}`);
             if(setToken){
               user = await UserService.getUserDetails(userToken.user);
+              console.log(`User returned from loadUserAction ${JSON.stringify(user.data.user)}`);
             }
-            console.log(`User returned from loadUserAction ${JSON.stringify(user.data.user)}`);
             context.commit('setLoggedInUserIdMutation', user.data.user)
           },
           setAuthTokenAction(context, token){
@@ -84,13 +86,14 @@ const createStore = () =>{
               }
                token  = jwtCookie.split("=")[1];
                expiresDate = req.headers.cookie.split(';').find(c =>c.trim().startsWith("expiresDate=")).split("=")[1];
-               user = req.headers.cookie.split(';').find(c =>c.trim().startsWith("user=")).split("=")[1];
+               user = req.headers.cookie.split(';').find(c =>c.replace("%", "").trim().startsWith("user=")).split("=")[1];
+              console.log('user:' + JSON.stringify(user));
                console.log(`User from server: ${JSON.stringify(user)}`);
             } else {
                console.log(`Getting the token and expiration date from local storage`);
                token = localStorage.getItem("token");
                expiresDate = localStorage.getItem("tokenExpiration");
-               user = localStorage.getItem("user");
+               user = JSON.parse(localStorage.getItem("user"));
                console.log(`User from localstorage: ${JSON.stringify(user)}`);
             }
 
@@ -115,9 +118,13 @@ const createStore = () =>{
             context.commit('clearToken');
             Cookie.remove('jwt');
             Cookie.remove('expiresDate');
+            Cookie.remove('user');
+            Cookie.remove('userId');
             if(process.client){
               localStorage.removeItem('token');
               localStorage.removeItem('tokenExpiration');
+              localStorage.removeItem('user');
+              localStorage.removeItem('userId');
             }
 
           }
