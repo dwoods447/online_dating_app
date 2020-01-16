@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookie from 'js-cookie'
+import UserService from '../middleware/services/UserProfileService'
+import UserProfileService from '../middleware/services/UserProfileService'
+
 Vue.use(Vuex)
 
 const createStore = () =>{
@@ -11,8 +14,10 @@ const createStore = () =>{
       },
       mutations: {
         setAuthTokenMutation(state, token){
+          console.log('Setting token mutation');
           state.token = token;
-          localStorage.setItem('token', token);
+          console.log('Setting token to :' + token);
+          console.log('Token in state: ' + state.token);
 
         },
         clearToken (state){
@@ -21,7 +26,9 @@ const createStore = () =>{
           state.userId = null;
         },
         setLoggedInUserIdMutation(state, userId){
+          console.log(`Setting logged in state to: ${JSON.stringify(userId)}`);
           state.userId = userId;
+          console.log(`User in state: ${JSON.stringify(state.userId)}`);
         },
       },
       getters :{
@@ -30,14 +37,25 @@ const createStore = () =>{
           },
 
           getLoggedInUser(state){
-            return state.userId !== null;
+            return state.userId;
           }
       },
       actions :{
+          async loadUserAction(context, userToken){
+            let user;
+            const setToken = await UserProfileService.setAuthHeaderToken(userToken.token);
+            if(setToken){
+              user = await UserService.getUserDetails(userToken.user);
+            }
+            console.log(`User returned from loadUserAction ${JSON.stringify(user.data.user)}`);
+            context.commit('setLoggedInUserIdMutation', user.data.user)
+          },
           setAuthTokenAction(context, token){
+            console.log('Setting token action');
             context.commit('setAuthTokenMutation', token);
           },
           setLoggedInUserIdAction(context, userId){
+            console.log(`Setting logged in user: ${JSON.stringify(userId)}`);
             context.commit('setLoggedInUserIdMutation', userId);
           },
           setLogOutTimerAction(context, duration){
@@ -51,8 +69,10 @@ const createStore = () =>{
           initAuthAction(context, req){
             let token;
             let expiresDate;
+            let user;
             console.log(`Re quest object value ${req}`)
             if(req){
+              console.log('Running on the server');
               if(!req.headers.cookie){
                 console.log(`Req.headers.cookies is not set`);
                 return;
@@ -64,11 +84,14 @@ const createStore = () =>{
               }
                token  = jwtCookie.split("=")[1];
                expiresDate = req.headers.cookie.split(';').find(c =>c.trim().startsWith("expiresDate=")).split("=")[1];
+               user = req.headers.cookie.split(';').find(c =>c.trim().startsWith("user=")).split("=")[1];
+               console.log(`User from server: ${JSON.stringify(user)}`);
             } else {
-               console.log(`Getting the token and expiration date`);
+               console.log(`Getting the token and expiration date from local storage`);
                token = localStorage.getItem("token");
                expiresDate = localStorage.getItem("tokenExpiration");
-
+               user = localStorage.getItem("user");
+               console.log(`User from localstorage: ${JSON.stringify(user)}`);
             }
 
             if(new Date().getTime() > +expiresDate || !token){
@@ -80,10 +103,12 @@ const createStore = () =>{
               return;
             }
 
+           context.dispatch('loadUserAction', {user: user, token: token});
            console.log(`Resetting Token: ${token}`);
            console.log(`Resetting Exp: ${+expiresDate  - new Date().getTime()}`);
           //  context.dispatch('setLogOutTimerAction', +expiresDate  - new Date().getTime())
-           context.commit('setAuthTokenMutation', token)
+           context.dispatch('setAuthTokenAction', token);
+
           },
 
           setLogOutAction(context){
@@ -96,7 +121,8 @@ const createStore = () =>{
             }
 
           }
-      }
+
+      } // end of action
     })
 
 };

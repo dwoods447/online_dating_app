@@ -55,6 +55,10 @@ import Cookie from 'js-cookie'
              console.log(`Token expires in  ${Number.parseInt(tokenExpiresIn)} in hours: ${Number.parseInt(tokenExpiresIn) * 1000}`)
              const setToken = await UserProfileService.setAuthHeaderToken(token);
              const userInfo = await UserProfileService.getUserDetails(userId, setToken);
+             //let userString = JSON.stringify(userInfo);
+             //console.log(`User string ${userString}`);
+             Cookie.set('user', userId)
+             localStorage.setItem('user', userId);
              if(userInfo.data.user){
                 this.user = userInfo.data.user;
                 this.$store.dispatch('setLoggedInUserIdAction', this.user);

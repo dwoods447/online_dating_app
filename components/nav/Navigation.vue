@@ -27,9 +27,13 @@
            <li class="nav-item">
             <nuxt-link to="/signup" class="nav-link" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <nuxt-link to="/edituserprofile" class="nav-link" v-if="this.$store.getters.isAutheticated" >Edit Profile</nuxt-link>
           </li>
+           <li class="nav-item">
+            <!-- <nuxt-link to="/signup" class="nav-link" v-if="!this.$store.getters.getLoggedInUser.username">Welcome, {{this.$store.getters.getLoggedInUser.username}}</nuxt-link> -->
+          </li>
+
            <li class="nav-item">
             <a class="nav-link" v-if="this.$store.getters.isAutheticated" @click="logOut">Log Out</a>
           </li>

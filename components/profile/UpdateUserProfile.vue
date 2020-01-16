@@ -2,14 +2,12 @@
   <div>
      <h2>Edit Your Profile</h2>
      <form @submit.prevent="updateExtentedUserProfile">
-      <label class="typo__label">Single select / dropdown</label>
-      <!-- <multiselect
-        v-model="seekingGender"
+      <label class="typo__label">Select a gender</label>
+      <multiselect
+        v-model="genderSeeking"
         :options="seekingGenders">
         <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong> </template>
-      </multiselect> -->
-
-
+      </multiselect>
        <div class="form-group">
         <label for="">Marital Status</label>
         <multiselect
@@ -186,7 +184,7 @@
 
        <!-- <input type="hidden" name="userId" :value="this.userId"> -->
 
-       <input type="text" v-model="city" class="multiselect__input" style="border: 1px solid #000;">
+       <input type="text" v-model="city"  style="border: 1px solid #000;">
       <div class="form-group">
         <label for=""></label>
           <multiselect
@@ -196,7 +194,7 @@
        </multiselect>
       </div>
 
-       <input type="text" v-model="postalCode" class="multiselect__input" style="border: 1px solid #000;">
+       <input type="text" v-model="postalCode"  style="border: 1px solid #000;">
 
      </form>
   </div>
@@ -209,7 +207,7 @@
     props: ['userId'],
     components: { Multiselect },
     mounted(){
-      console.log(`Editing user with an ID of : ${this.user}`);
+      console.log(`Editing user with an ID of : ${JSON.stringify(this.user)}`);
     },
     data(){
       return {
@@ -402,6 +400,8 @@
             if(this.income) formData.income = this.income;
             if(this.doesDateInteracially) formData.doesDateInteracially = this.doesDateInteracially;
             if(this.interacialDatingPreferences.length > 0) formData.interacialDatingPreferences = this.interacialDatingPreferences;
+
+            console.log(`Form Data submitted: ${JSON.stringify(formData, null, 2)}`);
       }
     }
   }
