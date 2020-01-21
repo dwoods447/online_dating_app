@@ -16,6 +16,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' },
 
     ]
   },
@@ -27,7 +28,10 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/css/business-frontpage.css'
+    '~/assets/vendor/fontawesome-free/css/all.min.css',
+    '~/assets/vendor/simple-line-icons/css/simple-line-icons.css',
+    '~/assets/css/landing-page.min.css',
+
   ],
   /*
   ** Plugins to load before mounting the App

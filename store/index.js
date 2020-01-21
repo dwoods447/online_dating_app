@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookie from 'js-cookie'
-import UserService from '../middleware/services/UserProfileService'
-import UserProfileService from '../middleware/services/UserProfileService'
-
+import api from '../middleware/services/api/api'
+import cookieparser from 'cookieparser'
 Vue.use(Vuex)
 
 const createStore = () =>{
@@ -14,21 +13,27 @@ const createStore = () =>{
       },
       mutations: {
         setAuthTokenMutation(state, token){
-          console.log('Setting token mutation');
+          console.log(`setting token ${token}`)
           state.token = token;
-          console.log('Setting token to :' + token);
-          console.log('Token in state: ' + state.token);
-
+          console.log(`Token set to:  ${state.token}`)
         },
         clearToken (state){
-          console.log(`Clearing Token...`);
           state.token = null;
           state.userId = null;
         },
         setLoggedInUserIdMutation(state, userId){
-          console.log(`Setting logged in state to: ${JSON.stringify(userId)}`);
-          state.userId = userId;
-          console.log(`User in state: ${JSON.stringify(state.userId)}`);
+          let storedUser = {};
+          console.log(`setting user${userId}`)
+          if(typeof userId === 'string'){
+            let storedUser
+            userId = JSON.parse(userId);
+            storedUser = {...userId},
+            state.userId = storedUser;
+          }
+          storedUser = {...userId};
+          state.userId = storedUser;
+          console.log(`User is an ${ typeof state.userId}`)
+          console.log(`User set to ${state.userId}`)
         },
       },
       getters :{
@@ -38,20 +43,75 @@ const createStore = () =>{
 
           getLoggedInUser(state){
             return state.userId;
+          },
+
+          getLoggedInUsername(state){
+            if(state.userId !== null){
+              return state.userId.username;
+            }
+            return null;
           }
       },
       actions :{
-          async loadUserAction(context, userToken){
-            let user;
-            const setToken = await UserProfileService.setAuthHeaderToken(userToken.token);
-            if(setToken){
-              user = await UserService.getUserDetails(userToken.user);
+          nuxtServerInit (context, { req }) {
+            let token = null;
+            let user = null;
+          console.log(`nuxtServerInit running`);
+            if(req){
+              if (req.headers.cookie) {
+               const parsed = cookieparser.parse(req.headers.cookie);
+                if(!parsed){
+                  return;
+                }
+                try {
+                  token = parsed.jwt.replace(/\\/g, '').trim();
+                  user =  parsed.user.replace(/\\/g, '').trim();
+
+                } catch (err) {
+                  // No valid cookie found
+                  console.log(`Error parsing cookie ${err}`);
+                }
+              }
             }
-            console.log(`User returned from loadUserAction ${JSON.stringify(user.data.user)}`);
-            context.commit('setLoggedInUserIdMutation', user.data.user)
+
+            context.commit('setAuthTokenMutation', token);
+            context.commit('setLoggedInUserIdMutation', user);
           },
+
+          async authenticateUserAction(context, authData){
+            let token;
+            let user;
+            let tokenExpr;
+             const res =  await api.post('/login', authData);
+             if(res.data.token){
+                token = res.data.token;
+                tokenExpr = JSON.stringify(res.data.tokenExpiresIn);
+                user = JSON.stringify(res.data.user);
+                console.log(`Response returned in Store ${JSON.stringify(token)}`);
+
+                localStorage.setItem('token', token);
+                localStorage.setItem('tokenExpiration', new Date().getTime() +  Number.parseInt(tokenExpr) * 1000);
+                localStorage.setItem('user', user);
+                Cookie.set('jwt', token);
+                Cookie.set('expiresDate', new Date().getTime() +  Number.parseInt(tokenExpr) * 1000);
+                Cookie.set('user', user);
+                context.commit('setAuthTokenMutation', token);
+                context.commit('setLoggedInUserIdMutation', res.data.user);
+                    //  test if  this.user.isProfileCompleted = true
+                    if(res.data.user.isProfileCompleted !== 'true'){
+                      console.log(`User Profile is incomplete.`)
+                      // if not redirect to completed profile
+                      this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
+                    } else {
+                       console.log(`User Profile is completed.`)
+                       this.$router.push({name: 'index', params: {user: res.data.user}})
+                    }
+                return res;
+             }
+          },
+
           setAuthTokenAction(context, token){
-            console.log('Setting token action');
+            console.log('Setting token action,' + token);
             context.commit('setAuthTokenMutation', token);
           },
           setLoggedInUserIdAction(context, userId){
@@ -70,30 +130,22 @@ const createStore = () =>{
             let token;
             let expiresDate;
             let user;
-            console.log(`Re quest object value ${req}`)
-            if(req){
-              console.log('Running on the server');
-              if(!req.headers.cookie){
-                console.log(`Req.headers.cookies is not set`);
-                return;
-              }
-              const jwtCookie = req.headers.cookie.split(';').find(c =>c.trim().startsWith("jwt="));
-              if(!jwtCookie){
-                 console.log(`JWT Cookie not found!`);
-                 return;
-              }
-               token  = jwtCookie.split("=")[1];
-               expiresDate = req.headers.cookie.split(';').find(c =>c.trim().startsWith("expiresDate=")).split("=")[1];
-               user = req.headers.cookie.split(';').find(c =>c.trim().startsWith("user=")).split("=")[1];
-               console.log(`User from server: ${JSON.stringify(user)}`);
-            } else {
-               console.log(`Getting the token and expiration date from local storage`);
+            if(!req){
                token = localStorage.getItem("token");
-               expiresDate = localStorage.getItem("tokenExpiration");
-               user = localStorage.getItem("user");
-               console.log(`User from localstorage: ${JSON.stringify(user)}`);
-            }
+               expiresDate = JSON.parse(localStorage.getItem("tokenExpiration"));
+               user  = JSON.parse(localStorage.getItem("user"));
+            } else {
+              if(req.headers.cookie){
+                console.log(`Parsing cookies....`);
+                const parsed = cookieparser.parse(req.headers.cookie);
+                if(parsed){
+                  console.log(`Setting parsed cookies....`);
+                  token = parsed.jwt.replace(/\\/g, '').trim();
+                  user =  parsed.user.replace(/\\/g, '').trim();
+                 }
 
+              }
+            }
             if(new Date().getTime() > +expiresDate || !token){
               console.log(`Token has expired or doesnt exist`);
               console.log(`Token Exp value: ${new Date().getTime() > +expiresDate}`);
@@ -103,21 +155,31 @@ const createStore = () =>{
               return;
             }
 
-           context.dispatch('loadUserAction', {user: user, token: token});
+          // context.dispatch('loadUserAction', {user: user, token: token});
            console.log(`Resetting Token: ${token}`);
            console.log(`Resetting Exp: ${+expiresDate  - new Date().getTime()}`);
           //  context.dispatch('setLogOutTimerAction', +expiresDate  - new Date().getTime())
-           context.dispatch('setAuthTokenAction', token);
-
+          console.log(`Storing or restoring user and token info`);
+          context.dispatch('setAuthTokenAction', token);
+          context.dispatch('setLoggedInUserIdAction', user);
           },
 
+          async setOffLineStatus(context){
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
+            const offline = await api.post('/logout');
+            console.log(`Returing offline ${JSON.stringify(offline.data)}`);
+            return offline;
+          },
           setLogOutAction(context){
             context.commit('clearToken');
             Cookie.remove('jwt');
             Cookie.remove('expiresDate');
+            Cookie.remove('user');
             if(process.client){
               localStorage.removeItem('token');
               localStorage.removeItem('tokenExpiration');
+              localStorage.removeItem('user');
             }
 
           }
