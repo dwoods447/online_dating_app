@@ -12,10 +12,7 @@ export default {
    // middleware: ['auth-user'],
    components: { ProfilePreview },
    created(){
-     if(this.$store.getters.isAutheticated){
         this.getRandUsers();
-     }
-
    },
    data(){
      return {
@@ -24,7 +21,7 @@ export default {
    },
    methods: {
      async getRandUsers(){
-       const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+      //  const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
        const users = (await UserProfileService.getRandomUsersInAuthUsersPostalCode()).data;
        console.log(`Users returned: ${JSON.stringify(users)}`);
        if(users){
