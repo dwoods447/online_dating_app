@@ -53,12 +53,8 @@ export default {
     return api.get('/profile/inbox/messages');
   },
 
-  uploadImg(file){
-    const formData = new FormData();
-    console.log(`Adding filename to formData: ${file.name}`)
-    formData.append('image', file, file.name);
-    return api.post(`/profile/image/upload`, formData, {headers: {'Content-Type': 'multipart/form-data' }
-    });
+  uploadImg(formData){
+    return api.post(`/profile/image/upload`, formData);
   },
 
 
