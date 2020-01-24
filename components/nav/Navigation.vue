@@ -3,7 +3,7 @@
     <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">ShootUrShoot.com</a>
+      <a class="navbar-brand" href="#">ShootUrShot.net</a>
            <nuxt-link to="/">
            Home
            <span class="sr-only">(current)</span>
@@ -32,13 +32,15 @@ export default {
   },
   methods: {
     async logOut(){
-      console.log('Loggin user out....')
-      const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-      const offline = await this.$store.dispatch('setOffLineStatus');
-      if(offline){
-          this.$store.dispatch('setLogOutAction');
-          this.$router.push({name: 'index'});
-      }
+      console.log('Loggin user out....');
+       this.$store.dispatch('setLogOutAction');
+       this.$router.push({name: 'index'});
+      // const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+      // const offline = await this.$store.dispatch('setOffLineStatus');
+      // if(offline){
+      //     this.$store.dispatch('setLogOutAction');
+      //     this.$router.push({name: 'index'});
+      // }
     },
     goToEditUsersProfile(){
           this.$router.push({path: '/edituserprofile', params: {user: this.$store.state.userId}});

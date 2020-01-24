@@ -59,6 +59,9 @@
           </div>
         </div>
 
+                <AddUserToBlockListButton :userId="userReturned._id"></AddUserToBlockListButton><br/>
+                <AddUserToFavoritesListButton :userId="userReturned._id"></AddUserToFavoritesListButton>
+
                 <SendMessage :userId="messageReciever" ></SendMessage>
 
         <h2>Preferences</h2>
@@ -115,8 +118,10 @@
 <script>
 import UserProfileService from '../../middleware/services/UserProfileService'
 import SendMessage from '../../components/profile/message/SendMessage'
+import AddUserToBlockListButton from '../../components/profile/actions/AddUserToBlockButton'
+import AddUserToFavoritesListButton from '../../components/profile/actions/AddUserToFavoriteButton'
   export default {
-    components: {SendMessage},
+    components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton},
     props:['userId'],
     created(){
 
@@ -137,10 +142,11 @@ import SendMessage from '../../components/profile/message/SendMessage'
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         const user = (await UserProfileService.getUserDetails(userId)).data;
         console.log(`User returned: ${JSON.stringify(user)}`)
-        if(!user){
-            return null;
+        if(user.message === 'This user has prohibited you from viewing their users profile'){
+            this.$router.push({path: '/blocked'})
+        } else {
+           this.userReturned = user.user;
         }
-        this.userReturned = user.user;
       },
 
 

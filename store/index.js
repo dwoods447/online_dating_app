@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookie from 'js-cookie'
 import api from '../middleware/services/api/api'
+import UserServiceProfile from '../middleware/services/UserProfileService'
 import cookieparser from 'cookieparser'
 Vue.use(Vuex)
 
@@ -183,6 +184,23 @@ const createStore = () =>{
               localStorage.removeItem('user');
             }
 
+          },
+          async addUserUToBlockListAction(context, userId){
+            const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+            const userAddedToBlockList = (await UserServiceProfile.addUserToBlockList(userId)).data;
+            if(userAddedToBlockList.message === 'User added to your block list'){
+                console.log(userAddedToBlockList.message);
+            }
+             return userAddedToBlockList;
+          },
+
+          async addUserToFavoritesAction(context, userId){
+            const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+            const userAddedToFavoritesList = (await UserServiceProfile.addUserToFavoriteList(userId)).data;
+            if(userAddedToFavoritesList.message === 'User added to favorites successfully!'){
+                console.log(userAddedToFavoritesList.message);
+            }
+             return userAddedToFavoritesList;
           }
 
       } // end of action

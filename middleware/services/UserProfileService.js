@@ -53,7 +53,10 @@ export default {
     return api.get('/profile/inbox/messages');
   },
 
-  uploadImg(formData){
+  uploadImg(file){
+    console.log(`File recieved by UserProfileService: ${JSON.stringify(file)}`);
+    const formData = new FormData();
+    formData.append('image', file.image, file.image.name)
     return api.post(`/profile/image/upload`, formData);
   },
 

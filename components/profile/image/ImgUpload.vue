@@ -39,11 +39,11 @@
           }
         },
         async onUpload(){
+          let formData = {}
           try{
             if(this.onSelectFile){
-            const formData = new FormData();
-            formData.append('image', this.onSelectFile)
-            console.log(`Sending img: ${this.onSelectFile}`);
+            formData.image = this.onSelectFile;
+            console.log(`Sending img: ${JSON.stringify(formData)}`);
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const uploadImg = await UserProfileService.uploadImg(formData);
             }

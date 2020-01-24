@@ -1,6 +1,13 @@
 <template>
   <div>
      <h2>Edit Your Profile</h2>
+
+
+       <div style="width: 50%; margin: 0 auto;" v-if="this.$store.state.userId">
+          Your picture:
+         <img :src="fullImageSrc" alt="">
+       </div>
+
      <div v-if="this.$store.state.userId">
           <div v-if="this.$store.state.userId.isProfileCompleted !== true">
         User has never updated profile
@@ -339,15 +346,17 @@
  import Multiselect from 'vue-multiselect'
  import states from '../../../data/states'
  import ImgUpload from '../../profile/image/ImgUpload'
+ import UserProfileService from '../../../middleware/services/UserProfileService'
   export default {
     props: ['userId'],
     components: { Multiselect, ImgUpload},
     mounted(){
-      console.log(`Editing user with an ID of : ${JSON.stringify(this.user)}`);
+      console.log(`Editing user with an ID of : ${JSON.stringify(this.userId._id)}`);
+      this.loadUserProfile(this.userId._id);
     },
     data(){
       return {
-         user: this.userId,
+         user: null,
          states: [...states],
          state: this.$store.state.userId.state,
          seekingGenders: [
@@ -513,23 +522,41 @@
          ],
 
          selectedFile: '',
+         url: '',
+      }
+    },
+    computed: {
+      fullImageSrc: function(){
+        if(this.$store.state.userId.images.imagePaths.length > 1){
+            return this.url = this.$store.state.userId.images.imagePaths[1].path;
+        } else {
+          return this.url = 'http://placehold.it/200x200';
+        }
 
       }
     },
-
     methods: {
-      onFileSelect(event){
-        this.selectedFile = event.target.files[0];
-        if(this.selectedFile){
-          //file is selected
-        }
+      async loadUserProfile(userId){
+        const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+          const userReturned = (await UserProfileService.getUserDetails(userId)).data;
+          console.log(`User Returned: ${JSON.stringify(userReturned)}`)
+          if(userReturned){
+            this.user = userReturned;
+              this.$store.dispatch('setLoggedInUserIdAction', this.user.user)
+          }
       },
-      async onUpload(){
-          let formData = new FormData();
-          formData.append('image', this.selectedFile, this.selectedFile.name);
-          console.log(`Sending img: ${JSON.stringify(formData)}`);
-          const uploadImg = await UserProfileService.uploadImg(formData);
-      },
+      // onFileSelect(event){
+      //   this.selectedFile = event.target.files[0];
+      //   if(this.selectedFile){
+      //     //file is selected
+      //   }
+      // },
+      // async onUpload(){
+      //     let formData = new FormData();
+      //     formData.append('image', this.selectedFile, this.selectedFile.name);
+      //     console.log(`Sending img: ${JSON.stringify(formData)}`);
+      //     const uploadImg = await UserProfileService.uploadImg(formData);
+      // },
       async updateExtentedUserProfile(){
 
          let formData = {};
@@ -557,6 +584,7 @@
             if(this.income) formData.income = this.income;
             if(this.doesDateInteracially) formData.doesDateInteracially = this.doesDateInteracially;
             if(this.interacialDatingPreferences.length > 0) formData.interacialDatingPreferences = this.interacialDatingPreferences;
+            formData.isProfileCompleted = true;
             console.log(`Form Data submitted: ${JSON.stringify(formData, null, 2)}`);
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
            const updated  = await UserProfileService.updateUserProfile(formData);

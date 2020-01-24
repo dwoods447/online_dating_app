@@ -1,7 +1,8 @@
 <template>
   <div>
         Profile Detail
-        <p>ID: {{ this.$route.params.id }}</p>
+        <p>Their ID: {{ this.$route.params.id }}</p>
+        <p>your ID: {{ this.$store.state.userId._id}}</p>
           <p>Profile: {{ this.$route.params.userProfile }}</p>
           <UserProfile :userId="this.$route.params.id"></UserProfile>
   </div>

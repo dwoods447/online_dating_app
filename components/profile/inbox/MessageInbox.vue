@@ -3,7 +3,19 @@
     <div class="row">
       <div class="col-lg-12">
              <div v-if="messages.length <= 0">You have No messages</div>
-             <MessageInboxPreview v-for="message in messages" :message="message.content" :imagePath="message.from.images.imagePaths[0]" :date="message.date"  :key="message.messageId"></MessageInboxPreview>
+             <div v-for="sender in messages" class="row">
+                  <div class="col-lg-2">From: {{ sender.from }} </div>
+                 <div v-for="(message, i) in sender.inbox.messages" class="col-lg-10">
+                   <div v-if="i == 0">{{message.content}}   <span v-if="sender.inbox.messages.length > 1">({{ sender.inbox.messages.length }})</span></div>
+                </div>
+             </div>
+
+             <div >
+
+                    <br/>
+
+
+             </div>
       </div>
     </div>
   </div>
@@ -27,13 +39,13 @@ import MessageInboxPreview from './MessageInboxPreview'
         async getUserMessages(){
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages()
-            console.log(`Message data returned ${JSON.stringify(messageData)}`)
-            if(messageData.data.messages.length > 0 ){
-                this.messages = messageData.data.messages;
+            console.log(`Message data returned ${JSON.stringify(messageData.data.messageInbox, null, 2)}`)
+            if(messageData.data.messageInbox.length > 0 ){
+                this.messages = messageData.data.messageInbox;
             } else {
               return this.messages = [];
             }
-        }
+        },
     },
   }
 </script>
