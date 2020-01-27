@@ -1,7 +1,8 @@
 <template>
   <div>
-      <BasicSearch/>
-      <SearchResult/>
+      <BasicSearch></BasicSearch>
+      <SearchResult :results="results"/>
+
   </div>
 </template>
 
@@ -15,7 +16,7 @@ import SearchResult from '../components/search/SearchResult'
     },
     data(){
       return {
-
+          results: [],
       }
     }
   }

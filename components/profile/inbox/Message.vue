@@ -1,6 +1,9 @@
 <template>
   <div>
 
+
+            <textarea name="" id="" cols="30" rows="10">Reply</textarea>
+            <button class="btn btn-primary">Send</button>
   </div>
 </template>
 

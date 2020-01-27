@@ -1,23 +1,27 @@
 <template>
   <div>
-            <form action="">
+            <form @submit.prevent="search">
               <div class="row">
                 <div class="col-sm-3">
+                  <label for="">Min Age</label>
                   <select name="minAge" class="form-control" v-model="formData.minAge">
                       <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                   </select>
                 </div>
                 <div class="col-sm-3">
+                   <label for="">Max Age</label>
                    <select name="maxAge" id="" class="form-control" v-model="formData.maxAge">
                      <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                    </select>
                 </div>
                 <div class="col-sm-3">
+                  <label for="">Gender</label>
                   <select name="seekingGender" id="" class="form-control" v-model="formData.gender">
                       <option v-for="gender in seekingGenders" :key="gender.key">{{gender.name}}</option>
                   </select>
                 </div>
                 <div class="col-sm-3">
+                  <label for="">Dating Intent</label>
                   <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent">
                    <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
                   </select>
@@ -27,33 +31,59 @@
 
              <div class="row">
                <div class="col-sm-3">
+                  <label for="">Highest Education</label>
                   <select name="educations" id="" class="form-control" v-model="formData.education">
                       <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
                   </select>
                </div>
                 <div class="col-sm-3">
+                    <label for="">Ethnicity</label>
                     <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity">
                       <option v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">{{ethnicity.name}}</option>
                    </select>
                </div>
                 <div class="col-sm-3">
+                     <label for="">State</label>
                       <select name="states" id="" class="form-control" v-model="formData.state">
                         <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}-{{state.abbreviation}}</option>
                    </select>
                </div>
                 <div class="col-sm-3">
+                  <label for="">Body Type</label>
                   <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType">
                    <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
                 </select>
                </div>
              </div>
+              <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-6">
+                      <label for="">Zipcode</label>
+                      <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode">
+                    </div>
+                       <div class="col-lg-6">
+                      <label for="">Miles</label>
+                        <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom">
+                        <option v-for="(mile, i) in miles" :key="'miles-'+i">{{mile.name}}</option>
+                      </select>
 
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <div class="row">
+                <div class="col-lg-6">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+              </div>
+              </div>
             </form>
   </div>
 </template>
 
 <script>
 import StateList from '../../data/states.js'
+import UserProfileService from '../../middleware/services/UserProfileService';
   export default {
     data(){
       return {
@@ -114,6 +144,8 @@ import StateList from '../../data/states.js'
             ],
 
 
+
+
             bodyTypes: [
               {name: 'Prefer Not To Say', value: ''},
               {name: 'Thin', value: ''},
@@ -127,16 +159,40 @@ import StateList from '../../data/states.js'
             formData: {
               minAge: '18',
               maxAge: '75',
-              gender: 'Female',
-              datingIntent: 'I want to date but nothing serious.',
-              education :'High school',
+              gender: '',
+              datingIntent: '',
+              education :'',
               ethnicity: '',
-              state: 'Texas-TX',
+              state: '',
               bodyType: '',
+              milesFrom: '',
+              postalCode: ''
             }
 
 
       }
+    },
+    methods: {
+      async search(){
+        console.log(`Searching......`);
+        let formSubmitData = {};
+        if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
+        if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
+        if(this.formData.gender) formSubmitData.gender =  this.formData.gender;
+        if(this.formData.datingIntent) formSubmitData.datingIntent =  this.formData.datingIntent;
+        if(this.formData.education) formSubmitData.education =  this.formData.education;
+        if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
+        if(this.formData.state) formSubmitData.state =  this.formData.state;
+        if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
+         if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode;
+        if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
+        const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+        console.log(`Submitting ${JSON.stringify(formSubmitData)}`);
+        const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
+        console.log(`Search Results ${JSON.stringify(searchResults)}`);
+         // console.log(`Users ${JSON.stringify(searchResults)}`);
+      }
+
     },
     computed: {
       rangeOfAges(){
