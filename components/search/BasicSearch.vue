@@ -17,7 +17,7 @@
                 <div class="col-sm-3">
                   <label for="">Gender</label>
                   <select name="seekingGender" id="" class="form-control" v-model="formData.gender">
-                      <option v-for="gender in seekingGenders" :key="gender.key">{{gender.name}}</option>
+                      <option v-for="gender in seekingGenders" :key="gender.key" :value="gender.value">{{gender.name}}</option>
                   </select>
                 </div>
                 <div class="col-sm-3">
@@ -88,10 +88,10 @@ import UserProfileService from '../../middleware/services/UserProfileService';
     data(){
       return {
           seekingGenders: [
-            {name: 'Male', value: '', key: 'gender-1'},
-            {name: 'Female', value: '', key: 'gender-2'},
-            {name: 'Trans Male', value: '', key: 'gender-3'},
-            {name: 'Trans Female', value: '', key: 'gender-4'},
+            {name: 'Male', value: 'male', key: 'gender-1'},
+            {name: 'Female', value: 'female', key: 'gender-2'},
+            {name: 'Trans Male', value: 'trans-male', key: 'gender-3'},
+            {name: 'Trans Female', value: 'trans-female', key: 'gender-4'},
           ],
 
 

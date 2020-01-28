@@ -36,6 +36,7 @@ import MessageInboxPreview from './MessageInboxPreview'
     data(){
       return {
         messages: [],
+        inboxData: [],
       }
     },
 
