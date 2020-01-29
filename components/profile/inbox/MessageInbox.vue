@@ -3,8 +3,20 @@
     <div class="row">
       <div class="col-lg-12">
              <div v-if="messages.length <= 0">You have No messages</div>
-             <div v-for="message in messages">
-               <div>{{message.sender }} </div><div>{{message.content}}</div>
+             <div v-for="message in messages" style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 2em;">
+               <div class="row">
+                 <div class="col-lg-2">
+                     <img :src="message.messageContent[0].imageSrc" alt="">
+                    {{ message.messageContent[0].sender }}
+                 </div>
+                 <div class="col-lg-7">
+                    {{ message.messageContent[0].content }}( {{ message.messageContent.length }})
+                 </div>
+                 <div class="col-lg-3">
+                    {{ message.messageContent[0].date }}
+                 </div>
+               </div>
+
              </div>
               <!-- <div v-for="sender in messages" style="width: 90%; margin: 0 auto;">
                 <a href="#">
