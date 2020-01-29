@@ -3,21 +3,20 @@
     <div class="row">
       <div class="col-lg-12">
              <div v-if="messages.length <= 0">You have No messages</div>
-             <div v-for="message in messages" style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 2em;">
-               <div class="row">
-                 <div class="col-lg-2">
-                     <img :src="message.messageContent[0].imageSrc" alt="">
-                    {{ message.messageContent[0].sender }}
-                 </div>
-                 <div class="col-lg-7">
-                    {{ message.messageContent[0].content }}( {{ message.messageContent.length }})
-                 </div>
-                 <div class="col-lg-3">
-                    {{ message.messageContent[0].date }}
-                 </div>
-               </div>
 
-             </div>
+            <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
+            :imageSrc="message.messageContent[0].image"
+            :sender="message.messageContent[0].sender"
+            :content="message.messageContent[0].content"
+            :messageLength="message.messageContent.length"
+            :date="message.messageContent[0].date"
+            :thread="message.messageContent[0]"
+            :senderId="message._id.from"
+            >
+            </MessageInboxPreview>
+
+
+
               <!-- <div v-for="sender in messages" style="width: 90%; margin: 0 auto;">
                 <a href="#">
                   <div  style="width: 900px; display: block; border: 2px solid #000;  box-shadow: 2px 3px #000; padding: 2em; margin: 10px;">
@@ -72,13 +71,11 @@ import MessageInboxPreview from './MessageInboxPreview'
            // console.log(`Message data returned ${JSON.stringify(messageData)}`)
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-              // console.log(`Message array ${JSON.stringify(this.messages, null, 2)}`)
+              console.log(`Message array ${JSON.stringify(this .messages, null, 2)}`)
             }
         },
 
-        showUserMessage(messageThread){
-              this.$router.push('/message/', {params: {thread: messageThread}});
-        },
+
     },
   }
 </script>

@@ -9,6 +9,7 @@
         </div>
         <button class="btn btn-primary" style="display: block; width: 100%;"> Sign In</button>
         <br/>
+        <div v-if="this.$store.state.error"> {{ this.$store.state.error }}</div>
       </form>
 
   </div>
@@ -35,14 +36,13 @@ import Cookie from 'js-cookie'
           password: this.password
         }
 
-        let resData = await this.$store.dispatch('authenticateUserAction', data);
-        console.log(`Returned data sign in: ${JSON.stringify(resData)}`);
-        if(resData.status !== 200){
-            console.log(`Retunred${JSON.stringify(resData)}`)
-        }
-        if(resData.status !== 200){
-            console.log(`Retunred${JSON.stringify(resData)}`)
-        }
+          let resData = await this.$store.dispatch('authenticateUserAction', data);
+          console.log(`message response: ${resData}`);
+
+
+
+
+
 
       }
     }

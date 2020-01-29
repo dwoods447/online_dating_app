@@ -6,7 +6,7 @@
 </template>
 
 <script>
- import MessageInbox from '../components/profile/inbox/MessageInbox'
+ import MessageInbox from '../../components/profile/inbox/MessageInbox'
   export default {
     components: { MessageInbox },
     data(){

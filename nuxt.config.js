@@ -31,6 +31,7 @@ export default {
     '~/assets/vendor/fontawesome-free/css/all.min.css',
     '~/assets/vendor/simple-line-icons/css/simple-line-icons.css',
     '~/assets/css/landing-page.min.css',
+    '~/assets/css/custom.css',
 
   ],
   /*

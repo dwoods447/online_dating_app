@@ -1,38 +1,54 @@
 <template>
   <div>
-        <div class="row">
-          <div class="col-lg-12">
-             <div class="row">
-               <div class="col-lg-2">
-                  imagePath: {{ imagePath }}
-               </div>
-                <div class="col-lg-9">
-                  <h3>Message: {{ message }}</h3>
-                  <p></p>
-                </div>
-               <div class="col-lg-1">
-                  Date: {{ date}}
-               </div>
-             </div>
-          </div>
-        </div>
+        <a @click="viewMessageThread()" href="javascript:void(0);"><div class="row">
+                  <div class="col-lg-2">
+                      <div style="border: 1px solid green;"><img :src="this.imageSrc" alt="" style="width: 100%;"></div>
+                      <div>{{ this.sender }}</div>
+                  </div>
+                  <div class="col-lg-6">
+                      {{ this.content | filterPreview }}( {{ this.messageLength }})
+                  </div>
+                  <div class="col-lg-4">
+                      {{ this.date }}
+                  </div>
+          </div></a>
   </div>
 </template>
 
 <script>
 import Message from './Message'
   export default {
-    props: ['message', 'imagePath', 'date'],
+    props: ['imageSrc', 'sender', 'content', 'messageLength', 'date', 'thread', 'senderId'],
     created(){
-      console.log(`Message in preview: ${JSON.stringify(this.message)}`)
+      console.log(`Message in preview: ${JSON.stringify(this.content)}`);
+       console.log(`Image src: ${JSON.stringify(this.thread.image)}`);
+          console.log(`Thread ${JSON.stringify(this.thread)}`);
+              console.log(`SenderId ${JSON.stringify(this.senderId)}`);
+    },
+    filters :{
+      filterPreview(message){
+        let length = message.length;
+        return message.substring(0, length/1.2) + '...';
+      }
     },
     data(){
       return {
-        sender: '',
+        msgSender: '',
       }
     },
     methods :{
-
+        viewMessageThread(){
+          let routeParams = {
+            thread: this.thread,
+            senderId: this.senderId
+          }
+              console.log(`Viewing messgage thread...`);
+              console.log(`Thread ${JSON.stringify(this.thread)}`);
+              console.log(`SenderId ${JSON.stringify(this.senderId)}`);
+              console.log(`passing ${JSON.stringify(routeParams)}`);
+              this.$router.push({path: `/message/${this.senderId}/${this.sender}`, params: {routeParams}});
+              // this.$router.push({path: '/profile/'+ id, params: {id: id, userProfile: profile}});
+        },
     }
   }
 </script>

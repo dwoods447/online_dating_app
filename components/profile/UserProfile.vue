@@ -62,7 +62,7 @@
                 <AddUserToBlockListButton :userId="userReturned._id"></AddUserToBlockListButton><br/>
                 <AddUserToFavoritesListButton :userId="userReturned._id"></AddUserToFavoritesListButton>
 
-                <SendMessage :userId="messageReciever" ></SendMessage>
+                <SendMessage :userId="messageReciever" >Send Message</SendMessage>
 
         <h2>Preferences</h2>
         <p> Im looking for....</p>

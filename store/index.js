@@ -11,6 +11,7 @@ const createStore = () =>{
       state: {
         token:  null,
         userId: null,
+        error: null,
       },
       mutations: {
         setAuthTokenMutation(state, token){
@@ -21,6 +22,12 @@ const createStore = () =>{
         clearToken (state){
           state.token = null;
           state.userId = null;
+        },
+        setErrorMessageMutation(state, message){
+          state.error  = '';
+          state.error = message;
+          console.log(`Setting error message to: ${message}`);
+          console.log(`Set error message to: ${state.error}`);
         },
         setLoggedInUserIdMutation(state, userId){
           let storedUser = {};
@@ -84,8 +91,9 @@ const createStore = () =>{
             let token;
             let user;
             let tokenExpr;
-             const res =  await api.post('/login', authData);
-             if(res.data.token){
+            try{
+              const res =  await api.post('/login', authData);
+              if(res.data.token){
                 token = res.data.token;
                 tokenExpr = JSON.stringify(res.data.tokenExpiresIn);
                 user = JSON.stringify(res.data.user);
@@ -110,8 +118,20 @@ const createStore = () =>{
                     }
                 return res;
              }
-          },
+            }catch(err){
+              // console.log(`Error code recieved: ${err}`);
+              console.log(`Msg: ${err.message}`);
+              console.log(`Status: ${err.status}`);
+                 let errorMessage = 'Invalid username and password';
+                 context.commit('setErrorMessageMutation', errorMessage);
 
+            }
+
+
+          },
+          setErrorMessageAction(context, message){
+            context.commit('setErrorMessageMutation', message);
+          },
           setAuthTokenAction(context, token){
             console.log('Setting token action,' + token);
             context.commit('setAuthTokenMutation', token);
