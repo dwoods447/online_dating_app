@@ -15,9 +15,7 @@ const createStore = () =>{
       },
       mutations: {
         setAuthTokenMutation(state, token){
-          console.log(`setting token ${token}`)
           state.token = token;
-          console.log(`Token set to:  ${state.token}`)
         },
         clearToken (state){
           state.token = null;
@@ -26,14 +24,12 @@ const createStore = () =>{
         setErrorMessageMutation(state, message){
           state.error  = '';
           state.error = message;
-          console.log(`Setting error message to: ${message}`);
-          console.log(`Set error message to: ${state.error}`);
         },
         setLoggedInUserIdMutation(state, userId){
           let storedUser = {};
           console.log(`setting user${userId}`)
           if(typeof userId === 'string'){
-            let storedUser
+            let storedUser;
             userId = JSON.parse(userId);
             storedUser = {...userId},
             state.userId = storedUser;
@@ -98,12 +94,11 @@ const createStore = () =>{
                 tokenExpr = JSON.stringify(res.data.tokenExpiresIn);
                 user = JSON.stringify(res.data.user);
                 console.log(`Response returned in Store ${JSON.stringify(token)}`);
-
                 localStorage.setItem('token', token);
-                localStorage.setItem('tokenExpiration', new Date().getTime() +  Number.parseInt(tokenExpr) * 1000);
+                localStorage.setItem('tokenExpiration', (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000));
                 localStorage.setItem('user', user);
                 Cookie.set('jwt', token);
-                Cookie.set('expiresDate', new Date().getTime() +  Number.parseInt(tokenExpr) * 1000);
+                Cookie.set('expiresDate', (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000));
                 Cookie.set('user', user);
                 context.commit('setAuthTokenMutation', token);
                 context.commit('setLoggedInUserIdMutation', res.data.user);

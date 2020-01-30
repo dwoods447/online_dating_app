@@ -1,7 +1,10 @@
 <template>
   <div>
-      <BasicSearch></BasicSearch>
-      <SearchResult :results="results"/>
+      <div style="width: 75%; margin: 0 auto;">
+         <BasicSearch></BasicSearch>
+         <SearchResult :results="results"/>
+      </div>
+
 
   </div>
 </template>

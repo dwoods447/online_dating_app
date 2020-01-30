@@ -185,11 +185,14 @@ import eventBus from '../../middleware/eventBus/index'
         if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
         if(this.formData.state) formSubmitData.state =  this.formData.state;
         if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
-         if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode;
+        if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode;
         if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         console.log(`Submitting ${JSON.stringify(formSubmitData)}`);
-        const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
+        if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
+          const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
+        }
+
         console.log(`Search Results ${JSON.stringify(searchResults)}`);
         if(searchResults.data.users.length > 0){
            eventBus.$emit('search-results', {results: searchResults.data.users});

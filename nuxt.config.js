@@ -30,7 +30,7 @@ export default {
   css: [
     '~/assets/vendor/fontawesome-free/css/all.min.css',
     '~/assets/vendor/simple-line-icons/css/simple-line-icons.css',
-    '~/assets/css/landing-page.min.css',
+    '~/assets/css/landing-page.css',
     '~/assets/css/custom.css',
 
   ],
@@ -62,6 +62,7 @@ export default {
   scripts: [
     '~/assets/vendor/jquery/jquery.min.js',
     '~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
+    'https://kit.fontawesome.com/b1f8671d0b.js'
    ],
   /*
   ** Build configuration

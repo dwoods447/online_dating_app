@@ -3,7 +3,7 @@
      <h2>Edit Your Profile</h2>
 
 
-       <div style="width: 50%; margin: 0 auto;" v-if="this.$store.state.userId">
+       <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your picture:
          <img :src="fullImageSrc" alt="">
        </div>
@@ -280,21 +280,131 @@
            <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Do you data interracially</label>
-                  <select class="form-control"  v-model="doesDateInteracially">
+                  <label for="">Do you date interracially?</label>
+                  <select class="form-control"  v-model="doesDateInteracially" @change="showInterracialChoices">
                     <option v-for="(option, i) in doesDateInteraciallyChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
                   </select>
                </div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                  <div v-if="displayInterracialChoices">
+                     <label for="">Im interested in:</label>
+                            <multiselect
+                            v-model="interacialDatingPreferences"
+                            :options="ethnicities"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
+                          </multiselect>
+                  </div>
+
+                </div>
             </div>
          </div>
 
            <div class="form-group">
             <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                   <label for="">Im prefer:</label>
+                            <multiselect
+                            v-model="selectedGenders"
+                            :options="genders"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ gender }"><strong>{{ gender.name }}</strong></template>
+                    </multiselect>
+                </div>
+                <div class="col-sm-6">
+                    <label for="">I will date someone with marital status of:</label>
+                      <multiselect
+                            v-model="selectedMaritalStatuses"
+                            :options="maritalStatuses"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ status }"><strong>{{ status.name }}</strong></template>
+                    </multiselect>
+                </div>
             </div>
          </div>
+
+
+
+           <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                   <label for="">Im prefer:</label>
+                           <multiselect
+                            v-model="raceDatingPreferences"
+                            :options="ethnicities"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
+                          </multiselect>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+         <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+
+          <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+
           <button class="btn btn-primary" style="width: 100%;">Update Your Profile </button>
       </form>
      </div>
@@ -303,9 +413,21 @@
      <br/>
      <div style="width: 50%; margin: 0 auto;">
             <div class="row">
-              <ImgUpload/>
+            <div class="col-lg-3">
+              <ImgUpload  />
+            </div>
+            <div class="col-lg-3">
+              <ImgUpload />
+            </div>
+            <div class="col-lg-3">
+              <ImgUpload />
+            </div>
+             <div class="col-lg-3">
+              <ImgUpload  />
             </div>
      </div>
+     </div>
+
 
 
 
@@ -357,14 +479,11 @@
     data(){
       return {
          user: null,
+         agePreferences: '',
+         heightPreferences: '',
+         displayInterracialChoices: false,
          states: [...states],
          state: this.$store.state.userId.state,
-         seekingGenders: [
-           {name: 'Male', value: 'male', key: 'male-0'},
-           {name: 'Female', value: 'female', key: 'female-1'},
-           {name: 'Trans-Male', value: 'trans-male', key: 'trans-male-2'},
-           {name: 'Trans-Female', value: 'trans-female', key: 'trans-male-3'},
-         ],
          genderSeeking: [],
          datingIntent: this.$store.state.userId.datingIntent,
          datingIntents: [
@@ -373,6 +492,7 @@
            {name: "I am putting in serious effort to find someone", value: "I am putting in serious effort to find someone", key: 'datingIntent-2'},
            {name: 'I am putting in serious effort to find someone', value: 'I am putting in serious effort to find someone', key: 'datingIntent-3'},
          ],
+         selectedMaritalStatuses: [],
          maritalStatuses: [
            {name: 'single', value: 'single', key: 'single-0'},
            {name: 'married', value: 'married', key: 'married-1'},
@@ -520,22 +640,50 @@
               {name: 'Average', value: 'Average'},
               {name: 'A Few Extra Pounds', value: 'A Few Extra Pounds'},
          ],
+          raceDatingPreferences: [],
+           ethnicities: [
+            {name: 'White/Caucasian', value: 'White/Caucasian', key: 'White/Caucasian'},
+            {name: 'Black/African American', value: 'Black/African American', key: 'Black/African American'},
+            {name: 'Native American', value: 'Native American', key: 'Native American'},
+            {name: 'Hispanic', value: 'Hispanic', key: 'Hispanic'},
+            {name: 'Indian', value: 'Indian', key: 'Indian'},
+            {name: 'Middle Eastern', value: 'Middle Eastern', key: 'Middle Eastern'},
+            {name: 'Asian', value: 'Asian', key: 'Asian'},
+            {name: 'Mixed Race', value: 'Mixed Race', key: 'Mixed Race'},
+            {name: 'Other', value: 'Other', key: 'Other'},
+          ],
 
          selectedFile: '',
          url: '',
+        genders: [
+             { name: 'male', val: 'male', key: 'male'},
+             { name: 'female', val: 'female', key: 'female'},
+             { name: 'trans-male', val: 'trans-male', key: 'trans male'},
+             { name: 'trans-female', val: 'trans-female', key: 'trans female'},
+        ],
+
+        selectedGenders: [],
       }
     },
     computed: {
       fullImageSrc: function(){
-        if(this.$store.state.userId.images.imagePaths.length > 1){
-            return this.url = this.$store.state.userId.images.imagePaths[1].path;
+        if(this.$store.state.userId.images.imagePaths.length > 0){
+            return this.url = this.$store.state.userId.images.imagePaths[0].path;
         } else {
-          return this.url = 'http://placehold.it/200x200';
+          return false;
         }
+      },
 
-      }
+
+
     },
     methods: {
+
+      showInterracialChoices(){
+        this.interacialDatingPreferences = [];
+        console.log(`Changing interracial choices ${this.displayInterracialChoices}`);
+        return this.displayInterracialChoices = !this.displayInterracialChoices;
+      },
       async loadUserProfile(userId){
         const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
           const userReturned = (await UserProfileService.getUserDetails(userId)).data;
