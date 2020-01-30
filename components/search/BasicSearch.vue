@@ -84,6 +84,7 @@
 <script>
 import StateList from '../../data/states.js'
 import UserProfileService from '../../middleware/services/UserProfileService';
+import eventBus from '../../middleware/eventBus/index'
   export default {
     data(){
       return {
@@ -190,6 +191,9 @@ import UserProfileService from '../../middleware/services/UserProfileService';
         console.log(`Submitting ${JSON.stringify(formSubmitData)}`);
         const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
         console.log(`Search Results ${JSON.stringify(searchResults)}`);
+        if(searchResults.data.users.length > 0){
+           eventBus.$emit('search-results', {results: searchResults.data.users});
+        }
          // console.log(`Users ${JSON.stringify(searchResults)}`);
       }
 
