@@ -1,7 +1,8 @@
 <template>
   <div>
+       <div v-if="message !== null">{{ message }}</div>
        <div v-if="errorMessage !== null">{{ errorMessage }}</div>
-      <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 0 auto;">
+      <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 5% auto;">
         <div class="form-group">
              <label for="">Username:</label>
              <input type="text" v-model="formData.username" class="form-control">
@@ -40,6 +41,7 @@ import AuthService from '../../middleware/services/AuthService'
   export default {
     data(){
       return {
+        message: '',
         errorMessage: '',
           formData: {
             username: '',
@@ -80,11 +82,16 @@ import AuthService from '../../middleware/services/AuthService'
           console.log(`User: ${JSON.stringify(signedUp.user)}`);
           if(signedUp.statusCode !== 200){
              console.log(`Error message: ${signedUp.message}`);
+
              this.errorMessage = signedUp.message;
           }
           if(signedUp.statusCode === 200){
               console.log(`Success message: ${signedUp.message}`);
-              this.$router.push('/login', {params: {user: signedUp.user}});
+               this.message =signedUp.message;
+              setTimeout(()=>{
+                this.$router.push('/login', {params: {user: signedUp.user}});
+              }, 6500);
+
           }
       }
     }

@@ -21,6 +21,10 @@ const createStore = () =>{
           state.token = null;
           state.userId = null;
         },
+
+        setLoggedOutTimer(state, timer){
+
+        },
         setErrorMessageMutation(state, message){
           state.error  = '';
           state.error = message;
@@ -94,19 +98,21 @@ const createStore = () =>{
                 tokenExpr = JSON.stringify(res.data.tokenExpiresIn);
                 user = JSON.stringify(res.data.user);
                 console.log(`Response returned in Store ${JSON.stringify(token)}`);
+                tokenExpr = (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000);
                 localStorage.setItem('token', token);
-                localStorage.setItem('tokenExpiration', (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000));
+                localStorage.setItem('tokenExpiration', tokenExpr);
                 localStorage.setItem('user', user);
                 Cookie.set('jwt', token);
-                Cookie.set('expiresDate', (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000));
+                Cookie.set('expiresDate',  tokenExpr);
                 Cookie.set('user', user);
                 context.commit('setAuthTokenMutation', token);
                 context.commit('setLoggedInUserIdMutation', res.data.user);
+                context.dispatch('setLogOutTimerAction', tokenExpr);
                     //  test if  this.user.isProfileCompleted = true
                     if(res.data.user.isProfileCompleted !== 'true' || res.data.user.isProfileCompleted !== true){
                       console.log(`User Profile is incomplete.`)
                       // if not redirect to completed profile
-                      this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
+                      this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
                     } else {
                        console.log(`User Profile is completed.`)
                        this.$router.push({name: 'index', params: {user: res.data.user}})
@@ -136,12 +142,15 @@ const createStore = () =>{
             context.commit('setLoggedInUserIdMutation', userId);
           },
           setLogOutTimerAction(context, duration){
-            console.log(`Duration re'vd: ${duration}`);
+            let hour = 60 * 60 * 1000;
+            console.log(`Duration re'vd: ${Number.parseInt(duration)}`);
              setTimeout(()=>{
                 console.log(`Timer expired`);
                 context.commit('clearToken');
-
-             }, duration)
+                console.log(`User logeed out....`);
+                console.log(`Redirecting to homepage....`);
+                this.$router.push({name:'index'});
+             }, hour);
           },
           initAuthAction(context, req){
             let token;
@@ -175,7 +184,7 @@ const createStore = () =>{
           // context.dispatch('loadUserAction', {user: user, token: token});
            console.log(`Resetting Token: ${token}`);
            console.log(`Resetting Exp: ${+expiresDate  - new Date().getTime()}`);
-          //  context.dispatch('setLogOutTimerAction', +expiresDate  - new Date().getTime())
+          context.dispatch('setLogOutTimerAction', +expiresDate  - new Date().getTime());
           console.log(`Storing or restoring user and token info`);
           context.dispatch('setAuthTokenAction', token);
           context.dispatch('setLoggedInUserIdAction', user);

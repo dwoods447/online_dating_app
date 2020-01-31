@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="col-lg-12">
+    <div class="col-lg-12" v-if="showImageUpload">
         <p>Upload your image:</p>
         <div >
           <img :src="imgPreview" alt=""><span @click="removeSelectedFile" v-if="imgPreview">X</span>
         </div>
-
-        <form @submit.prevent="onUpload" enctype="multipart/form-data" v-if="showImageUpload">
+        <p v-if="message">{{ message }}</p>
+        <form @submit.prevent="onUpload" enctype="multipart/form-data" >
             <div class="form-group">
               <input type="file" name="image" ref="image" @change="onFileSelect" class="form-control">
             </div>
@@ -27,6 +27,7 @@
         selectedFile: null,
         onSelectFile: null,
         previewSrc: '',
+        message: '',
       }
     },
     computed: {
@@ -85,6 +86,15 @@
             console.log(`Sending img: ${JSON.stringify(formData)}`);
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const uploadImg = await UserProfileService.uploadImg(formData);
+              if(uploadImg.data.user){
+                  this.$store.dispatch('setLoggedInUserIdAction', uploadImg.data.user);
+                  this.message =  uploadImg.data.message;
+                  setTimeout(()=>{
+                    this.removeSelectedFile();
+                   this.previewSrc = user.images.imagePaths[0];
+                  }, 3000)
+
+              }
             }
 
           } catch(err){

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <form @submit.prevent="signIn" style="max-width: 20%; margin: 0 auto;">
+      <form @submit.prevent="signIn" style="max-width: 20%; margin: 5% auto;">
         <div class="form-group">
            <input type="text" name="username" v-model="username" class="form-control">
         </div>

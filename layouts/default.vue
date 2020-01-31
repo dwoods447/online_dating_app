@@ -5,7 +5,9 @@
     <!-- Page Content -->
     <div>
       <AppHeader/>
-      <nuxt />
+       <SubMenu>
+         <nuxt />
+       </SubMenu>
     </div>
     <!-- /.container -->
       <!-- Bootstrap core JavaScript -->
@@ -26,11 +28,13 @@
 import AppFooter from '../components/footer/AppFooter'
 import Navigation from '../components/nav/Navigation'
 import AppHeader from '../components/header/AppHeader'
+import SubMenu from '../components/SubMenu'
 export default {
   components:{
     AppFooter,
     Navigation,
-    AppHeader
+    AppHeader,
+    SubMenu
   },
   data(){
     return {
