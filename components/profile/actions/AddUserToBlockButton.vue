@@ -19,6 +19,10 @@
         const message = await this.$store.dispatch('addUserUToBlockListAction', {userToBlockId: this.userId});
         if(message ){
           console.log(`Message returned in addUserUToBlockList button component: ${message}`);
+          setTimeout(()=>{
+            this.$router.push({name: 'basicsearch'});
+          }, 8000);
+
         }
       }
     }

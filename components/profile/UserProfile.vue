@@ -29,7 +29,7 @@
         <div class="row">
           <div class="col-lg-6">
             <ul>
-                <li>Do you have children?: <strong>{{ userReturned.hasChildren }}</strong></li>
+                <li>Do you have children?: <strong>{{ userReturned.hasChildren | booleanToResponse }}</strong></li>
                 <li>Do you smoke?: <strong>{{ userReturned.doesSmoke | booleanToResponse }}</strong></li>
                 <li>Do you do you do drugs?: <strong>{{ userReturned.doesDoDrugs | booleanToResponse }}</strong></li>
                 <li>Do you do you drink?: <strong>{{ userReturned.doesDrink | booleanToResponse }}</strong></li>
@@ -169,7 +169,7 @@ import Tab from '../../components/profile/Tab'
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         const user = (await UserProfileService.getUserDetails(userId)).data;
         console.log(`User returned: ${JSON.stringify(user)}`)
-        if(user.message === 'This user has prohibited you from viewing their users profile'){
+        if(user.blocked == true){
             this.$router.push({path: '/blocked'})
         } else {
            this.userReturned = user.user;

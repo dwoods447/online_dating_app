@@ -3,7 +3,7 @@
     <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">FlingYourShot.com</a>
+      <a class="navbar-brand" href="#">Websitename.com</a>
            <nuxt-link to="/">
            Home
            <span class="sr-only">(current)</span>
