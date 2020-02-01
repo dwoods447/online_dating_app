@@ -34,7 +34,7 @@
       </li>
       <li class="nav-item dropdown" v-if="this.$store.getters.isAutheticated">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+          aria-haspopup="true" aria-expanded="false" href="javascript:void(0);">
           <i class="fas fa-user"></i>&nbsp;&nbsp;  Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" >
           <nuxt-link class="dropdown-item" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
