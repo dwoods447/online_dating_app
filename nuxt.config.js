@@ -62,8 +62,6 @@ export default {
   router :{
   },
   scripts: [
-    '~/assets/vendor/jquery/jquery.min.js',
-    '~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
     'https://kit.fontawesome.com/b1f8671d0b.js'
    ],
   /*

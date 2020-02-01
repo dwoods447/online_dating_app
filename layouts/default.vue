@@ -10,18 +10,7 @@
        </SubMenu>
     </div>
     <!-- /.container -->
-      <!-- Bootstrap core JavaScript -->
-  <!-- <script
-  src="https://code.jquery.com/jquery-3.4.1.slim.js"
-  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
-  crossorigin="anonymous"></script>
-  <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <AppFooter/> -->
-
-
-
-
+  <AppFooter/>
   </div>
 </template>
 <script>
@@ -40,6 +29,16 @@ export default {
   data(){
     return {
 
+    }
+  },
+  head(){
+    return {
+        script: [
+        { src: 'https://code.jquery.com/jquery-3.4.1.slim.js', body: true },
+         { src: 'https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js', body: true },
+          { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', body: true },
+           { src: 'https://kit.fontawesome.com/b1f8671d0b.js', body: true },
+      ],
     }
   }
 }
