@@ -11,7 +11,6 @@ import ProfilePreview from '../../components/profile/preview/ProfilePreview'
     components: { ProfilePreview },
     created(){
        eventBus.$on('search-results', (data) => {
-            console.log(`Results passed to SearchResultComponent ${JSON.stringify(data.results)}`);
             this.users = data.results;
        })
     },

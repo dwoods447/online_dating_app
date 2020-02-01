@@ -5,7 +5,7 @@
 
        <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your picture:
-         <img :src="fullImageSrc" alt="">
+         <img :src="fullImageSrc|imageSrcFilter " alt="">
        </div>
 
      <div v-if="this.$store.state.userId">
@@ -416,7 +416,7 @@
             <div class="col-lg-3">
               <ImgUpload  />
             </div>
-            <div class="col-lg-3">
+            <!-- <div class="col-lg-3">
               <ImgUpload />
             </div>
             <div class="col-lg-3">
@@ -424,7 +424,7 @@
             </div>
              <div class="col-lg-3">
               <ImgUpload  />
-            </div>
+            </div> -->
      </div>
      </div>
 
@@ -473,7 +473,6 @@
     props: ['userId'],
     components: { Multiselect, ImgUpload},
     mounted(){
-      console.log(`Editing user with an ID of : ${JSON.stringify(this.userId._id)}`);
       this.loadUserProfile(this.userId._id);
     },
     data(){
@@ -663,15 +662,28 @@
         ],
 
         selectedGenders: [],
+        imagePaths: this.$store.state.userId.images.imagePaths || []
+      }
+    },
+    filters: {
+      imageSrcFilter(src){
+        console.log('Filter src: '+ src);
+        if(src){
+          return 'uploads/'+ src
+        }
+
       }
     },
     computed: {
       fullImageSrc: function(){
-        if(this.$store.state.userId.images.imagePaths.length > 0){
-            return this.url = this.$store.state.userId.images.imagePaths[0].path;
-        } else {
-          return false;
+        if(this.$store.state.hasOwnProperty("userId") && this.$store.state.userId !== {} || this.$store.state.userId !== null){
+          console.log('UserId obj is defined.');
+          if(this.imagePaths.length > 0){
+             console.log('images key exits on userId obj');
+              return this.url = this.imagePaths[0].path;
+          }
         }
+        return false;
       },
 
 
@@ -681,13 +693,11 @@
 
       showInterracialChoices(){
         this.interacialDatingPreferences = [];
-        console.log(`Changing interracial choices ${this.displayInterracialChoices}`);
         return this.displayInterracialChoices = !this.displayInterracialChoices;
       },
       async loadUserProfile(userId){
         const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
           const userReturned = (await UserProfileService.getUserDetails(userId)).data;
-          console.log(`User Returned: ${JSON.stringify(userReturned)}`)
           if(userReturned){
             this.user = userReturned;
               this.$store.dispatch('setLoggedInUserIdAction', this.user.user)
@@ -702,7 +712,6 @@
       // async onUpload(){
       //     let formData = new FormData();
       //     formData.append('image', this.selectedFile, this.selectedFile.name);
-      //     console.log(`Sending img: ${JSON.stringify(formData)}`);
       //     const uploadImg = await UserProfileService.uploadImg(formData);
       // },
       async updateExtentedUserProfile(){
@@ -733,11 +742,9 @@
             if(this.doesDateInteracially) formData.doesDateInteracially = this.doesDateInteracially;
             if(this.interacialDatingPreferences.length > 0) formData.interacialDatingPreferences = this.interacialDatingPreferences;
             formData.isProfileCompleted = true;
-            console.log(`Form Data submitted: ${JSON.stringify(formData, null, 2)}`);
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
            const updated  = await UserProfileService.updateUserProfile(formData);
            if(updated){
-              console.log(`Updated response ${JSON.stringify(updated)}`)
            }
       },
 

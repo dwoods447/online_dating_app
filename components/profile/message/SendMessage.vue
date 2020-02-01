@@ -22,7 +22,6 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
       }
     },
     mounted(){
-      console.log(`Id is send message: ${this.userId}`)
     },
     data(){
       return {
@@ -32,11 +31,8 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
     },
     methods: {
        async sendUserMessage(recieverId){
-          console.log(`Sending user a messagew with id: ${recieverId}`);
           const sent  = await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message});
-          console.log(`Message status: ${JSON.stringify(sent)}`)
           if(sent.status == 200){
-              console.log(`Message sent succesfully`);
               this.message = '';
               this.status = '';
               this.status = 'Message sent succesfully'

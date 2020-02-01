@@ -1,16 +1,13 @@
 import axios from 'axios'
-import store from '../../../store/index'
 let api;
 if(process.env.NODE_ENV !== 'production'){
-    api = axios.create({
-      baseURL: 'http://localhost:3535',
-     // Authorization: `Bearer ${store.state.token}`
-    })
+  api = axios.create({
+    baseURL: 'http://localhost:3000/api'
+  })
 } else {
   api = axios.create({
-    baseURL: ''
+    baseURL: 'https://online-dating-front-end-nuxt.herokuapp.com/api'
   })
 }
-
 
 export default api;

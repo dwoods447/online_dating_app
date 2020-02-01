@@ -18,7 +18,6 @@
     },
     methods: {
         goToProfileDetail(id, profile){
-          console.log(`Profile: ${JSON.stringify(profile)}`);
           if(this.$store.getters.isAutheticated){
             this.$router.push({path: '/profile/'+ id, params: {id: id, userProfile: profile}});
           }

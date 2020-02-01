@@ -78,15 +78,10 @@ import AuthService from '../../middleware/services/AuthService'
             return;
           }
           const signedUp = (await AuthService.signUp(this.formData)).data;
-          console.log(`Signed Up Resp: ${JSON.stringify(signedUp)}`);
-          console.log(`User: ${JSON.stringify(signedUp.user)}`);
           if(signedUp.statusCode !== 200){
-             console.log(`Error message: ${signedUp.message}`);
-
              this.errorMessage = signedUp.message;
           }
           if(signedUp.statusCode === 200){
-              console.log(`Success message: ${signedUp.message}`);
                this.message =signedUp.message;
               setTimeout(()=>{
                 this.$router.push('/login', {params: {user: signedUp.user}});

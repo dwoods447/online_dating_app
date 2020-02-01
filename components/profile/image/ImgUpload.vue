@@ -37,7 +37,6 @@
     },
     methods: {
           showImageUpload(){
-          console.log(`current Img array length: ${this.$store.state.userId.images.imagePaths.length}`)
           if(this.$store.state.userId.images.imagePaths.length < 1){
             return false;
           }
@@ -63,11 +62,6 @@
             const reader = new FileReader();
             reader.onload = e =>  this.previewSrc = e.target.result;
             reader.readAsDataURL(this.selectedFile);
-            console.log(`File selected ${JSON.stringify(this.selectedFile)}`)
-             console.log(`File NAME ${JSON.stringify(this.selectedFile.name)}`)
-
-              console.log(`OnSelectFile selected ${JSON.stringify(this.onSelectFile )}`)
-             console.log(`OnSelectFile NAME ${JSON.stringify(this.onSelectFile.name)}`)
           }
         },
         removeSelectedFile(){
@@ -75,15 +69,12 @@
            this.selectedFile = null;
            this.$refs.image.value = null;
            this.previewSrc = '';
-           console.log(`file ref ${this.$refs.image}`);
-           console.log(`file ref ${this.$refs.image}`);
         },
         async onUpload(){
           let formData = {}
           try{
             if(this.onSelectFile){
             formData.image = this.onSelectFile;
-            console.log(`Sending img: ${JSON.stringify(formData)}`);
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const uploadImg = await UserProfileService.uploadImg(formData);
               if(uploadImg.data.user){
@@ -91,7 +82,7 @@
                   this.message =  uploadImg.data.message;
                   setTimeout(()=>{
                     this.removeSelectedFile();
-                   this.previewSrc = user.images.imagePaths[0];
+                   this.previewSrc = uploadImg.data.user.images.imagePaths[0];
                   }, 3000)
 
               }

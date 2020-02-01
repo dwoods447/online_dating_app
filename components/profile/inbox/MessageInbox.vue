@@ -58,7 +58,6 @@ import MessageInboxPreview from './MessageInboxPreview'
         // async getUserMessages(){
         //     const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         //     const messageData = await UserProfileService.getUserMessages()
-        //     console.log(`Message data returned ${JSON.stringify(messageData.data.messageInbox, null, 2)}`)
         //     if(messageData.data.messageInbox.length > 0 ){
         //         this.messages = messageData.data.messageInbox;
         //     } else {
@@ -68,10 +67,8 @@ import MessageInboxPreview from './MessageInboxPreview'
         async getUserMessages(){
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages()
-           // console.log(`Message data returned ${JSON.stringify(messageData)}`)
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-              console.log(`Message array ${JSON.stringify(this .messages, null, 2)}`)
             }
         },
 

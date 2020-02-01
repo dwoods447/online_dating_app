@@ -23,11 +23,8 @@ export default {
      async getRandUsers(){
       //  const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
        const users = (await UserProfileService.getRandomUsersInAuthUsersPostalCode()).data;
-       console.log(`Users returned: ${JSON.stringify(users)}`);
        if(users){
           this.myusers = users.users;
-       } else {
-         console.log(`No users returned`)
        }
      }
    }

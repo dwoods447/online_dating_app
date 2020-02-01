@@ -7,15 +7,34 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start": "nuxt build && nuxt start",
+    "generate": "nuxt generate",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "axios": "^0.19.1",
     "cookieparser": "^0.1.0",
     "js-cookie": "^2.2.1",
     "nuxt": "^2.0.0",
-    "vue-multiselect": "^2.1.6"
+    "vue-multiselect": "^2.1.6",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongo-seeding": "^3.4.0-alpha.1",
+    "mongoose": "^5.8.4",
+    "mongoose-data-seed": "^2.1.6",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "^6.4.2",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "passport-jwt": "^4.0.0",
+    "socket.io": "^2.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "mdSeed": {
+    "seedersFolder": "./api/seeders/"
+  }
 }

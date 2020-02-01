@@ -37,7 +37,6 @@ import Cookie from 'js-cookie'
         }
 
           let resData = await this.$store.dispatch('authenticateUserAction', data);
-          console.log(`message response: ${resData}`);
 
 
 

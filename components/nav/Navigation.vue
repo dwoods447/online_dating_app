@@ -35,7 +35,7 @@
       <li class="nav-item dropdown" v-if="this.$store.getters.isAutheticated">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i> Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>
+          <i class="fas fa-user"></i>&nbsp;&nbsp;  Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" >
           <nuxt-link class="dropdown-item" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
           <a href="#" class="dropdown-item" @click="goToEditUsersProfile"  v-if="this.$store.getters.isAutheticated" >Edit Profile</a>
@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     async logOut(){
-      console.log('Loggin user out....');
        this.$store.dispatch('setLogOutAction');
        this.$router.push({name: 'index'});
       // const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);

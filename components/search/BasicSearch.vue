@@ -175,7 +175,6 @@ import eventBus from '../../middleware/eventBus/index'
     },
     methods: {
       async search(){
-        console.log(`Searching......`);
         let formSubmitData = {};
         if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
         if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
@@ -188,16 +187,12 @@ import eventBus from '../../middleware/eventBus/index'
         if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode;
         if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-        console.log(`Submitting ${JSON.stringify(formSubmitData)}`);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
           const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
         }
-
-        console.log(`Search Results ${JSON.stringify(searchResults)}`);
         if(searchResults.data.users.length > 0){
            eventBus.$emit('search-results', {results: searchResults.data.users});
         }
-         // console.log(`Users ${JSON.stringify(searchResults)}`);
       }
 
     },

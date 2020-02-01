@@ -143,7 +143,6 @@ import Tab from '../../components/profile/Tab'
 
     },
     mounted(){
-      console.log(`Getting user with id ${this.userId}`);
         this.getUserDetails(this.userId);
     },
     filters: {
@@ -168,7 +167,6 @@ import Tab from '../../components/profile/Tab'
 
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         const user = (await UserProfileService.getUserDetails(userId)).data;
-        console.log(`User returned: ${JSON.stringify(user)}`)
         if(user.blocked == true){
             this.$router.push({path: '/blocked'})
         } else {

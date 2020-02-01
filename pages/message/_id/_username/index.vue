@@ -29,7 +29,6 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
             let messageToFilter;
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages()
-           // console.log(`Message data returned ${JSON.stringify(messageData)}`)
             if(messageData.data.messages.length > 0 ){
                messageToFilter = messageData.data.messages;
                messageToFilter =  messageToFilter.filter(message =>{
@@ -37,7 +36,6 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
                })
 
               this.messages  =  messageToFilter[0].messageContent;
-              console.log(`Message array ${JSON.stringify(this.messages, null, 2)}`);
             }
         },
     }

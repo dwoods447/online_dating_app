@@ -1,9 +1,11 @@
+const bodyParser = require('body-parser');
 
 export default {
   mode: 'universal',
   /*
   ** Headers of the page
   */
+  envoirment: process.env.NODE_ENV,
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -74,4 +76,9 @@ export default {
     extend (config, ctx) {
     }
   },
+
+  serverMiddleware: [
+    bodyParser.json(),
+    '~/api'
+  ]
 }

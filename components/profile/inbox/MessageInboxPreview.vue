@@ -20,10 +20,6 @@ import Message from './Message'
   export default {
     props: ['imageSrc', 'sender', 'content', 'messageLength', 'date', 'thread', 'senderId'],
     created(){
-      console.log(`Message in preview: ${JSON.stringify(this.content)}`);
-       console.log(`Image src: ${JSON.stringify(this.thread.image)}`);
-          console.log(`Thread ${JSON.stringify(this.thread)}`);
-              console.log(`SenderId ${JSON.stringify(this.senderId)}`);
     },
     filters :{
       filterPreview(message){
@@ -42,10 +38,6 @@ import Message from './Message'
             thread: this.thread,
             senderId: this.senderId
           }
-              console.log(`Viewing messgage thread...`);
-              console.log(`Thread ${JSON.stringify(this.thread)}`);
-              console.log(`SenderId ${JSON.stringify(this.senderId)}`);
-              console.log(`passing ${JSON.stringify(routeParams)}`);
               this.$router.push({path: `/message/${this.senderId}/${this.sender}`, params: {routeParams}});
               // this.$router.push({path: '/profile/'+ id, params: {id: id, userProfile: profile}});
         },

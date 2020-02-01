@@ -31,7 +31,6 @@ const createStore = () =>{
         },
         setLoggedInUserIdMutation(state, userId){
           let storedUser = {};
-          console.log(`setting user${userId}`)
           if(typeof userId === 'string'){
             let storedUser;
             userId = JSON.parse(userId);
@@ -40,8 +39,6 @@ const createStore = () =>{
           }
           storedUser = {...userId};
           state.userId = storedUser;
-          console.log(`User is an ${ typeof state.userId}`)
-          console.log(`User set to ${state.userId}`)
         },
       },
       getters :{
@@ -65,7 +62,6 @@ const createStore = () =>{
           nuxtServerInit (context, { req }) {
             let token = null;
             let user = null;
-          console.log(`nuxtServerInit running`);
             if(req){
               if (req.headers.cookie) {
                const parsed = cookieparser.parse(req.headers.cookie);
@@ -97,7 +93,6 @@ const createStore = () =>{
                 token = res.data.token;
                 tokenExpr = JSON.stringify(res.data.tokenExpiresIn);
                 user = JSON.stringify(res.data.user);
-                console.log(`Response returned in Store ${JSON.stringify(token)}`);
                 tokenExpr = (new Date().getTime()) +  (Number.parseInt(tokenExpr) * 1000);
                 localStorage.setItem('token', token);
                 localStorage.setItem('tokenExpiration', tokenExpr);
@@ -110,19 +105,14 @@ const createStore = () =>{
                 context.dispatch('setLogOutTimerAction', tokenExpr);
                     //  test if  this.user.isProfileCompleted = true
                     if(res.data.user.isProfileCompleted !== 'true' || res.data.user.isProfileCompleted !== true){
-                      console.log(`User Profile is incomplete.`)
                       // if not redirect to completed profile
                       this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
                     } else {
-                       console.log(`User Profile is completed.`)
                        this.$router.push({name: 'index', params: {user: res.data.user}})
                     }
                 return res;
              }
             }catch(err){
-              // console.log(`Error code recieved: ${err}`);
-              console.log(`Msg: ${err.message}`);
-              console.log(`Status: ${err.status}`);
                  let errorMessage = 'Invalid username and password';
                  context.commit('setErrorMessageMutation', errorMessage);
 
@@ -134,21 +124,15 @@ const createStore = () =>{
             context.commit('setErrorMessageMutation', message);
           },
           setAuthTokenAction(context, token){
-            console.log('Setting token action,' + token);
             context.commit('setAuthTokenMutation', token);
           },
           setLoggedInUserIdAction(context, userId){
-            console.log(`Setting logged in user: ${JSON.stringify(userId)}`);
             context.commit('setLoggedInUserIdMutation', userId);
           },
           setLogOutTimerAction(context, duration){
             let hour = 60 * 60 * 1000;
-            console.log(`Duration re'vd: ${Number.parseInt(duration)}`);
              setTimeout(()=>{
-                console.log(`Timer expired`);
                 context.commit('clearToken');
-                console.log(`User logeed out....`);
-                console.log(`Redirecting to homepage....`);
                 this.$router.push({name:'index'});
              }, hour);
           },
@@ -162,10 +146,8 @@ const createStore = () =>{
                user  = JSON.parse(localStorage.getItem("user"));
             } else {
               if(req.headers.cookie){
-                console.log(`Parsing cookies....`);
                 const parsed = cookieparser.parse(req.headers.cookie);
                 if(parsed){
-                  console.log(`Setting parsed cookies....`);
                   token = parsed.jwt.replace(/\\/g, '').trim();
                   user =  parsed.user.replace(/\\/g, '').trim();
                  }
@@ -173,19 +155,12 @@ const createStore = () =>{
               }
             }
             if(new Date().getTime() > +expiresDate || !token){
-              console.log(`Token has expired or doesnt exist`);
-              console.log(`Token Exp value: ${new Date().getTime() > +expiresDate}`);
-              console.log(`Token value: ${token}`);
-              console.log(`Clearing token.....`);
               context.commit('clearToken');
               return;
             }
 
           // context.dispatch('loadUserAction', {user: user, token: token});
-           console.log(`Resetting Token: ${token}`);
-           console.log(`Resetting Exp: ${+expiresDate  - new Date().getTime()}`);
           context.dispatch('setLogOutTimerAction', +expiresDate  - new Date().getTime());
-          console.log(`Storing or restoring user and token info`);
           context.dispatch('setAuthTokenAction', token);
           context.dispatch('setLoggedInUserIdAction', user);
           },
@@ -194,7 +169,6 @@ const createStore = () =>{
             const user = JSON.parse(localStorage.getItem('user'));
             const token = localStorage.getItem('token');
             const offline = await api.post('/logout');
-            console.log(`Returing offline ${JSON.stringify(offline.data)}`);
             return offline;
           },
           setLogOutAction(context){
@@ -213,7 +187,7 @@ const createStore = () =>{
             const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
             const userAddedToBlockList = (await UserServiceProfile.addUserToBlockList(userId)).data;
             if(userAddedToBlockList.message === 'User added to your block list'){
-                console.log(userAddedToBlockList.message);
+
             }
              return userAddedToBlockList;
           },
@@ -222,7 +196,6 @@ const createStore = () =>{
             const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
             const userAddedToFavoritesList = (await UserServiceProfile.addUserToFavoriteList(userId)).data;
             if(userAddedToFavoritesList.message === 'User added to favorites successfully!'){
-                console.log(userAddedToFavoritesList.message);
             }
              return userAddedToFavoritesList;
           }
