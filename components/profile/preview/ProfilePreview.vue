@@ -2,7 +2,7 @@
   <div>
         <div>
           <div class="">
-            <a @click="goToProfileDetail(profile._id, profile)" href="#"><img src="http://placehold.it/150x150" alt=""><br/>{{ profile.username }}</a>
+            <a @click="goToProfileDetail(profile._id, profile)" href="#"><img src="https://placehold.it/150x150" alt=""><br/>{{ profile.username }}</a>
           </div>
         </div>
   </div>
