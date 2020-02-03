@@ -52,6 +52,11 @@ export default {
     return api.get('/inbox/messages');
   },
 
+
+  getSenderMessages(senderId){
+    return api.get(`/sender/${senderId}/messages`);
+  },
+
   uploadImg(file){
     const formData = new FormData();
     formData.append('image', file.image, file.image.name)

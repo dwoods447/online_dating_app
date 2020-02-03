@@ -5,7 +5,7 @@
              <div v-if="messages.length <= 0">You have No messages</div>
 
             <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
-            :imageSrc="message.messageContent[0].image"
+            :imageSrc="message.messageContent[0].image.path"
             :sender="message.messageContent[0].sender"
             :content="message.messageContent[0].content"
             :messageLength="message.messageContent.length"
@@ -66,9 +66,11 @@ import MessageInboxPreview from './MessageInboxPreview'
         // },
         async getUserMessages(){
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-            const messageData = await UserProfileService.getUserMessages()
+            const messageData = await UserProfileService.getUserMessages();
+            console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
+                console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             }
         },
 

@@ -38,7 +38,7 @@ module.exports = {
          password: password,
          gender: gender,
          birthdate: birthdate,
-         age: moment().diff(moment(birthdate, 'MM/DD/YYYY'), 'years'),
+         age: moment(new Date(), 'MM/DD/YYYY').diff(moment(birthdate, 'MM/DD/YYYY'), 'years'),
          ethnicity: ethnicity,
          onlineStatus: false,
          seekingGender: '',

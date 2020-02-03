@@ -469,6 +469,7 @@
  import states from '../../../data/states'
  import ImgUpload from '../../profile/image/ImgUpload'
  import UserProfileService from '../../../middleware/services/UserProfileService'
+ import Cookie from 'js-cookie'
   export default {
     props: ['userId'],
     components: { Multiselect, ImgUpload},
@@ -700,7 +701,9 @@
           const userReturned = (await UserProfileService.getUserDetails(userId)).data;
           if(userReturned){
             this.user = userReturned;
-              this.$store.dispatch('setLoggedInUserIdAction', this.user.user)
+            console.log(`Setting logged in user: ${JSON.stringify(this.user)}`);
+            this.$store.dispatch('setLoggedInUserIdAction', this.user.user);
+
           }
       },
       // onFileSelect(event){
@@ -744,7 +747,16 @@
             formData.isProfileCompleted = true;
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
            const updated  = await UserProfileService.updateUserProfile(formData);
-           if(updated){
+           let updatedUser = updated.data.user;
+           if(updatedUser){
+             console.log(`Updated ${JSON.stringify(updatedUser)}`);
+              localStorage.removeItem('user');
+              Cookie.remove('user');
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+              Cookie.set('user', JSON.stringify(updatedUser));
+              await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
+
+              this.$router.push({name: 'basicsearch'});
            }
       },
 

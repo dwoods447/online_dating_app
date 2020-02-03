@@ -76,6 +76,7 @@ router.post('/logout', AuthenticationController.userLogout)
 
 
 router.get('/inbox/messages', isAuthenticated,  ProfileController.getInboxMessagesForUser); // tested || works but need to adjust
+router.get('/sender/:senderId/messages', isAuthenticated,  ProfileController.getMessagesFromSender);
 router.get('/profile/views', isAuthenticated, ProfileController.getUserProfileViews);
 router.get('/add/views', isAuthenticated, ProfileController.addUserProfileViews);
 router.get('/view/random/users', ProfileController.getRandomUsersInAuthUsersPostalCode);  // tested || works but need to adjust

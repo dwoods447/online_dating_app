@@ -32,6 +32,7 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
     methods: {
        async sendUserMessage(recieverId){
           const sent  = await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message});
+          console.log(`${JSON.stringify(sent)}`)
           if(sent.status == 200){
               this.message = '';
               this.status = '';

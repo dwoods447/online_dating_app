@@ -3,7 +3,7 @@
       Username
       {{this.$route.params}}
           <ul>
-            <li v-for="msg in messages">{{ msg.content }}</li>
+            <li v-for="message in senderMessages">{{message.username }}: {{message.content}}</li>
           </ul>
            <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
   </div>
@@ -13,15 +13,18 @@
 import UserProfileService from '../../../../middleware/services/UserProfileService'
 import SendMessage from '../../../../components/profile/message/SendMessage'
   export default {
+    middleware: ['check-auth', 'auth', 'check-profile'],
     components: {
       SendMessage,
     },
     created(){
         this.getUserMessages();
+        this.getSendersMessages();
     },
     data(){
       return {
         messages: [],
+        senderMessages: [],
       }
     },
     methods:{
@@ -38,6 +41,14 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
               this.messages  =  messageToFilter[0].messageContent;
             }
         },
+
+        async getSendersMessages(){
+           const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+           const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
+           if(messageData.data.messages.length > 0){
+              this.senderMessages = messageData.data.messages;
+           }
+        }
     }
   }
 </script>

@@ -26,6 +26,13 @@ const MessageSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
+        username: {
+          type: String,
+          required: true,
+       },
+       imageSrc: {
+        type: String,
+      },
     },
     date: {
         type: Date,

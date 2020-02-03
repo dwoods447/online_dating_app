@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const config = require('./config/config');
+const config = require('./api/config/config');
 const mongoURL = process.env.MONGO_URL || config.db.connectString;
-const Users = require('./seeders/users');
+const Users = require('./api/seeders/users');
 /**
  * Seeders List
  * order is important

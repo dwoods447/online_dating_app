@@ -37,7 +37,6 @@ export default {
         { src: 'https://code.jquery.com/jquery-3.4.1.slim.js', body: true },
          { src: 'https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js', body: true },
           { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', body: true },
-           { src: 'https://kit.fontawesome.com/b1f8671d0b.js', body: true },
       ],
     }
   }

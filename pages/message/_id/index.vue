@@ -7,6 +7,7 @@
 <script>
 import UserProfileService from '../../../middleware/services/UserProfileService'
   export default {
+     middleware: ['check-auth', 'auth', 'check-profile'],
     created(){
 
     },

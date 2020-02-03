@@ -55,6 +55,11 @@ const createStore = () =>{
               return state.userId.username;
             }
             return null;
+          },
+          isProfileCompleted(state){
+            if(state.userId !== null){
+              return state.userId.isProfileCompleted;
+            }
           }
       },
       actions :{
@@ -106,9 +111,9 @@ const createStore = () =>{
                     //  test if  this.user.isProfileCompleted = true
                     if(res.data.user.isProfileCompleted !== 'true' || res.data.user.isProfileCompleted !== true){
                       // if not redirect to completed profile
-                      this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
+                      this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
                     } else {
-                       this.$router.push({name: 'index', params: {user: res.data.user}})
+                       this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
                     }
                 return res;
              }
@@ -127,6 +132,7 @@ const createStore = () =>{
             context.commit('setAuthTokenMutation', token);
           },
           setLoggedInUserIdAction(context, userId){
+            console.log(`loggeInUserAction: ${JSON.stringify(userId)}`);
             context.commit('setLoggedInUserIdMutation', userId);
           },
           setLogOutTimerAction(context, duration){

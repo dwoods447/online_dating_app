@@ -26,7 +26,7 @@ const UserSchema = new Schema({
         type: Date,
         required: true,
     },
-    age: moment().diff(moment(this.birthdate, 'MM/DD/YYYY'), 'years'),
+    age: moment(new Date(), 'MM/DD/YYYY').diff(moment(this.birthdate, 'MM/DD/YYYY'), 'years'),
     ethnicity: {
         type: String,
         required: true,
@@ -390,7 +390,7 @@ UserSchema.methods.removeUserFromFavorites = function(user){
 
 UserSchema.methods.updateUserAge = function(){
     let age = this.age;
-        age  = moment().diff(moment(this.birthdate, 'MM/DD/YYYY'), 'years');
+        age  = moment(new Date(), 'MM/DD/YYYY').diff(moment(this.birthdate, 'MM/DD/YYYY'), 'years');
         this.age = age;
         return this.save();
 }

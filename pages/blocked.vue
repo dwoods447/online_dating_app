@@ -6,6 +6,7 @@
 
 <script>
   export default {
+    middleware: ['check-auth', 'auth', 'check-profile'],
     data(){
       return {
 

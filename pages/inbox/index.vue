@@ -8,6 +8,7 @@
 <script>
  import MessageInbox from '../../components/profile/inbox/MessageInbox'
   export default {
+    middleware: ['check-auth', 'auth', 'check-profile'],
     components: { MessageInbox },
     data(){
       return {

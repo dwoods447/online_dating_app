@@ -46,7 +46,7 @@ export default {
 //    }
 //  },
   plugins: [
-
+    '~/plugins/moment'
   ],
   /*
   ** Nuxt.js dev-modules

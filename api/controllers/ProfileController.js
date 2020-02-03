@@ -93,12 +93,13 @@
             if(income) user.income = income;
             if(doesDateInteracially) user.doesDateInteracially = true;
             if(interacialDatingPreferences) user.interacialDatingPreferences = interacialDatingPreferences;
-            if(isProfileCompleted) user.isProfileCompleted = true;
+            user.isProfileCompleted = true;
             const savedUser = await user.save();
             if(!savedUser){
+
                 return res.status(422).json({message: 'There was an error saving the profile'});
             }
-            return res.status(200).json({message: 'User Profile updated successfully!'});
+            return res.status(200).json({message: 'User Profile updated successfully!', user: savedUser });
        },
 
        async addUserToFavorites(req, res, next){
@@ -152,8 +153,10 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
+
         const messages = await Message.find({recipient: {id: user._id}});
 
+        console.log(`Server messages: ${JSON.stringify(messages)}`);
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient": {id: mongoose.Types.ObjectId(user._id)} }
@@ -177,25 +180,77 @@
           return res.status(500).json({message: 'Error retrieving messages'});
         }
 
-        return res.status(200).json({messages: myMesages});
+        return res.status(200).json({messages: messages});
+       },
+
+
+       async getMessagesFromSender(req, res, next){
+        let user = await User.findOne({_id: req.userId});
+        const { senderId } = req.params;
+        let msgSender = await User.findOne({_id: senderId});
+        if(!user){
+          return res.status(401).json({message: 'Unauthorized you are not logged in!'});
+        }
+        console.log('Sender Id: '+ msgSender._id)
+        console.log('Reciver Id: '+ user._id)
+        let messagesThread;
+        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id':msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]).sort({ date: 'desc'});
+        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id':user._id}).select(["content", "date", "unread"]).sort({ date: 'desc'});
+        //const messages = await Message.find({recipient: {id: msgSender._id}});
+        messagesThread = [...messagesThreadOne, ...messagesThreadTwo]
+        console.log(`Conversations: ${JSON.stringify(messagesThread)}`);
+        // const myMesages = await Message.aggregate([
+        //   {
+        //     $match: { "recipient": {id: mongoose.Types.ObjectId(user._id)} }
+        //   },
+        //   {
+        //     $group : {
+        //        _id : { from: "$sender.id" },
+        //        messageContent: {
+        //          $push: {
+        //            messageId: "$_id",
+        //            sender: "$sender.username",
+        //            image: "$sender.imageSrc",
+        //            date: "$date",
+        //            content: "$content",
+        //          }
+        //        },
+        //      }
+        //   }
+        // ])
+        // if(!messages){
+        //   return res.status(500).json({message: 'Error retrieving messages'});
+        // }
+
+        return res.status(200).json({messages: messagesThread});
        },
        async sendMessageToInbox(req, res, next){
         let statusCode;
         const {userProfileId, message } = req.body;
          const sender = await User.findById(req.userId);
+
          if(!sender){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
          const receiverOfMessage = await User.findById(userProfileId);
+         console.log(`Reciever: ${JSON.stringify(receiverOfMessage)}`);
          if(!receiverOfMessage){
             return res.status(404).json({message: 'Unable to locate user profile'});
          }
 
          let imgSrc;
+         console.log(`Sender: ${JSON.stringify(sender)}`);
          if(sender.images.imagePaths.length > 0){
-          imgSrc = sender.images.imagePaths[0];
+          imgSrc = sender.images.imagePaths[0].path;
          } else {
           imgSrc = 'http://placehold.it/100x100';
+         }
+
+         let recieverImg;
+         if(receiverOfMessage.images.imagePaths.length > 0){
+           recieverImg = receiverOfMessage.images.imagePaths[0].path;
+         } else {
+           recieverImg ='http://placehold.it/100x100';
          }
 
          const createdMessage = new Message({
@@ -205,7 +260,11 @@
              imageSrc: imgSrc,
              username:sender.username
             },
-           recipient: {id: receiverOfMessage._id},
+           recipient: {
+             id: receiverOfMessage._id,
+             imageSrc: recieverImg,
+             username: receiverOfMessage.username
+            },
            date: new Date(),
            unread: true,
          })
@@ -220,6 +279,7 @@
          if(!createdMessage){
             return res.status(422).json({message :'There was an error sending the  message!'});
          }
+         console.log('Message sent');
          return res.status(200).json({message: 'Message sent sucessfully!'});
        },
        async deleteMessageFromInbox(req, res, next){
