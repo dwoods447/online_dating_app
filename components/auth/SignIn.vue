@@ -1,11 +1,13 @@
 <template>
   <div>
-      <form @submit.prevent="signIn" style="max-width: 20%; margin: 5% auto;">
+      <h2 style="text-align:center;">Please Sign In</h2>
+      <div v-if="signInResponse" style="color: green; font-weight: 600;">{{ signInResponse }}</div>
+      <form @submit.prevent="signIn" style="max-width: 20%; margin: 2% auto;">
         <div class="form-group">
-           <input type="text" name="username" v-model="username" class="form-control">
+           <input type="text" name="username" v-model="username" placeholder="Enter your username" class="form-control">
         </div>
          <div class="form-group">
-          <input type="password" name="password" v-model="password" class="form-control">
+          <input type="password" name="password" v-model="password" placeholder="Enter your password" class="form-control">
         </div>
         <button class="btn btn-primary" style="display: block; width: 100%;"> Sign In</button>
         <br/>
@@ -26,7 +28,8 @@ import Cookie from 'js-cookie'
         response: '',
         username: '',
         password: '',
-        user: {}
+        user: {},
+        signUpMessage: this.$route.params.message || ''
       }
     },
     methods: {
@@ -35,16 +38,15 @@ import Cookie from 'js-cookie'
           username: this.username,
           password: this.password
         }
-
-          let resData = await this.$store.dispatch('authenticateUserAction', data);
-
-
-
-
-
-
+       let resData = await this.$store.dispatch('authenticateUserAction', data);
+      },
+    },
+    computed: {
+      signInResponse(){
+        return this.signUpMessage;
       }
     }
+
   }
 </script>
 

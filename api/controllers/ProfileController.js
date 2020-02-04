@@ -153,13 +153,13 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-
-        const messages = await Message.find({recipient: {id: user._id}});
+        console.log(`Getting messages for reciepient with id of ${user._id}`);
+        const messages = await Message.find({'recipient.id': user._id});
 
         console.log(`Server messages: ${JSON.stringify(messages)}`);
         const myMesages = await Message.aggregate([
           {
-            $match: { "recipient": {id: mongoose.Types.ObjectId(user._id)} }
+            $match: { "recipient.id": mongoose.Types.ObjectId(user._id) }
           },
           {
             $group : {
@@ -621,6 +621,12 @@
                 next(err);
               }
 
+       },
+
+       async markMessageAsRead(req, res, next){
+        const { messageId } = req.body;
+        const message = await Message.findById(messageId);
+        const readMessage = await message.markUserMessageAsRead(messageId);
        },
 
 

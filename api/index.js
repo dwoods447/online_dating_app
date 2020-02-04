@@ -71,8 +71,8 @@ router.get('/test', (req, res, next) =>{
 router.post('/login', AuthenticationController.userLogin);
 router.post('/register', AuthenticationController.userRegistration);
 router.post('/logout', AuthenticationController.userLogout)
-
-
+router.post('/check/username/unique', AuthenticationController.checkUserNameUnique);
+router.post('/check/email/unique', AuthenticationController.checkUserNameUnique);
 
 
 router.get('/inbox/messages', isAuthenticated,  ProfileController.getInboxMessagesForUser); // tested || works but need to adjust
@@ -87,6 +87,7 @@ router.post('/user/block/add', isAuthenticated, ProfileController.addUserToBlock
 router.post('/user/block/remove', isAuthenticated, ProfileController.removeUserFromBlockList);
 router.post('/send/message', isAuthenticated, ProfileController.sendMessageToInbox); // tested
 router.post('/remove/message', isAuthenticated, ProfileController.deleteMessageFromInbox);
+router.post('/mark/message/read', isAuthenticated, ProfileController.markMessageAsRead);
 router.post('/general/search', isAuthenticated, ProfileController.generalUsersSearch); // tested
 router.post('/advanced/search', isAuthenticated,ProfileController.advancedUsersSearch);
 router.post('/username/lookup', ProfileController.usernameLookUp);

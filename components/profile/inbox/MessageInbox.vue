@@ -5,13 +5,14 @@
              <div v-if="messages.length <= 0">You have No messages</div>
 
             <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
-            :imageSrc="message.messageContent[0].image.path"
-            :sender="message.messageContent[0].sender"
-            :content="message.messageContent[0].content"
-            :messageLength="message.messageContent.length"
-            :date="message.messageContent[0].date"
-            :thread="message.messageContent[0]"
-            :senderId="message._id.from"
+            :imageSrc="message.sender.imageSrc|imageSrcFilter"
+            :sender="message.sender.username"
+            :content="message.content"
+            :messageLength="message.length"
+            :date="message.date|dateFilter"
+            :thread="message"
+            :senderId="message.sender.id"
+            :class="{unread: message.unread}"
             >
             </MessageInboxPreview>
 
@@ -42,10 +43,25 @@
 <script>
 import UserProfileService from '../../../middleware/services/UserProfileService'
 import MessageInboxPreview from './MessageInboxPreview'
+import moment from 'moment'
   export default {
     components :{ MessageInboxPreview },
     created(){
         this.getUserMessages();
+    },
+     filters: {
+      imageSrcFilter(src){
+        console.log('Filter src: '+ src);
+        if(src){
+          return 'uploads/'+ src
+        }
+
+      },
+      dateFilter(date){
+        if(date){
+          return moment(new Date(date), 'MM/DD/YYYY').format('l')
+        }
+      }
     },
     data(){
       return {
@@ -67,10 +83,10 @@ import MessageInboxPreview from './MessageInboxPreview'
         async getUserMessages(){
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages();
-            console.log(`Inbox response: ${JSON.stringify(messageData)}`);
+           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-                console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+              //  console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             }
         },
 
@@ -79,6 +95,9 @@ import MessageInboxPreview from './MessageInboxPreview'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+ .unread{
+   background-color: #ee4;
+   color: #fff;
+ }
 </style>

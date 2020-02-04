@@ -38,7 +38,8 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
                  return message._id.from === this.$route.params.id;
                })
 
-              this.messages  =  messageToFilter[0].messageContent;
+              this.messages  =  messageToFilter;
+              console.log(`Message thread returned for user ${this.messages}`);
             }
         },
 

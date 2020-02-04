@@ -45,6 +45,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+ /* li.nav-item{
+   margin: 14px;
+ } */
 </style>

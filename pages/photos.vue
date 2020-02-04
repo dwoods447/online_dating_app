@@ -4,7 +4,21 @@
               <ul>
                  <li v-for="(image, i) in profileImages" :key="'image-'+i" style="display: inline-block; margin: 10px;">
                   <div style="width: 300px; height: 300px; border: 1px solid #000;">
-                    <img :src="image.path|imageSrcFilter" style="width: 100%;">
+                     <div v-if="profile.random === 'false'">
+                         <img :src="image.path|imageSrcFilter" style="width: 100%;">
+                    </div>
+                    <div v-if="profile.random === 'true' && profile.gender === 'male'">
+                         <img :src="image.path|maleImageSrcFilter" style="width: 100%;">
+                    </div>
+                    <div v-if="profile.random === 'true' && profile.gender === 'female'">
+                         <img :src="image.path|femaleImageSrcFilter" style="width: 100%;">
+                    </div>
+                     <div v-if="profile.random === 'true' && profile.gender === 'trans-female'">
+                         <img :src="image.path|transMaleImageSrcFilter" style="width: 100%;">
+                    </div>
+                     <div v-if="profile.random === 'true' && profile.gender === 'trans-male'">
+                         <img :src="image.path|transFemaleImageSrcFilter" style="width: 100%;">
+                    </div>
                     <div style="padding: 1em;">
                       <a @click="removeImage(image.imageId)" href="javascript:void(0);">
                           <span>
@@ -29,15 +43,24 @@
     data(){
       return {
        images: [],
+       profile: null,
       }
     },
     filters: {
       imageSrcFilter(src){
-        console.log('Filter src: '+ src);
-        if(src){
-          return 'uploads/'+ src
-        }
-
+         return 'uploads/'+src;
+      },
+      maleImageSrcFilter(src){
+        return 'random-users/men/'+ src;
+      },
+      femaleImageSrcFilter(src){
+         return 'random-users/women/'+ src;
+      },
+      transMaleImageSrcFilter(src){
+         return 'random-users/men/'+ src;
+      },
+      transFemaleImageSrcFilter(src){
+        return 'random-users/women/'+ src;
       }
     },
     methods: {
@@ -46,6 +69,7 @@
         const photoRetrieved = await UserProfileService.getUserDetails(this.$store.state.userId._id);
         if(photoRetrieved){
             this.images = photoRetrieved.data.user.images.imagePaths;
+            this.profile = photoRetrieved.data.user;
         }
       },
       async removeImage(imageId){

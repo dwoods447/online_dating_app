@@ -6,6 +6,10 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const UserSchema = new Schema({
+    random: {
+      type: String,
+      required: true,
+    },
     username: {
         type: String,
         required: true,
@@ -400,6 +404,8 @@ UserSchema.methods.updateUserAge = function(){
 UserSchema.methods.getRandomArbitrary = function(min, max){
     return Math.ceil(Math.random() * (max - min) + min);
 }
+
+
 
 
 

@@ -15,6 +15,23 @@ auth: {
 
 
 module.exports = {
+ async checkUserNameUnique(req, res, next){
+  const { username } =  req.body;
+  const userName = await User.findOne({username: username});
+  if(!userName){
+    return res.status(200).json({message: 'Username not found', usernameExists: false});
+  }
+  return res.status(200).json({message: 'Username already exists!', usernameExists: true});
+ },
+
+ async checkEmailUnique(req, res, next){
+  const { email } =  req.body;
+  const email = await User.findOne({email: email});
+  if(!email){
+    return res.status(200).json({message: 'Email not found', emailExists: false});
+  }
+  return res.status(200).json({message: 'Email already exists!', emailExists: true});
+ },
 
  async userRegistration(req, res, next){
      let statusCode;
@@ -33,6 +50,7 @@ module.exports = {
 
 
      const newUser = new User({
+         random: 'false',
          username: username,
          email: email,
          password: password,
@@ -70,7 +88,6 @@ module.exports = {
          blockedUsers: { users: []},
          favorites: { users: []},
          profileViews: {views: []},
-         inbox: {messages: []},
      })
      const savedUser = await newUser.save();
      if(!savedUser){
@@ -144,6 +161,8 @@ module.exports = {
      }
      return res.status(200).json({message: 'Status updated succesfully.'});
  },
+
+
  async userPasswordReset(req, res, next){
 
  },

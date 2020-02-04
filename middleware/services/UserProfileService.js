@@ -65,6 +65,10 @@ export default {
 
   removeUploadedImg(imageId){
     return api.post(`/remove/image/upload`, imageId);
+  },
+
+  markMessageAsRead(messageId){
+    return api.post(`/mark/message/read`, messageId);
   }
 
 

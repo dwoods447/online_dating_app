@@ -1,11 +1,11 @@
 <template>
   <div>
        <div v-if="message !== null">{{ message }}</div>
-       <div v-if="errorMessage !== null">{{ errorMessage }}</div>
-      <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 5% auto;">
+       <div v-if="errorMessage !== null" style='color:red; text-align: center; margin" 0 auto;'>{{ errorMessage }}</div>
+      <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 3% auto;">
         <div class="form-group">
              <label for="">Username:</label>
-             <input type="text" v-model="formData.username" class="form-control">
+             <input type="text" v-model="formData.username" class="form-control" @change="checkUsername">
              <label for="">Email:</label>
              <input type="text" v-model="formData.email" class="form-control">
 
@@ -72,6 +72,28 @@ import AuthService from '../../middleware/services/AuthService'
       }
     },
     methods: {
+      async checkUsername(){
+        this.errorMessage = '';
+        console.log(`User entered: ${this.formData.username}`);
+        let username = {
+          username: this.formData.username
+        }
+        const usernameResponse = (await AuthService.checkUserNameUnique(username)).data;
+        if(usernameResponse.usernameExists){
+          this.errorMessage = usernameResponse.message;
+        }
+      },
+       async emailUsername(){
+         this.errorMessage = '';
+        console.log(`User entered: ${this.formData.username}`);
+        let email = {
+          email: this.formData.email
+        }
+        const emailResponse = (await AuthService.checkEmailUnique(email)).data;
+        if(emailResponse.emailExists){
+            this.errorMessage = emailResponse.message;
+        }
+      },
       async signUp(){
           if(this.formData.password !== this.formData.passwordConfirm){
              this.errorMessage = "Passwords do not match!";
@@ -84,7 +106,7 @@ import AuthService from '../../middleware/services/AuthService'
           if(signedUp.statusCode === 200){
                this.message =signedUp.message;
               setTimeout(()=>{
-                this.$router.push('/login', {params: {user: signedUp.user}});
+                this.$router.push('/login', {params: {user: signedUp.user, message: this.message}});
               }, 6500);
 
           }
