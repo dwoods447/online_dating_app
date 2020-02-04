@@ -26,8 +26,8 @@ module.exports = {
 
  async checkEmailUnique(req, res, next){
   const { email } =  req.body;
-  const email = await User.findOne({email: email});
-  if(!email){
+  const userEmail = await User.findOne({email: email});
+  if(!userEmail){
     return res.status(200).json({message: 'Email not found', emailExists: false});
   }
   return res.status(200).json({message: 'Email already exists!', emailExists: true});
