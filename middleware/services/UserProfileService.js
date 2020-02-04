@@ -69,6 +69,10 @@ export default {
 
   markMessageAsRead(messageId){
     return api.post(`/mark/message/read`, messageId);
+  },
+
+  getUserProfileViews(){
+    return api.get('/profile/views');
   }
 
 

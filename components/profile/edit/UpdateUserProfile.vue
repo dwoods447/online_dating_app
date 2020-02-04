@@ -4,8 +4,25 @@
 
 
        <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
-          Your picture:
-         <img :src="fullImageSrc|imageSrcFilter " alt="">
+          Your main picture:
+          <div v-if="randomVal === 'true'">
+            <div v-if="chosenGender==='male'" style="max-width: 127px; max-height: 127px;">
+               <img :src="fullImageSrc|maleImageSrcFilter" style="width: 100%;">
+            </div>
+            <div v-if="chosenGender==='female'" style="max-width: 127px; max-height: 127px;">
+              <img :src="fullImageSrc|femaleImageSrcFilter" style="width: 100%;">
+            </div>
+             <div v-if="chosenGender==='trans-female'" style="max-width: 127px; max-height: 127px;">
+              <img :src="fullImageSrc|transFemaleImageSrcFilter" style="width: 100%;">
+            </div>
+            <div v-if="chosenGender==='trans-male'" style="max-width: 127px; max-height: 127px;">
+              <img :src="fullImageSrc|transMaleImageSrcFilter" style="width: 100%;">
+            </div>
+          </div>
+           <div v-if="randomVal === 'false'" style="max-width: 127px; max-height: 127px;">
+              <img :src="fullImageSrc|imageSrcFilter " alt="">
+           </div>
+
        </div>
 
      <div v-if="this.$store.state.userId">
@@ -485,6 +502,8 @@
          states: [...states],
          state: this.$store.state.userId.state,
          genderSeeking: [],
+         randomVal: this.$store.state.userId.random,
+         chosenGender: this.$store.state.userId.gender,
          datingIntent: this.$store.state.userId.datingIntent,
          datingIntents: [
            {name: 'I am looking for Casual dating/No Commitment', value: 'I am looking for Casual dating/No Commitment', key: 'datingIntent-0'},
@@ -673,6 +692,18 @@
           return 'uploads/'+ src
         }
 
+      },
+      maleImageSrcFilter(src){
+        return 'random-users/men/'+ src;
+      },
+      femaleImageSrcFilter(src){
+         return 'random-users/women/'+ src;
+      },
+      transMaleImageSrcFilter(src){
+         return 'random-users/men/'+ src;
+      },
+      transFemaleImageSrcFilter(src){
+        return 'random-users/women/'+ src;
       }
     },
     computed: {

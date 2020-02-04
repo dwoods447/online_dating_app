@@ -263,11 +263,12 @@ UserSchema.methods.addProfileViewer = function(userId){
     });
 
     const updatedProfileViews = [...this.profileViews.views];
-
-    if(userProfileIndex === -1){
+    console.log(`User ID rec'vd in profileAdder: ${JSON.stringify(userId)}`)
+    if(userProfileIndex === -1 && this._id.toString() !== userId){
              // User is not in list of profile viewers
+          console.log(`Adding profile view....`);
           updatedProfileViews.push({
-            userId: userId,
+            userId: mongoose.Types.ObjectId(userId),
             date: new Date()
         })
     }else {

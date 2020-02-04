@@ -2,7 +2,28 @@
   <div>
         <div>
           <div class="">
-            <a @click="goToProfileDetail(profile._id, profile)" href="#"><div style="max-width: 127px; max-height:127px;"><img :src="profile | imageSrcFilter" alt="" style="width: 100%;"></div><br/>{{ profile.username }}</a>
+            <a @click="goToProfileDetail(profile._id, profile)" href="#">
+              <div style="max-width: 127px; max-height:127px;">
+                <div v-if="profile.random === 'true'">
+                  <div v-if="profile.gender ==='male'">
+                    <img :src="profile | maleImageSrcFilter" alt="" style="width: 100%;">
+                  </div>
+                  <div v-if="profile.gender ==='female'">
+                    <img :src="profile | femaleImageSrcFilter" alt="" style="width: 100%;">
+                  </div>
+                  <div v-if="profile.gender ==='trans-male'">
+                    <img :src="profile | transMaleImageSrcFilter" alt="" style="width: 100%;">
+                  </div>
+                  <div v-if="profile.gender ==='trans-female'">
+                    <img :src="profile | transFemaleImageSrcFilter" alt="" style="width: 100%;">
+                  </div>
+                </div>
+                <div v-if="profile.random === 'false'">
+                  <img :src="profile | imageSrcFilter" alt="" style="width: 100%;">
+                </div>
+              </div>
+              <br/>{{ profile.username }}
+            </a>
           </div>
         </div>
   </div>
@@ -23,26 +44,19 @@ import eventBus from '../../../middleware/eventBus/index'
     },
      filters: {
       imageSrcFilter(profile){
-       // console.log('Filter src: '+ JSON.stringify(profile));
-         if(!profile){
-          return ''
-        }
-        if(profile.images.imagePaths[0].path === 'no-photo-provided.png'){
-             return 'uploads/'+ profile.images.imagePaths[0].path;
-        }
-        if(profile.gender === 'male'){
-          return 'random-users/men/'+ profile.images.imagePaths[0].path;
-        }
-        if(profile.gender === 'female'){
-          return 'random-users/women/'+ profile.images.imagePaths[0].path;
-        }
-        if(profile.gender === 'trans-female'){
-          return 'random-users/men/'+ profile.images.imagePaths[0].path;
-        }
-        if(profile.gender === 'trans-male'){
-          return 'random-users/women/'+ profile.images.imagePaths[0].path;
-        }
-
+         return '../uploads/'+profile.images.imagePaths[0].path;
+      },
+      maleImageSrcFilter(profile){
+        return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      },
+      femaleImageSrcFilter(profile){
+         return '../random-users/women/'+ profile.images.imagePaths[0].path;
+      },
+      transMaleImageSrcFilter(profile){
+         return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      },
+      transFemaleImageSrcFilter(profile){
+        return '../random-users/women/'+ profile.images.imagePaths[0].path;
       }
     },
     methods: {

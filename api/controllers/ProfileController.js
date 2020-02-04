@@ -16,14 +16,18 @@
             if(!searchedUser){
                 return res.status(404).json({message: 'User with that ID not found!'});
             }
-            if(userId !== userWhoisRequestingSearch){
-              const userBlockedYou = await searchedUser.checkIfUserIsBlocked(userWhoisRequestingSearch);
-              const youblockedUser = await userWhoSearching.checkIfUserIsBlocked(userId);
-                if(userBlockedYou || youblockedUser){
-                    return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
-                }
-             }
-             const profileViewAdded = await searchedUser.addProfileViewer(userWhoisRequestingSearch);
+          const userBlockedYou = await searchedUser.checkIfUserIsBlocked(userWhoisRequestingSearch);
+          const youblockedUser = await userWhoSearching.checkIfUserIsBlocked(userId);
+           if(!userBlockedYou || !youblockedUser){
+            console.log(`User Requesting profile ${userWhoisRequestingSearch}`);
+            console.log(`Incoming userID ${userId}`);
+              if(userId !== userWhoisRequestingSearch){
+                console.log(`adding profile viewer`);
+                const profileViewAdded = await searchedUser.addProfileViewer(userWhoisRequestingSearch);
+              }
+           } else {
+              return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
+           }
             return res.status(200).json({message: 'User found', user: searchedUser, blocked: false});
        },
 
@@ -154,12 +158,12 @@
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
         console.log(`Getting messages for reciepient with id of ${user._id}`);
-        const messages = await Message.find({'recipient.id': user._id});
+       // const messages = await Message.find({'recipient.id': user._id});
 
-        console.log(`Server messages: ${JSON.stringify(messages)}`);
+
         const myMesages = await Message.aggregate([
           {
-            $match: { "recipient.id": mongoose.Types.ObjectId(user._id) }
+            $match: { "recipient.id": user._id }
           },
           {
             $group : {
@@ -174,13 +178,16 @@
                  }
                },
              }
-          }
-        ])
-        if(!messages){
-          return res.status(500).json({message: 'Error retrieving messages'});
-        }
+          },
+           { $sort : { "messageContent.date": -1 } },
 
-        return res.status(200).json({messages: messages});
+        ])
+        console.log(`Server messages: ${JSON.stringify(myMesages)}`);
+        // if(!messages){
+        //   return res.status(500).json({message: 'Error retrieving messages'});
+        // }
+
+        return res.status(200).json({messages: myMesages});
        },
 
 
@@ -194,11 +201,22 @@
         console.log('Sender Id: '+ msgSender._id)
         console.log('Reciver Id: '+ user._id)
         let messagesThread;
-        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id':msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]).sort({ date: 'desc'});
-        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id':user._id}).select(["content", "date", "unread"]).sort({ date: 'desc'});
+        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id':msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id':user._id}).select(["content", "date", "unread"]);
         //const messages = await Message.find({recipient: {id: msgSender._id}});
-        messagesThread = [...messagesThreadOne, ...messagesThreadTwo]
-        console.log(`Conversations: ${JSON.stringify(messagesThread)}`);
+        messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
+        messagesThread =  messagesThread.sort((a, b)=>{
+          let aDate = new Date(a.date);
+          let bDate = new Date(b.date);
+          if(aDate < bDate){
+            return -1;
+          }
+          if(aDate > bDate){
+            return 1;
+          }
+          return 0;
+        })
+          console.log(`Conversations: ${JSON.stringify(messagesThread, null ,2)}`);
         // const myMesages = await Message.aggregate([
         //   {
         //     $match: { "recipient": {id: mongoose.Types.ObjectId(user._id)} }
@@ -258,12 +276,16 @@
            sender: {
              id: sender._id,
              imageSrc: imgSrc,
-             username:sender.username
+             username:sender.username,
+             random: sender.random,
+             gender: sender.gender
             },
            recipient: {
              id: receiverOfMessage._id,
              imageSrc: recieverImg,
-             username: receiverOfMessage.username
+             username: receiverOfMessage.username,
+             random: sender.random,
+             gender: sender.gender
             },
            date: new Date(),
            unread: true,
@@ -343,11 +365,12 @@
       //  },
 
        async getUserProfileViews(req, res, next){
-        const user = await User.findById(req.userId);
-        if(!user){
+        const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']}).select(["-password"]);
+       // console.log(`User Views resp ${JSON.stringify(userViews, null, 2)}`);
+        if(!userViews){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
-         return res.status(200).json({views: user.profileViews.views});
+         return res.status(200).json({views: userViews});
        },
 
        async generalUsersSearch(req, res, next){

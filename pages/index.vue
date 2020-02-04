@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Users</h2>
+    <h2>Recent Users</h2>
               <div v-if="warningMessage" style="padding: 1em margin: 1em; color:red;">{{ warningMessage }}</div>
               <ProfilePreview v-for="user in myusers" :profile="user" :key="user._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
   </div>

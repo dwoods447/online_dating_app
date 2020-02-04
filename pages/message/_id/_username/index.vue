@@ -1,11 +1,30 @@
 <template>
   <div>
-      Username
-      {{this.$route.params}}
-          <ul>
-            <li v-for="message in senderMessages">{{message.username }}: {{message.content}}</li>
+    <section>
+      <div style="width: 40%; margin: 0 auto;">
+          <h3>Messages thread from:  {{this.$route.params.username}}</h3>
+
+            <ul>
+              <li v-for="message in senderMessages">
+              <div v-if="message.recipient.id !== $store.state.userId._id" style="display: inline-block;">
+                  <p><strong> You:</strong></p>
+              </div>
+               <div v-if="message.recipient.id == $store.state.userId._id" style="display: inline-block;">
+                  <p><strong> {{$route.params.username}}:</strong></p>
+              </div>
+               <!-- <div v-if="message.recipient.id === $store.state.userId._id" style="display: inline-block;">
+                <div v-if="message.recipient.username">
+                   <strong>You:</strong>&nbsp;&nbsp;
+                </div>
+              </div> -->
+              {{message.content}}
+              </li>
           </ul>
-           <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
+
+      </div>
+      <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
+    </section>
+
   </div>
 </template>
 
@@ -38,8 +57,17 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
                  return message._id.from === this.$route.params.id;
                })
 
+              messageToFilter =  messageToFilter.sort((a, b)=>{
+                if(b.date < a.date){
+                  return 1;
+                }
+                if(a.date > b.date){
+                  return -1;
+                }
+                return 0;
+              })
               this.messages  =  messageToFilter;
-              console.log(`Message thread returned for user ${this.messages}`);
+             // console.log(`Message thread returned for user ${JSON.stringify(this.messages)}`);
             }
         },
 
@@ -48,6 +76,7 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
            const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
            if(messageData.data.messages.length > 0){
               this.senderMessages = messageData.data.messages;
+               console.log(`Message thread returned for user ${JSON.stringify(this.senderMessages, null ,2)}`);
            }
         }
     }

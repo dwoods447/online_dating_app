@@ -2,7 +2,11 @@
   <div>
         <a @click="viewMessageThread()" href="javascript:void(0);"><div class="row">
                   <div class="col-lg-2">
-                      <div style="border: 1px solid green;"><img :src="this.imageSrc" alt="" style="width: 100%;"></div>
+                      <div style="border: 1px solid green;">
+
+                          <img :src="this.imageSrc" alt="" style="width: 100%;">
+
+                        </div>
                       <div>{{ this.sender }}</div>
                   </div>
                   <div class="col-lg-6">
@@ -26,6 +30,21 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
       filterPreview(message){
         let length = message.length;
         return message.substring(0, length/1.2) + '...';
+      },
+      imageSrcFilter(profile){
+         return '../uploads/'+profile.images.imagePaths[0].path;
+      },
+      maleImageSrcFilter(profile){
+        return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      },
+      femaleImageSrcFilter(profile){
+         return '../random-users/women/'+ profile.images.imagePaths[0].path;
+      },
+      transMaleImageSrcFilter(profile){
+         return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      },
+      transFemaleImageSrcFilter(profile){
+        return '../random-users/women/'+ profile.images.imagePaths[0].path;
       }
     },
     data(){

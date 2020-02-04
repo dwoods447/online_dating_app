@@ -12,13 +12,20 @@ const MessageSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        imageSrc: {
-            type: String,
-        },
         username: {
             type: String,
             required: true,
         },
+        imageSrc: {
+          type: String,
+       },
+        random:{
+          type: String,
+        },
+        gender: {
+          type: String,
+        },
+
 
     },
     recipient: {
@@ -31,6 +38,12 @@ const MessageSchema = new Schema({
           required: true,
        },
        imageSrc: {
+        type: String,
+      },
+      random:{
+        type: String,
+      },
+      gender: {
         type: String,
       },
     },

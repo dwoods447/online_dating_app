@@ -1,6 +1,6 @@
 <template>
   <div>
-      <nav class="nav nav-tabs" style="width: 40%; margin: 0 auto;">
+      <nav class="nav nav-tabs" style="width: 45%; margin: 0 auto;">
         <li class="nav-item">
            <!-- <a href="" class="nav-link">Inbox</a> -->
            <nuxt-link class="nav-link nav-item active" to="/" v-if="this.$store.getters.isAutheticated">Home</nuxt-link>
@@ -20,7 +20,7 @@
            <nuxt-link class="nav-link nav-item" to="/basicsearch" v-if="this.$store.getters.isAutheticated">Search</nuxt-link>
         </li>
         <li class="nav-item">
-        <a href="#" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Profile Views</a>
+        <nuxt-link to="/profileviews" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Profile Views</nuxt-link>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Favorite Users</a>

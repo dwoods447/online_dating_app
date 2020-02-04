@@ -3,15 +3,15 @@
     <div class="row">
       <div class="col-lg-12">
              <div v-if="messages.length <= 0">You have No messages</div>
-
+            Messages
             <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
-            :imageSrc="message.sender.imageSrc|imageSrcFilter"
-            :sender="message.sender.username"
-            :content="message.content"
-            :messageLength="message.length"
-            :date="message.date|dateFilter"
+            :imageSrc="message.messageContent[0].sender.imageSrc|imageSrcFilter"
+            :sender="message.messageContent[0].sender"
+            :content="message.messageContent[0].content"
+            :messageLength="message.messageContent[0].length"
+            :date="message.messageContent[0].date|dateFilter"
             :thread="message"
-            :senderId="message.sender.id"
+            :senderId="message._id.from"
             :class="{unread: message.unread}"
             >
             </MessageInboxPreview>
@@ -86,7 +86,7 @@ import moment from 'moment'
            // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-              //  console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             }
         },
 
