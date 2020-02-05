@@ -17,6 +17,10 @@ const createStore = () =>{
         setAuthTokenMutation(state, token){
           state.token = token;
         },
+
+        alertProfileIncomplete(state){
+          console.log('prilile not complet ein store')
+        },
         clearToken (state){
           state.token = null;
           state.userId = null;
@@ -87,7 +91,6 @@ const createStore = () =>{
             context.commit('setAuthTokenMutation', token);
             context.commit('setLoggedInUserIdMutation', user);
           },
-
           async authenticateUserAction(context, authData){
             let token;
             let user;

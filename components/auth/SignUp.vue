@@ -1,13 +1,13 @@
 <template>
   <div>
        <div v-if="message !== null">{{ message }}</div>
-       <div v-if="errorMessage !== null" style='color:red; text-align: center; margin" 0 auto;'>{{ errorMessage }}</div>
+       <div v-if="errorMessage !== null" style='width: 25%; color:red; text-align: center; margin" 0 auto;'>{{ errorMessage }}</div>
       <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 3% auto;">
         <div class="form-group">
              <label for="">Username:</label>
              <input type="text" v-model="formData.username" class="form-control" @change="checkUsername">
              <label for="">Email:</label>
-             <input type="text" v-model="formData.email" class="form-control">
+             <input type="text" v-model="formData.email" class="form-control" @change="checkEmail">
 
         </div>
         <div class="form-group">
@@ -83,7 +83,7 @@ import AuthService from '../../middleware/services/AuthService'
           this.errorMessage = usernameResponse.message;
         }
       },
-       async emailUsername(){
+       async checkEmail(){
          this.errorMessage = '';
         console.log(`User entered: ${this.formData.username}`);
         let email = {
@@ -104,11 +104,9 @@ import AuthService from '../../middleware/services/AuthService'
              this.errorMessage = signedUp.message;
           }
           if(signedUp.statusCode === 200){
-               this.message =signedUp.message;
-              setTimeout(()=>{
-                this.$router.push('/login', {params: {user: signedUp.user, message: this.message}});
-              }, 6500);
-
+               this.message = signedUp.message;
+               let $this = this;
+               $this.$router.push({name:'login', params: {user: signedUp.user, message: this.message}});
           }
       }
     }

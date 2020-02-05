@@ -115,7 +115,7 @@ module.exports = {
      //     `
      // })
      statusCode = 200;
-     return res.status(200).json({message: 'User succesfully signed up!', user: savedUser, statusCode: statusCode})
+     return res.status(200).json({message: 'User succesfully signed up! Please login.', user: savedUser, statusCode: statusCode})
  },
 
 
@@ -125,7 +125,7 @@ module.exports = {
      const user = await User.findOne({username: username});
      if(!user){
          statusCode = 403;
-         return res.status(403).json({message: 'Invalid username/password',  statusCode: statusCode});
+         return res.status(403).json({message: 'Invalid username/password. Please try again.',  statusCode: statusCode});
      }
      // Unecrypted password
      const passwordMatch = (password === user.password) ? true: false;
@@ -133,7 +133,7 @@ module.exports = {
   //   const passwordMatch = bcrypt.compareSync(password, user.password);
      if(!passwordMatch){
          statusCode = 403;
-         return res.status(403).json({message: 'Invalid username/password'});
+         return res.status(403).json({message: 'Invalid username/password. Please try again.'});
      }
 
 

@@ -23,10 +23,10 @@
         <nuxt-link to="/profileviews" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Profile Views</nuxt-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Favorite Users</a>
+          <nuxt-link to="/favoriteusers" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Favorite Users</nuxt-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Blocked Users</a>
+         <nuxt-link to="/blockedusers" class="nav-link nav-item" v-if="this.$store.getters.isAutheticated">Blocked Users</nuxt-link>
         </li>
       </nav>
       <section>
