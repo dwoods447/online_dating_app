@@ -5,18 +5,15 @@
           <h3>Messages thread from:  {{this.$route.params.username}}</h3>
 
             <ul>
-              <li v-for="message in senderMessages">
-              <div v-if="message.recipient.id !== $store.state.userId._id" style="display: inline-block;">
+              <li v-for="(message, i) in usersMessages" :key="message.recipient.id+'-'+i">
+
+               <!-- <div v-if="message.sender.id == $store.state.userId._id" style="display: inline-block;">
                   <p><strong> You:</strong></p>
               </div>
-               <div v-if="message.recipient.id == $store.state.userId._id" style="display: inline-block;">
+               <div v-if="message.recipient.id == $route.params.id" style="display: inline-block;">
                   <p><strong> {{$route.params.username}}:</strong></p>
-              </div>
-               <!-- <div v-if="message.recipient.id === $store.state.userId._id" style="display: inline-block;">
-                <div v-if="message.recipient.username">
-                   <strong>You:</strong>&nbsp;&nbsp;
-                </div>
-              </div> -->
+               </div> -->
+              <strong>{{message.sender.username}}:</strong>
               {{message.content}}
               </li>
           </ul>
@@ -31,12 +28,17 @@
 <script>
 import UserProfileService from '../../../../middleware/services/UserProfileService'
 import SendMessage from '../../../../components/profile/message/SendMessage'
+import eventBus from '../../../../middleware/eventBus/index'
   export default {
     middleware: ['check-auth', 'auth', 'check-profile'],
     components: {
       SendMessage,
     },
     created(){
+        eventBus.$on('message-sent', ()=>{
+          console.log('Message-sent emit recvd');
+          this.getSendersMessages();
+        })
         this.getUserMessages();
         this.getSendersMessages();
     },
@@ -45,6 +47,11 @@ import SendMessage from '../../../../components/profile/message/SendMessage'
         messages: [],
         senderMessages: [],
       }
+    },
+    computed: {
+       usersMessages(){
+         return this.senderMessages;
+       }
     },
     methods:{
        async getUserMessages(){

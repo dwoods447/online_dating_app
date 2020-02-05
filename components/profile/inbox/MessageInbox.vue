@@ -5,16 +5,20 @@
              <div v-if="messages.length <= 0">You have No messages</div>
             Messages
             <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
-            :imageSrc="message.messageContent[0].sender.imageSrc|imageSrcFilter"
+            :imageSrc="message.messageContent[0].image"
             :sender="message.messageContent[0].sender"
-            :content="message.messageContent[0].content"
-            :messageLength="message.messageContent[0].length"
+            :content="message.messageContent[message.messageContent.length - 1].content"
+            :messageLength="message.messageContent.length"
             :date="message.messageContent[0].date|dateFilter"
             :thread="message"
             :senderId="message._id.from"
-            :class="{unread: message.unread}"
+            :gender="message.messageContent[0].gender"
+            :random="message.messageContent[0].random"
+            :class="{unread: message.messageContent[message.messageContent.length - 1].unread}"
             >
             </MessageInboxPreview>
+
+
 
 
 

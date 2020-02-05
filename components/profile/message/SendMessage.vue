@@ -14,6 +14,7 @@
 
 <script>
 import UserProfileService from '../../../middleware/services/UserProfileService'
+import eventBus from '../../../middleware/eventBus/index'
   export default {
     props: {
       userId: {
@@ -36,7 +37,9 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
           if(sent.status == 200){
               this.message = '';
               this.status = '';
-              this.status = 'Message sent succesfully'
+              this.status = 'Message sent succesfully';
+              eventBus.$emit('message-sent');
+              console.log(`Emitting message-sent`)
           }
       }
     }

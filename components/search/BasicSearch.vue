@@ -189,10 +189,10 @@ import eventBus from '../../middleware/eventBus/index'
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
           const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
-        }
-        if(searchResults.data.users.length > 0){
-           eventBus.$emit('search-results', {results: searchResults.data.users});
-        }
+            if(searchResults.data.users.length > 0){
+              eventBus.$emit('search-results', {results: searchResults.data.users});
+            }
+         }
       }
 
     },

@@ -3,14 +3,30 @@
         <a @click="viewMessageThread()" href="javascript:void(0);"><div class="row">
                   <div class="col-lg-2">
                       <div style="border: 1px solid green;">
+                          <div v-if="this.random === 'true'">
+                            <div v-if="this.gender === 'male'">
+                              <img :src="this.imageSrc|maleImageSrcFilter" alt="" style="width: 100%;">
+                            </div>
+                             <div v-if="this.gender === 'female'">
+                               <img :src="this.imageSrc|femaleImageSrcFilter" alt="" style="width: 100%;">
+                            </div>
+                             <div v-if="this.gender === 'trans-male'">
+                               <img :src="this.imageSrc|transMaleImageSrcFilter" alt="" style="width: 100%;">
+                            </div>
+                             <div v-if="this.gender === 'trans-female'">
+                               <img :src="this.imageSrc|transFemaleImageSrcFilter" alt="" style="width: 100%;">
+                            </div>
+                          </div>
+                          <div v-if="this.random === 'false'">
+                            <!-- <img :src="this.imageSrc|imageSrcFilter" alt="" style="width: 100%;"> -->
+                          </div>
 
-                          <img :src="this.imageSrc" alt="" style="width: 100%;">
 
                         </div>
                       <div>{{ this.sender }}</div>
                   </div>
                   <div class="col-lg-6">
-                      {{ this.content | filterPreview }}( {{ this.messageLength }})
+                      {{ this.content | filterPreview }}&nbsp;&nbsp;<strong>( {{ this.messageLength }})</strong>
                   </div>
                   <div class="col-lg-4">
                       {{ this.date }}
@@ -20,10 +36,9 @@
 </template>
 
 <script>
-import Message from './Message'
 import UserProfileService from '../../../middleware/services/UserProfileService'
   export default {
-    props: ['imageSrc', 'sender', 'content', 'messageLength', 'date', 'thread', 'senderId'],
+    props: ['imageSrc', 'sender', 'content', 'messageLength', 'date', 'thread', 'senderId', 'gender', 'random'],
     created(){
     },
     filters :{
@@ -31,20 +46,20 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
         let length = message.length;
         return message.substring(0, length/1.2) + '...';
       },
-      imageSrcFilter(profile){
-         return '../uploads/'+profile.images.imagePaths[0].path;
+      imageSrcFilter(src){
+         return '../uploads/'+src;
       },
-      maleImageSrcFilter(profile){
-        return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      maleImageSrcFilter(src){
+        return '../random-users/men/'+src;
       },
-      femaleImageSrcFilter(profile){
-         return '../random-users/women/'+ profile.images.imagePaths[0].path;
+      femaleImageSrcFilter(src){
+         return '../random-users/women/'+src;
       },
-      transMaleImageSrcFilter(profile){
-         return '../random-users/men/'+ profile.images.imagePaths[0].path;
+      transMaleImageSrcFilter(src){
+         return '../random-users/men/'+src;
       },
-      transFemaleImageSrcFilter(profile){
-        return '../random-users/women/'+ profile.images.imagePaths[0].path;
+      transFemaleImageSrcFilter(src){
+        return '../random-users/women/'+src;
       }
     },
     data(){
@@ -64,7 +79,7 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
         },
 
         async changeUnreadStatus(){
-            let messageId = this.thread._id;
+            let messageId = this.thread.messageContent[this.thread.messageContent.length - 1].messageId;
             console.log('Reading message with id ' + messageId);
             await UserProfileService.markMessageAsRead({messageId: messageId});
         }

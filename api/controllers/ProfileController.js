@@ -158,29 +158,31 @@
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
         console.log(`Getting messages for reciepient with id of ${user._id}`);
-       // const messages = await Message.find({'recipient.id': user._id});
-
-
+        const messages = await Message.find({'recipient.id': user._id});
         const myMesages = await Message.aggregate([
           {
-            $match: { "recipient.id": user._id }
+            $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
           },
           {
             $group : {
-               _id : { from: "$sender.id" },
-               messageContent: {
+              _id: {from: "$sender.id"},
+            messageContent: {
                  $push: {
                    messageId: "$_id",
                    sender: "$sender.username",
                    image: "$sender.imageSrc",
                    date: "$date",
                    content: "$content",
+                   unread: "$unread",
+                   random: "$sender.random",
+                   gender: "$sender.gender"
                  }
                },
              }
           },
-           { $sort : { "messageContent.date": -1 } },
-
+          {
+            $sort : { "messageContent.date": -1 }
+          }
         ])
         console.log(`Server messages: ${JSON.stringify(myMesages)}`);
         // if(!messages){
@@ -201,8 +203,8 @@
         console.log('Sender Id: '+ msgSender._id)
         console.log('Reciver Id: '+ user._id)
         let messagesThread;
-        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id':msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id':user._id}).select(["content", "date", "unread"]);
+        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id': msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id': user._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
         //const messages = await Message.find({recipient: {id: msgSender._id}});
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
@@ -274,14 +276,14 @@
          const createdMessage = new Message({
            content: message,
            sender: {
-             id: sender._id,
+             id: mongoose.Types.ObjectId(sender._id),
              imageSrc: imgSrc,
              username:sender.username,
              random: sender.random,
              gender: sender.gender
             },
            recipient: {
-             id: receiverOfMessage._id,
+             id: mongoose.Types.ObjectId(receiverOfMessage._id),
              imageSrc: recieverImg,
              username: receiverOfMessage.username,
              random: sender.random,
@@ -648,7 +650,8 @@
 
        async markMessageAsRead(req, res, next){
         const { messageId } = req.body;
-        const message = await Message.findById(messageId);
+        console.log(`Marking message as read, Message Id rec'vd ${JSON.stringify(messageId)}`);
+        const message = await Message.findById({_id: messageId});
         const readMessage = await message.markUserMessageAsRead(messageId);
        },
 
