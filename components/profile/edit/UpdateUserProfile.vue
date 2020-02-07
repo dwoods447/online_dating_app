@@ -1,10 +1,7 @@
 <template>
   <div>
      <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile</h2>
-
-        <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
-
-       <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
+     <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your main picture:
           <div v-if="randomVal === 'true'">
             <div v-if="chosenGender==='male'" style="max-width: 127px; max-height: 127px;">
@@ -21,11 +18,10 @@
             </div>
           </div>
            <div v-if="randomVal === 'false'" style="max-width: 127px; max-height: 127px;">
-              <img :src="fullImageSrc|imageSrcFilter " alt="">
+              <img :src="fullImageSrc|imageSrcFilter " alt=""style="width: 100%;">
            </div>
-
        </div>
-
+     <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
      <div v-if="this.$store.state.userId">
           <div v-if="this.$store.state.userId.isProfileCompleted !== true">
        <form @submit.prevent="updateExtentedUserProfile" style="width: 50%; margin: 0 auto;">
@@ -34,7 +30,7 @@
               <div class="col-sm-6">
               <label for="">Height</label>
               <select class="form-control"  v-model="height">
-                <option v-for="(option, i) in heights" :key="'inches-'+i+'-'+option.value">{{ option.name }}</option>
+                <option v-for="(option, i) in heights" :key="'inches-'+i+'-'+option.value" :value="option.value">{{ option.name }}</option>
               </select>
 
           </div>
@@ -178,7 +174,7 @@
               <div class="col-sm-6">
               <label for="">Height</label>
                <select class="form-control"  v-model="height">
-                <option v-for="(option, i) in heights" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                <option v-for="(option, i) in heights" :key="'option-'+i+'-'+option.name" :value="option.value">{{ option.name }}</option>
               </select>
           </div>
            <div class="col-sm-6">
@@ -552,7 +548,7 @@
            {name: "7,0", value: 82, key: ""},
            {name: "7,1", value: 83, key: ""},
          ],
-         height: this.$store.state.userId.height,
+         height: '',
          hairColor: this.$store.state.userId.hairColor,
          hairColors:[
            {name: 'black', value: 'black', key: 'hairColor-black-0'},
