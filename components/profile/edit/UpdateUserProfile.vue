@@ -18,7 +18,7 @@
             </div>
           </div>
            <div v-if="randomVal === 'false'" style="max-width: 127px; max-height: 127px;">
-              <img :src="fullImageSrc|imageSrcFilter " alt=""style="width: 100%;">
+              <img :src="fullImageSrc|imageSrcFilter " alt="" style="width: 100%;">
            </div>
        </div>
      <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
