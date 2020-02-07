@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; margin: 0 auto;" v-if="userReturned !== null || userReturned !== {}">
      <div class="row">
-       <Tab style="width: 100%;"></Tab>
+       <Tab style="width: 100%;" :user="userReturned"></Tab>
      </div>
       <div class="row">
           <div class="col-lg-12" v-if="images.length > 0">
@@ -13,10 +13,10 @@
                  <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|femaleImageSrcFilter" style="width: 100%;"></div>
              </div>
              <div v-if="userReturned.gender === 'trans-female'">
-             <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|transMaleImageSrcFilter" style="width: 100%;"></div>
+             <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|transFemaleImageSrcFilter" style="width: 100%;"></div>
             </div>
              <div v-if="userReturned.gender === 'trans-male'">
-                  <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|transFemaleImageSrcFilter" style="width: 100%;"></div>
+                  <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|transMaleImageSrcFilter" style="width: 100%;"></div>
               </div>
           </div>
            <div v-if="userReturned.random === 'false'">
