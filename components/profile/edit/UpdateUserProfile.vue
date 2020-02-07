@@ -1,7 +1,8 @@
 <template>
   <div>
-     <h2>Edit Your Profile</h2>
+     <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile</h2>
 
+        <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
 
        <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your main picture:
@@ -27,14 +28,13 @@
 
      <div v-if="this.$store.state.userId">
           <div v-if="this.$store.state.userId.isProfileCompleted !== true">
-        User has never updated profile
        <form @submit.prevent="updateExtentedUserProfile" style="width: 50%; margin: 0 auto;">
            <div class="form-group">
           <div class="row">
               <div class="col-sm-6">
               <label for="">Height</label>
               <select class="form-control"  v-model="height">
-                <option v-for="(option, i) in heights" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                <option v-for="(option, i) in heights" :key="'inches-'+i+'-'+option.value">{{ option.name }}</option>
               </select>
 
           </div>
@@ -520,37 +520,37 @@
          ],
          maritalStatus: this.$store.state.userId.maritalStatus,
          heights: [
-           {name: "4'5", value: "4'5", key: ""},
-           {name: "4'6", value: "4'6", key: ""},
-           {name: "4'7", value: "4'7", key: ""},
-           {name: "4'8", value: "4'8", key: ""},
-           {name: "4'9", value: "4'9", key: ""},
-           {name: "4'10", value: "4'10", key: ""},
-           {name: "4'11", value: "4'11", key: ""},
-           {name: "5'0", value: "5'0", key: ""},
-           {name: "5'1", value: "5'1", key: ""},
-           {name: "5'2", value: "5'2", key: ""},
-           {name: "5'3", value: "5'3", key: ""},
-           {name: "5'4", value: "5'4", key: ""},
-           {name: "5'5", value: "5'5", key: ""},
-           {name: "5'6", value: "5'6", key: ""},
-           {name: "5'7", value: "5'7", key: ""},
-           {name: "5'8", value: "5'8", key: ""},
-           {name: "5'9", value: "5'9", key: ""},
-           {name: "5'10", value: "5'10", key: ""},
-           {name: "5'11", value: "5'11", key: ""},
-           {name: "6'0", value: "6'0", key: ""},
-           {name: "6'1", value: "6'1", key: ""},
-           {name: "6'2", value: "6'2", key: ""},
-           {name: "6'3", value: "6'3", key: ""},
-           {name: "6'4", value: "6'4", key: ""},
-           {name: "6'5", value: "6'5", key: ""},
-           {name: "6'6", value: "6'6", key: ""},
-           {name: "6'7", value: "6'7", key: ""},
-           {name: "6'8", value: "6'8", key: ""},
-           {name: "6'9", value: "6'9", key: ""},
-           {name: "7,0", value: "7'0", key: ""},
-           {name: "7,1", value: "7,1", key: ""},
+           {name: "4'5", value: 53, key: ""},
+           {name: "4'6", value: 54, key: ""},
+           {name: "4'7", value: 55, key: ""},
+           {name: "4'8", value: 56, key: ""},
+           {name: "4'9", value: 57, key: ""},
+           {name: "4'10", value: 58, key: ""},
+           {name: "4'11", value: 59, key: ""},
+           {name: "5'0", value: 60, key: ""},
+           {name: "5'1", value: 61, key: ""},
+           {name: "5'2", value: 62, key: ""},
+           {name: "5'3", value: 63, key: ""},
+           {name: "5'4", value: 64, key: ""},
+           {name: "5'5", value: 65, key: ""},
+           {name: "5'6", value: 66, key: ""},
+           {name: "5'7", value: 67, key: ""},
+           {name: "5'8", value: 68, key: ""},
+           {name: "5'9", value: 69, key: ""},
+           {name: "5'10", value: 70, key: ""},
+           {name: "5'11", value: 71, key: ""},
+           {name: "6'0", value: 72, key: ""},
+           {name: "6'1", value: 73, key: ""},
+           {name: "6'2", value: 74, key: ""},
+           {name: "6'3", value: 75, key: ""},
+           {name: "6'4", value: 76, key: ""},
+           {name: "6'5", value: 77, key: ""},
+           {name: "6'6", value: 78, key: ""},
+           {name: "6'7", value: 79, key: ""},
+           {name: "6'8", value: 80, key: ""},
+           {name: "6'9", value: 81, key: ""},
+           {name: "7,0", value: 82, key: ""},
+           {name: "7,1", value: 83, key: ""},
          ],
          height: this.$store.state.userId.height,
          hairColor: this.$store.state.userId.hairColor,

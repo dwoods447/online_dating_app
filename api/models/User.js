@@ -43,7 +43,7 @@ const UserSchema = new Schema({
         genders: [],
     },
     height: {
-        type: String
+        type: Number
     },
     relationshipTypeSeeking: {
         type: String

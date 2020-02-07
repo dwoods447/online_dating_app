@@ -34,8 +34,6 @@ import eventBus from '../../../middleware/eventBus/index'
   export default {
     props: ['profile'],
     created(){
-      console.log(`Profile Passed in: ${JSON.stringify(this.profile)}`)
-
     },
     data(){
       return {

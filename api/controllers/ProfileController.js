@@ -16,6 +16,7 @@
             if(!searchedUser){
                 return res.status(404).json({message: 'User with that ID not found!'});
             }
+          await searchedUser.updateUserAge();
           const userBlockedYou = await searchedUser.checkIfUserIsBlocked(userWhoisRequestingSearch);
           const youblockedUser = await userWhoSearching.checkIfUserIsBlocked(userId);
            if(!userBlockedYou || !youblockedUser){

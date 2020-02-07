@@ -70,7 +70,7 @@
                 <li>Do you date interacially?: <strong>{{ userReturned.doesDateInteracially | booleanToResponse }}</strong></li>
                 <li>secondLanguage: <strong>{{ userReturned.secondLanguage }}</strong></li>
                 <li>BodyType: <strong>{{ userReturned.bodyType }}</strong></li>
-                <li>Height: <strong>{{ userReturned.height }}</strong></li>
+                <li>Height: <strong>{{ userReturned.height|heightInchesToFeet}}</strong></li>
                 <li>Highest Education Level: <strong>{{ userReturned.highestEducation }}</strong></li>
             </ul>
           </div>
@@ -189,6 +189,11 @@ import Tab from '../../components/profile/Tab'
       },
       transFemaleImageSrcFilter(src){
         return '../random-users/women/'+ src;
+      },
+      heightInchesToFeet(value){
+        let feet = Math.floor(value/12);
+        let inches = value%12;
+        return `${feet}'${inches}`;
       }
     },
     data (){
