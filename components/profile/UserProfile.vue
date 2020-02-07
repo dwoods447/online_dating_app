@@ -1,8 +1,5 @@
 <template>
   <div style="width: 100%; margin: 0 auto;" v-if="userReturned !== null || userReturned !== {}">
-     <div class="row">
-       <Tab style="width: 100%;" :user="userReturned"></Tab>
-     </div>
       <div class="row">
           <div class="col-lg-12" v-if="images.length > 0">
               <div v-if="userReturned.random === 'true'">
@@ -155,15 +152,18 @@ import UserProfileService from '../../middleware/services/UserProfileService'
 import SendMessage from '../../components/profile/message/SendMessage'
 import AddUserToBlockListButton from '../../components/profile/actions/AddUserToBlockButton'
 import AddUserToFavoritesListButton from '../../components/profile/actions/AddUserToFavoriteButton'
-import Tab from '../../components/profile/Tab'
+
   export default {
-    components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton, Tab},
-    props:['userId'],
+    components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton},
+    props:['user'],
     created(){
 
     },
     mounted(){
-        this.getUserDetails(this.userId);
+        //this.getUserDetails(this.userId);
+        console.log(`User Details in UserProfile ${JSON.stringify(this.user)}`);
+        this.userReturned = this.user;
+        this.images = this.user.images.imagePaths;
     },
     filters: {
       booleanToResponse(value){
@@ -199,7 +199,7 @@ import Tab from '../../components/profile/Tab'
     data (){
       return {
           userReturned: {},
-          messageReciever: this.userId,
+          messageReciever: this.user._id,
           images: []
       }
     },

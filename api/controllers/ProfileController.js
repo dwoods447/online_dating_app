@@ -10,6 +10,7 @@
    module.exports = {
        async getUserDetails(req, res, next){
            const { userId } = req.body;
+           let userDetails;
            const userWhoisRequestingSearch = req.userId;
            const userWhoSearching = await User.findOne({_id: userWhoisRequestingSearch}).select("-password");
            const searchedUser = await User.findOne({_id: userId}).select("-password");
@@ -29,18 +30,14 @@
            } else {
               return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
            }
+
+       // userDetails = await User.findOne({_id: userId}).select(["-password", "-blockUsers.users", "-profileViews.views", "-favorites.users"]);
             return res.status(200).json({message: 'User found', user: searchedUser, blocked: false});
        },
 
         async updateExtendedUserProfile(req, res, next){
         const {
             userId,
-            // username,
-            // email,
-            // citrsy,
-            // gender,
-            // birthdate,
-            // ethnicity,
             seekingGender,
             height,
             relationshipTypeSeeking,

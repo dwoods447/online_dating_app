@@ -207,6 +207,19 @@ const createStore = () =>{
             if(userAddedToFavoritesList.message === 'User added to favorites successfully!'){
             }
              return userAddedToFavoritesList;
+          },
+
+          async getUserDetailsAction(context, userId){
+            console.log(`Getting user details through store`);
+            let userReturned;
+            const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+            const userDetails = (await UserServiceProfile.getUserDetails(userId)).data;
+            console.log(`Data retunred in store ${JSON.stringify(userDetails)}`);
+            if(userDetails.blocked == true){
+              this.$router.push({path: '/blocked'})
+              return userReturned;
+            }
+            return userReturned = userDetails.user;
           }
 
       } // end of action
