@@ -483,6 +483,7 @@
  import ImgUpload from '../../profile/image/ImgUpload'
  import UserProfileService from '../../../middleware/services/UserProfileService'
  import Cookie from 'js-cookie'
+ import eventBus from '../../../middleware/eventBus/index'
   export default {
     props: ['userId'],
     components: { Multiselect, ImgUpload},
@@ -782,7 +783,7 @@
               localStorage.setItem('user', JSON.stringify(updatedUser));
               Cookie.set('user', JSON.stringify(updatedUser));
               await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
-
+              $emit('setActiveLink', 'isShowSearch');
               this.$router.push({name: 'basicsearch'});
            }
       },

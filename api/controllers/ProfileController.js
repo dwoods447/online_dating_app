@@ -9,6 +9,9 @@
 
    module.exports = {
        async getUserDetails(req, res, next){
+            /*  User projection to limit fields
+              // https://mongoosejs.com/docs/api.html#query_Query-projection
+             */
            const { userId } = req.body;
            let userDetails;
            const userWhoisRequestingSearch = req.userId;
@@ -132,24 +135,6 @@
            return res.status(200).json({message: 'User successfully removed from favorites'});
          }
        },
-
-       async addUserProfileViews(req, res, next){
-        //  const {userProfileId } = req.body;
-        //  const currentUser = await User.findById(req.userId);
-        //  if(!currentUser){
-        //     return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-        //  }
-        //  const personBeingViewed = await User.findById(userProfileId);
-        //  if(!personBeingViewed){
-        //     return res.status(404).json({message: 'This user was not found'});
-        //  }
-        //  const viewAdded = await personBeingViewed.addUserProfileViews(currentUser);
-        //  if(!viewAdded){
-        //     return res.status(422).json({message: 'View not added!'});
-        //  }
-        //  return res.status(200).json({message: 'View added successfully'});
-       },
-
        async getInboxMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});
         if(!user){
@@ -217,31 +202,56 @@
           return 0;
         })
           console.log(`Conversations: ${JSON.stringify(messagesThread, null ,2)}`);
-        // const myMesages = await Message.aggregate([
-        //   {
-        //     $match: { "recipient": {id: mongoose.Types.ObjectId(user._id)} }
-        //   },
-        //   {
-        //     $group : {
-        //        _id : { from: "$sender.id" },
-        //        messageContent: {
-        //          $push: {
-        //            messageId: "$_id",
-        //            sender: "$sender.username",
-        //            image: "$sender.imageSrc",
-        //            date: "$date",
-        //            content: "$content",
-        //          }
-        //        },
-        //      }
-        //   }
-        // ])
-        // if(!messages){
-        //   return res.status(500).json({message: 'Error retrieving messages'});
-        // }
-
         return res.status(200).json({messages: messagesThread});
        },
+
+       async getSentMessagesForUser(req, res, next){
+        let user = await User.findOne({_id: req.userId});
+        //let sentMessages = await Message.find({'sender.id': user._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+
+        const mySentMesages = await Message.aggregate([
+          {
+            $match: { "sender.id": mongoose.Types.ObjectId(req.userId) }
+          },
+          {
+            $group : {
+              _id: {to: "$recipient.id"},
+            messageContent: {
+                 $push: {
+                   messageId: "$_id",
+                   receiver: "$recipient.username",
+                   image: "$recipient.imageSrc",
+                   date: "$date",
+                   content: "$content",
+                   unread: "$unread",
+                   random: "$recipient.random",
+                   gender: "$recipient.gender"
+                 }
+               },
+             }
+          },
+          {
+            $sort : { "messageContent.date": 1 }
+          }
+        ])
+
+
+
+        // sentMessages.sort((a, b)=>{
+        //   let aDate = new Date(a.date);
+        //   let bDate = new Date(b.date);
+        //   if(aDate < bDate){
+        //     return -1;
+        //   }
+        //   if(aDate > bDate){
+        //     return 1;
+        //   }
+        //   return 0;
+        // })
+        return res.status(200).json({messages: mySentMesages});
+       },
+
+
        async sendMessageToInbox(req, res, next){
         let statusCode;
         const {userProfileId, message } = req.body;
@@ -261,14 +271,14 @@
          if(sender.images.imagePaths.length > 0){
           imgSrc = sender.images.imagePaths[0].path;
          } else {
-          imgSrc = 'http://placehold.it/100x100';
+          imgSrc = 'no-photo.provided.png';
          }
 
          let recieverImg;
          if(receiverOfMessage.images.imagePaths.length > 0){
            recieverImg = receiverOfMessage.images.imagePaths[0].path;
          } else {
-           recieverImg ='http://placehold.it/100x100';
+           recieverImg ='no-photo.provided.png';
          }
 
          const createdMessage = new Message({

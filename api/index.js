@@ -75,10 +75,11 @@ router.post('/check/username/unique', AuthenticationController.checkUserNameUniq
 router.post('/check/email/unique', AuthenticationController.checkUserNameUnique);
 
 
-router.get('/inbox/messages', isAuthenticated,  ProfileController.getInboxMessagesForUser); // tested || works but need to adjust
-router.get('/sender/:senderId/messages', isAuthenticated,  ProfileController.getMessagesFromSender);
+router.get('/inbox/messages', isAuthenticated, ProfileController.getInboxMessagesForUser); // tested || works but need to adjust
+router.get('/sender/:senderId/messages', isAuthenticated, ProfileController.getMessagesFromSender);
+router.get('/sent/messages', isAuthenticated, ProfileController.getSentMessagesForUser);
 router.get('/profile/views', isAuthenticated, ProfileController.getUserProfileViews);
-router.get('/add/views', isAuthenticated, ProfileController.addUserProfileViews);
+// router.get('/add/views', isAuthenticated, ProfileController.addUserProfileViews);
 router.get('/view/random/users', ProfileController.getRandomUsersInAuthUsersPostalCode);  // tested || works but need to adjust
 router.post('/user/update/userprofile', isAuthenticated, ProfileController.updateExtendedUserProfile);  // tested
 router.post('/favorites/add', isAuthenticated, ProfileController.addUserToFavorites);

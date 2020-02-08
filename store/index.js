@@ -4,6 +4,7 @@ import Cookie from 'js-cookie'
 import api from '../middleware/services/api/api'
 import UserServiceProfile from '../middleware/services/UserProfileService'
 import cookieparser from 'cookieparser'
+import eventBus from '../middleware/eventBus/index'
 Vue.use(Vuex)
 
 const createStore = () =>{
@@ -116,6 +117,7 @@ const createStore = () =>{
                       // if not redirect to completed profile
                       this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
                     } else {
+                     $emit('setActiveLink', 'isShowSearch');
                        this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
                     }
                 return res;

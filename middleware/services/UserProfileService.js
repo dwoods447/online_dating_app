@@ -73,6 +73,10 @@ export default {
 
   getUserProfileViews(){
     return api.get('/profile/views');
+  },
+
+  getSentMessagesForUser(){
+    return api.get('/sent/messages');
   }
 
 

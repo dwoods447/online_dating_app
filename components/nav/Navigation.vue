@@ -52,6 +52,7 @@
 </template>
 <script>
 import UserProfileService from '../../middleware/services/UserProfileService'
+import eventBus from '../../middleware/eventBus/index'
 export default {
   data(){
     return {
@@ -61,6 +62,7 @@ export default {
   methods: {
     async logOut(){
        this.$store.dispatch('setLogOutAction');
+       eventBus.$emit('setActiceLink', 'isShowHome');
        this.$router.push({name: 'index'});
       // const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
       // const offline = await this.$store.dispatch('setOffLineStatus');
@@ -70,6 +72,7 @@ export default {
       // }
     },
     goToEditUsersProfile(){
+
           this.$router.push({path: '/edituserprofile', params: {user: this.$store.state.userId}});
     },
   }
