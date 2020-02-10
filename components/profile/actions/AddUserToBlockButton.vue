@@ -19,7 +19,7 @@ import eventBus from '../../../middleware/eventBus/index'
         const message = await this.$store.dispatch('addUserUToBlockListAction', {userToBlockId: this.userId});
         if(message ){
           setTimeout(()=>{
-           $emit('setActiveLink', 'isShowSearch');
+           eventBus.$emit('setActiveLink', 'isShowSearch');
             this.$router.push({name: 'basicsearch'});
           }, 8000);
 

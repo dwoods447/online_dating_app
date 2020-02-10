@@ -13,6 +13,8 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
+        index: true,
+        unique: true
     },
     password: {
         type:String,
@@ -21,6 +23,8 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
+        index: true,
+        unique: true
     },
     gender: {
         type: String,
@@ -328,14 +332,19 @@ UserSchema.methods.removeUserFromBlockList = function(userId){
 
 
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
+  console.log(`Checking if ${userId} is  in the block list`);
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-        return userId ===  searchedUser.userId.toString();
+            console.log(`Comparing ${userId} to ${searchedUser.userId.toString()}`);
+        return userId.toString() ===  searchedUser.userId.toString();
     });
+    console.log(`Index from search result: ${userBlockedIndex}`);
     if(userBlockedIndex !== -1){
+      console.log(`${userId} IS in the block list Blocking...`);
         // User is already in blocked user list
+        console.log(`User with userdId: ${userId} is blocked by ${this._id.toString()}`);
         return true;
     }
-
+    console.log(`${userId} is NOT in the block list`);
     return false;
 }
 

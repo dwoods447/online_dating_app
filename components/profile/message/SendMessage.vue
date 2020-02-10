@@ -3,7 +3,7 @@
 
        <form @submit.prevent="sendUserMessage(userId)" style="max-width: 20%; margin: 0 auto;">
        <textarea name="message" id="message" cols="30" rows="10" v-model="message" class="form-control"><slot></slot></textarea>
-       <button class="btn btn-success btn-custom">Send</button>
+       <button class="btn btn-success btn-custom" :disabled="isBlocked">Send</button>
        <div>
          <div v-if="status">{{ status }}</div>
        </div>
@@ -27,19 +27,23 @@ import eventBus from '../../../middleware/eventBus/index'
     data(){
       return {
           message: '',
-          status: ''
+          status: '',
+          isBlocked: false,
       }
     },
     methods: {
        async sendUserMessage(recieverId){
           const sent  = await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message});
           console.log(`${JSON.stringify(sent)}`)
-          if(sent.status == 200){
+          if(sent.status == 200 && sent.blocked == false){
               this.message = '';
               this.status = '';
               this.status = 'Message sent succesfully';
               eventBus.$emit('message-sent');
               console.log(`Emitting message-sent`)
+          } else if(sent.blocked == true) {
+            this.message = sent.message;
+            this.isBlocked = sent.blocked;
           }
       }
     }

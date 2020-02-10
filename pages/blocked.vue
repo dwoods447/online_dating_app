@@ -1,6 +1,6 @@
 <template>
   <div>
-        This user has prevented you from viewing their profile.
+         You are prevented from viewing this user's profile.
   </div>
 </template>
 

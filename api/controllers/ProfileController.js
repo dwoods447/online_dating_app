@@ -21,19 +21,19 @@
                 return res.status(404).json({message: 'User with that ID not found!'});
             }
           await searchedUser.updateUserAge();
+          console.log(`Checking if your are blocked: ${userWhoisRequestingSearch}`);
           const userBlockedYou = await searchedUser.checkIfUserIsBlocked(userWhoisRequestingSearch);
           const youblockedUser = await userWhoSearching.checkIfUserIsBlocked(userId);
-           if(!userBlockedYou || !youblockedUser){
-            console.log(`User Requesting profile ${userWhoisRequestingSearch}`);
-            console.log(`Incoming userID ${userId}`);
-              if(userId !== userWhoisRequestingSearch){
-                console.log(`adding profile viewer`);
-                const profileViewAdded = await searchedUser.addProfileViewer(userWhoisRequestingSearch);
-              }
-           } else {
-              return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
+          console.log(`Checking user blocked you: ${userId}`);
+           if(userBlockedYou || youblockedUser){
+            return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
            }
-
+           console.log(`User Requesting profile ${userWhoisRequestingSearch}`);
+           console.log(`Incoming userID ${userId}`);
+             if(userId !== userWhoisRequestingSearch){
+               console.log(`adding profile viewer`);
+               const profileViewAdded = await searchedUser.addProfileViewer(userWhoisRequestingSearch);
+             }
        // userDetails = await User.findOne({_id: userId}).select(["-password", "-blockUsers.users", "-profileViews.views", "-favorites.users"]);
             return res.status(200).json({message: 'User found', user: searchedUser, blocked: false});
        },
@@ -223,12 +223,15 @@
                  $push: {
                    messageId: "$_id",
                    receiver: "$recipient.username",
+                   sender: "$sender.username",
                    image: "$recipient.imageSrc",
                    date: "$date",
                    content: "$content",
                    unread: "$unread",
                    random: "$recipient.random",
-                   gender: "$recipient.gender"
+                   receiverGender: "$recipient.gender",
+                   senderGender: "$sender.gender"
+
                  }
                },
              }
@@ -263,14 +266,31 @@
          if(!sender){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
+
+
+
          const receiverOfMessage = await User.findById(userProfileId);
-         console.log(`Reciever: ${JSON.stringify(receiverOfMessage)}`);
+         console.log(`User sent message..Checking block status.....`);
+         console.log(`Sender of message ${sender.username} with id ${sender._id}`);
+         console.log(`Reciever of message ${receiverOfMessage.username} with id ${receiverOfMessage._id}`);
+         const userBlockedYou = await receiverOfMessage.checkIfUserIsBlocked(sender._id);
+         const youblockedUser = await sender.checkIfUserIsBlocked(receiverOfMessage._id);
+
+         console.log(`If user blocked you: ${userBlockedYou}`);
+         console.log(`If you blocked user: ${youblockedUser}`);
+         if(userBlockedYou || youblockedUser){
+          statusCode = 200;
+          return res.status(200).json({message: 'You are prohibited from sending a message to this user!', statusCode: statusCode, blocked: true});
+         }
+
+       //  console.log(`Reciever: ${JSON.stringify(receiverOfMessage)}`);
          if(!receiverOfMessage){
-            return res.status(404).json({message: 'Unable to locate user profile'});
+             statusCode = 404;
+            return res.status(404).json({message: 'Unable to locate user profile', statusCode: statusCode, blocked: false});
          }
 
          let imgSrc;
-         console.log(`Sender: ${JSON.stringify(sender)}`);
+       //  console.log(`Sender: ${JSON.stringify(sender)}`);
          if(sender.images.imagePaths.length > 0){
           imgSrc = sender.images.imagePaths[0].path;
          } else {
@@ -307,15 +327,17 @@
          const savedMessage = await createdMessage.save();
          if(!savedMessage){
              statusCode = 500;
-             return res.status(500).json({message: `There was an error sending the message `, statusCode: statusCode});
+             return res.status(500).json({message: `There was an error sending the message `, statusCode: statusCode, blocked: false});
          }
         // const messageSent = await receiverOfMessage.sendMessageToUserInbox(sender, message);
          //const messageCopied = await sender.sendMessageToUserInbox(receiverOfMessage, message);
          if(!createdMessage){
-            return res.status(422).json({message :'There was an error sending the  message!'});
+            statusCode = 422;
+            return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
          }
          console.log('Message sent');
-         return res.status(200).json({message: 'Message sent sucessfully!'});
+         statusCode = 200;
+         return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
        async deleteMessageFromInbox(req, res, next){
         const userWhoisRequestingDeletion = req.userId;

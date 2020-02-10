@@ -5,30 +5,30 @@
             Reciever: {{ message.messageContent[0].receiver}}<br/>
             {{ message.messageContent[0].content }}
         </div> -->
-           <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
+           <SentMessagesInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
             :imageSrc="message.messageContent[0].image"
-            :sender="message.messageContent[0].receiver"
+            :sender="message.messageContent[0].sender"
             :reciever="message.messageContent[0].receiver"
             :content="message.messageContent[message.messageContent.length - 1].content"
             :messageLength="message.messageContent.length"
             :date="message.messageContent[0].date|dateFilter"
             :thread="message"
             :senderId="message._id.from"
-            :gender="message.messageContent[0].gender"
+            :gender="message.messageContent[0].receiverGender"
             :random="message.messageContent[0].random"
             :class="{unread: message.messageContent[message.messageContent.length - 1].unread}"
             >
-            </MessageInboxPreview>
+            </SentMessagesInboxPreview>
   </div>
 </template>
 
 <script>
   import UserProfileService from '../../../middleware/services/UserProfileService'
-  import MessageInboxPreview from './MessageInboxPreview'
+  import SentMessagesInboxPreview from '../../profile/inbox/SentMessagesInboxPreview'
   import moment from 'moment'
   export default {
     props: ['user'],
-    components :{ MessageInboxPreview },
+    components :{ SentMessagesInboxPreview },
     created(){
         this.getUserMessages();
     },

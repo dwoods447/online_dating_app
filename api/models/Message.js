@@ -10,7 +10,8 @@ const MessageSchema = new Schema({
     sender: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            index: true
         },
         username: {
             type: String,
@@ -31,7 +32,8 @@ const MessageSchema = new Schema({
     recipient: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            index: true
         },
         username: {
           type: String,
