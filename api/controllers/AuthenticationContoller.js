@@ -68,6 +68,7 @@ module.exports = {
          secondLanguage: '',
          bodyType:'',
          postalCode: '',
+         city:'',
          state:'',
          martialStatus: '',
          hasChildren: false,
@@ -138,7 +139,7 @@ module.exports = {
 
 
      await user.updateUserAge();
-     const returnedUser = await User.findOne({username: username}).select(["-password", "-blockedUsers.users", "-inbox.messages", "-profileViews.views", "-favorites.users"])
+     const returnedUser = await User.findOne({username: username}).select(["-password", "-blockedUsers.users", "-profileViews.views", "-favorites.users"])
      const token = jwt.sign({
          email: user.email,
          userId: user._id.toString()

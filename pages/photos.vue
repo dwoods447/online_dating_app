@@ -14,10 +14,10 @@
                          <img :src="image.path|femaleImageSrcFilter" style="width: 100%;">
                     </div>
                      <div v-if="profile.random === 'true' && profile.gender === 'trans-female'">
-                         <img :src="image.path|transMaleImageSrcFilter" style="width: 100%;">
+                         <img :src="image.path|transFemaleImageSrcFilter" style="width: 100%;">
                     </div>
                      <div v-if="profile.random === 'true' && profile.gender === 'trans-male'">
-                         <img :src="image.path|transFemaleImageSrcFilter" style="width: 100%;">
+                         <img :src="image.path|transMaleImageSrcFilter" style="width: 100%;">
                     </div>
                     <div style="padding: 1em;">
                       <a @click="removeImage(image.imageId)" href="javascript:void(0);">

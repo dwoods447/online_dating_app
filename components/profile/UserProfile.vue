@@ -54,8 +54,9 @@
           </div>
           <div class="col-lg-6">
              <ul>
-                <li>City: <strong>{{ userReturned.postalCode }}</strong></li>
+                <li>City: <strong>{{ userReturned.city }}</strong></li>
                 <li>State: <strong>{{ userReturned.state }}</strong></li>
+                <li>Zipcode: <strong>{{ userReturned.postalCode }}</strong></li>
                 <li>Dating Intent: <strong>{{ userReturned.datingIntent }}</strong></li>
             </ul>
           </div>

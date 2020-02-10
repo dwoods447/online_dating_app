@@ -3,22 +3,20 @@
         <a @click="viewMessageThread()" href="javascript:void(0);"><div class="row">
                   <div class="col-lg-2">
                       <div style="border: 1px solid green;">
-                          <div v-if="this.random === 'true'">
-                            <div v-if="this.gender === 'male'">
-                              <img :src="this.imageSrc|maleImageSrcFilter" alt="" style="width: 100%;">
-                            </div>
-                             <div v-if="this.gender === 'female'">
+                          <div v-if="this.random === 'true' && this.gender === 'male'">
+                             <img :src="this.imageSrc|maleImageSrcFilter" alt="" style="width: 100%;">
+                          </div>
+                          <div v-if="this.random === 'true' && this.gender === 'female'">
                                <img :src="this.imageSrc|femaleImageSrcFilter" alt="" style="width: 100%;">
                             </div>
-                             <div v-if="this.gender === 'trans-male'">
+                             <div v-if="this.random === 'true' && this.gender === 'trans-male'">
                                <img :src="this.imageSrc|transMaleImageSrcFilter" alt="" style="width: 100%;">
                             </div>
-                             <div v-if="this.gender === 'trans-female'">
+                             <div v-if="this.random === 'true' && this.gender === 'trans-female'">
                                <img :src="this.imageSrc|transFemaleImageSrcFilter" alt="" style="width: 100%;">
                             </div>
-                          </div>
                           <div v-if="this.random === 'false'">
-                            <!-- <img :src="this.imageSrc|imageSrcFilter" alt="" style="width: 100%;"> -->
+                            <img :src="this.imageSrc|imageSrcFilter" alt="" style="width: 100%;">
                           </div>
 
 
@@ -38,7 +36,7 @@
 <script>
 import UserProfileService from '../../../middleware/services/UserProfileService'
   export default {
-    props: ['imageSrc', 'sender', 'content', 'messageLength', 'date', 'thread', 'senderId', 'gender', 'random'],
+    props: ['imageSrc', 'sender', 'reciever', 'content', 'messageLength', 'date', 'thread', 'senderId', 'gender', 'random'],
     created(){
     },
     filters :{

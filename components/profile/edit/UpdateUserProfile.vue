@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-sm-6">
                    <label for="">City</label>
-                   <input type="text" v-model="city"  class="form-control">
+                   <input type="text" v-model="city"   class="form-control">
                 </div>
             </div>
          </div>
@@ -623,9 +623,9 @@
          doesHaveChildren: this.$store.state.userId.doesHaveChildren,
          postalCode: this.$store.state.userId.postalCode ||'',
          profession: this.$store.state.userId.profession || '',
-         city: this.$store.state.userId.city || '',
-         doesDateInteracially: '',
-         interacialDatingPreferences: [],
+         city: this.$store.state.userId.city,
+         doesDateInteracially: this.$store.state.userId.doesDateInteracially,
+         interacialDatingPreferences: this.$store.state.userId.interacialDatingPreferences.races || [],
          secondLanguage: '',
          languages: [
            {name: 'Arabic', value: 'Arabic'},
@@ -656,7 +656,7 @@
               {name: 'Average', value: 'Average'},
               {name: 'A Few Extra Pounds', value: 'A Few Extra Pounds'},
          ],
-          raceDatingPreferences: [],
+          raceDatingPreferences: this.$store.state.userId.raceDatingPreferences.races || [],
            ethnicities: [
             {name: 'White/Caucasian', value: 'White/Caucasian', key: 'White/Caucasian'},
             {name: 'Black/African American', value: 'Black/African American', key: 'Black/African American'},
@@ -678,7 +678,7 @@
              { name: 'trans-female', val: 'trans-female', key: 'trans female'},
         ],
 
-        selectedGenders: [],
+        selectedGenders: this.$store.state.userId.seekingGenders.genders || [],
         imagePaths: this.$store.state.userId.images.imagePaths || []
       }
     },
@@ -722,7 +722,12 @@
 
       showInterracialChoices(){
         this.interacialDatingPreferences = [];
-        return this.displayInterracialChoices = !this.displayInterracialChoices;
+        if(this.doesDateInteracially.toLowerCase() == 'yes'){
+          this.displayInterracialChoices = true;
+        } else {
+          this.displayInterracialChoices = false;
+        }
+
       },
       async loadUserProfile(userId){
         const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
@@ -783,7 +788,7 @@
               localStorage.setItem('user', JSON.stringify(updatedUser));
               Cookie.set('user', JSON.stringify(updatedUser));
               await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
-              $emit('setActiveLink', 'isShowSearch');
+              eventBus.$emit('setActiveLink', 'isShowSearch');
               this.$router.push({name: 'basicsearch'});
            }
       },

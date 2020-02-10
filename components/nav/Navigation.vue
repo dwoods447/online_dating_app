@@ -2,7 +2,7 @@
   <div>
     <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top navbar-expand-lg">
-     <nuxt-link to="/" class="navbar-brand">Websitename.com</nuxt-link>
+     <nuxt-link to="/" class="navbar-brand">ImSeekingGeeks.com</nuxt-link>
     <!-- <div class="container">
       <a class="navbar-brand" href="#">Websitename.com</a>
            <nuxt-link to="/">

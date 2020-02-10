@@ -13,7 +13,7 @@
         </li>
         <li class="nav-item" @click="setActiveLink('isShowPhotos')">
           <!-- <a href="" class="nav-link">Search</a> -->
-           <nuxt-link :class="[{active: isShowPhotos},'nav-item', 'nav-link']"  to="/photos" v-if="this.$store.getters.isAutheticated">Photos</nuxt-link>
+           <nuxt-link :class="[{active: isShowPhotos},'nav-item', 'nav-link']"  to="/photos" v-if="this.$store.getters.isAutheticated">My Photos</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowSearch')">
           <!-- <a href="" class="nav-link">Search</a> -->

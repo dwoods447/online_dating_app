@@ -51,7 +51,7 @@
             bodyType,
             postalCode,
             state,
-            martialStatus,
+            maritalStatus,
             hasChildren,
             doesSmoke,
             doesDoDrugs,
@@ -83,7 +83,7 @@
             if(bodyType) user.bodyType = bodyType;
             if(postalCode) user.postalCode = postalCode;
             if(state) user.state = state;
-            if(martialStatus) user.martialStatus = martialStatus;
+            if(maritalStatus) user.maritalStatus = maritalStatus;
             if(hasChildren == null || hasChildren !== '') user.hasChildren = true;
             if(doesSmoke !== null || doesSmoke !== '') user.doesSmoke = true;
             if(doesDoDrugs !== '' || doesDoDrugs !== null) user.doesDoDrugs = true;
@@ -97,7 +97,7 @@
             if(longestRelationShip) user.longestRelationShip = longestRelationShip;
             if(income) user.income = income;
             if(doesDateInteracially) user.doesDateInteracially = true;
-            if(interacialDatingPreferences) user.interacialDatingPreferences = interacialDatingPreferences;
+            if(doesDateInteracially && interacialDatingPreferences.length > 0) user.interacialDatingPreferences.races = interacialDatingPreferences;
             user.isProfileCompleted = true;
             const savedUser = await user.save();
             if(!savedUser){
@@ -183,12 +183,15 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
+        console.log('Running getMessagesFromSender');
         console.log('Sender Id: '+ msgSender._id)
         console.log('Reciver Id: '+ user._id)
         let messagesThread;
-        const messagesThreadOne = await Message.find({'sender.id': user._id}, {'recipient.id': msgSender._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-        const messagesThreadTwo = await Message.find({'sender.id': msgSender._id}, {'recipient.id': user._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-        //const messages = await Message.find({recipient: {id: msgSender._id}});
+        const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+
+        console.log(`messagesThreadOne: ${JSON.stringify(messagesThreadOne)}`);
+        //console.log(`messagesThreadTwo: ${JSON.stringify(messagesThreadTwo)}`);
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
           let aDate = new Date(a.date);
@@ -294,8 +297,8 @@
              id: mongoose.Types.ObjectId(receiverOfMessage._id),
              imageSrc: recieverImg,
              username: receiverOfMessage.username,
-             random: sender.random,
-             gender: sender.gender
+             random: receiverOfMessage.random,
+             gender: receiverOfMessage.gender
             },
            date: new Date(),
            unread: true,

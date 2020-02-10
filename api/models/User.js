@@ -66,12 +66,14 @@ const UserSchema = new Schema({
     postalCode: {
         type: String
     },
-
+    city: {
+       type: String
+    },
     state: {
         type: String
     },
 
-    martialStatus:{
+    maritalStatus:{
         type: String
     },
 
@@ -145,17 +147,6 @@ const UserSchema = new Schema({
             }
         ]
     },
-    // inbox: {
-    //     messages: [
-    //         {
-    //             messageId: {type: Schema.Types.ObjectId},
-    //             from: {type: Schema.Types.ObjectId, ref: 'User', required: true },
-    //             content: {type: String, required: true},
-    //            // unread: {type: Boolean, required: true},
-    //             date: {type: Date}
-    //         }
-    //     ]
-    // },
     images: {
         imagePaths: [
             {
