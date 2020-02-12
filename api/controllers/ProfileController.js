@@ -466,16 +466,16 @@
                 return res.status(422).json({message: 'An error occured'});
             }
             const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
-               return  user.blockedUsers.users.map(a =>{
-                return a.userId.toString() && self.blockedUsers.users.indexOf(a.userId) == -1;
+               return self.blockedUsers.users.indexOf(user._id) == -1 &&  user.blockedUsers.users.map(a =>{
+                return a.userId.toString();
                }).indexOf(userWhoIsSearching) == -1;
             })
 
-            const filteredUsersIhaveNotBlocked = filteredUsersWhoAreNotBlocked.filter( user => {
-              return  user.blockedUsers.users.map(a =>{
-               return a.userId.toString();
-              }).indexOf(userWhoIsSearching) == -1;
-           })
+          //   const filteredUsersIhaveNotBlocked = filteredUsersWhoAreNotBlocked.filter( user => {
+          //     return  user.blockedUsers.users.map(a =>{
+          //      return a.userId.toString();
+          //     }).indexOf(userWhoIsSearching) == -1;
+          //  })
               // and filter them out of users search
               // and filter the user who is searching
             // const filteredForUserWhoIsSearching = filteredUsersWhoAreNotBlocked.filter(user  =>{
