@@ -11,7 +11,7 @@ const MessageSchema = new Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            index: true
+            // index: true
         },
         username: {
             type: String,
@@ -33,7 +33,7 @@ const MessageSchema = new Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            index: true
+            // index: true
         },
         username: {
           type: String,

@@ -184,7 +184,7 @@ import eventBus from '../../middleware/eventBus/index'
         if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
         if(this.formData.state) formSubmitData.state =  this.formData.state;
         if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
-        if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode;
+        if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode.trim();
         if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){

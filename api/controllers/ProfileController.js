@@ -414,7 +414,7 @@
        async generalUsersSearch(req, res, next){
 
            const userWhoIsSearching = req.userId;
-           const self = await User.findOne({_id: req.userId});
+           const self = await User.findOne({_id: userWhoIsSearching});
             // Get user search parameters
             const {
               gender,
@@ -455,9 +455,11 @@
               return res.status(422).json({message: 'There was an error retrieving zipcodes'});
             }
 
-           // let checkBlocked =  {"blockedUsers.users": {$nin: [mongoose.Types.ObjectId(req.userId)]}};
+            // let checkIfYouAreBlocked =  {"blockedUsers.users": { $elemMatch: { $ne: mongoose.Types.ObjectId(userWhoIsSearching) } }};
+            let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}};
+            //let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}; test if user is in block list
             let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
-            findParams = {...findParams, ...checkUserSame}
+            findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]}
             console.log(`Final Find params before send: ${JSON.stringify(findParams)}`);
             const searchedUsers = await User.find(findParams)
             // Return searched for users
@@ -465,11 +467,11 @@
             if(!searchedUsers){
                 return res.status(422).json({message: 'An error occured'});
             }
-            const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
-               return self.blockedUsers.users.indexOf(user._id) == -1 &&  user.blockedUsers.users.map(a =>{
-                return a.userId.toString();
-               }).indexOf(userWhoIsSearching) == -1;
-            })
+            // const filteredUsersWhoHaveNotBlockedMe = searchedUsers.filter( user => {
+            //     return user.blockedUsers.users.map(a =>{
+            //     return a.userId.toString();
+            //    }).indexOf(userWhoIsSearching) == -1;
+            // })
 
           //   const filteredUsersIhaveNotBlocked = filteredUsersWhoAreNotBlocked.filter( user => {
           //     return  user.blockedUsers.users.map(a =>{
@@ -483,7 +485,7 @@
             // })
 
            // const userSearchResults = filteredForUserWhoIsSearching;
-            return res.status(200).json({users: filteredUsersWhoAreNotBlocked});
+            return res.status(200).json({users: searchedUsers});
        },
 
        async advancedUsersSearch(req, res, next){
