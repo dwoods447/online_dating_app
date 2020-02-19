@@ -2,7 +2,7 @@
   <div>
     <section>
       <div style="width: 40%; margin: 0 auto;">
-          <h3>Messages thread from:  {{this.$route.params.username}}</h3>
+          <!-- <h3>Messages thread from:  {{this.$route.params.username}}</h3> -->
 
             <ul>
               <li v-for="(message, i) in usersMessages" :key="message.recipient.id+'-'+i">

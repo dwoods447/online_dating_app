@@ -1,18 +1,13 @@
 <template>
   <div>
-      <nav class="nav nav-tabs" style="width: 45%; margin: 0 auto;">
+      <nav class="nav nav-tabs" style="width: 60%; margin: 0 auto;">
         <li class="nav-item" @click="setActiveLink('isShowHome')">
-           <!-- <a href="" class="nav-link">Inbox</a> -->
            <nuxt-link :class="[{active: isShowHome},'nav-item', 'nav-link']"  to="/" v-if="this.$store.getters.isAutheticated">Home</nuxt-link>
-
         </li>
         <li class="nav-item" @click="setActiveLink('isShowInbox')">
-           <!-- <a href="" class="nav-link">Inbox</a> -->
            <nuxt-link :class="[{active: isShowInbox},'nav-item', 'nav-link']"  to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
-
         </li>
         <li class="nav-item" @click="setActiveLink('isShowPhotos')">
-          <!-- <a href="" class="nav-link">Search</a> -->
            <nuxt-link :class="[{active: isShowPhotos},'nav-item', 'nav-link']"  to="/photos" v-if="this.$store.getters.isAutheticated">My Photos</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowSearch')">
@@ -38,7 +33,7 @@
 <script>
 import eventBus from '../middleware/eventBus/index'
   export default {
-    creted(){
+    created(){
       eventBus.$on('setActiveLink', (activeChoice)=>{
           if(activeChoice === 'isShowHome'){
               this.isShowHome = true;
@@ -192,7 +187,8 @@ import eventBus from '../middleware/eventBus/index'
 </script>
 
 <style scoped>
- /* li.nav-item{
-   margin: 14px;
- } */
+ li.nav-item{
+   display: block;
+   margin: 2px;
+ }
 </style>

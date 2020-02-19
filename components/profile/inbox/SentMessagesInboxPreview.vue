@@ -21,7 +21,7 @@
 
 
                         </div>
-                      <div>{{ this.sender }}</div>
+                      <div>{{ this.reciever }}</div>
                   </div>
                   <div class="col-lg-6">
                       {{ this.content | filterPreview }}&nbsp;&nbsp;<strong>( {{ this.messageLength }})</strong>
@@ -36,7 +36,7 @@
 <script>
 import UserProfileService from '../../../middleware/services/UserProfileService'
   export default {
-    props: ['imageSrc', 'sender', 'reciever', 'content', 'messageLength', 'date', 'thread', 'senderId', 'gender', 'random'],
+    props: ['imageSrc', 'sender', 'reciever', 'content', 'messageLength', 'date', 'thread', 'senderId', 'recieverId', 'gender', 'random'],
     created(){
     },
     filters :{
@@ -69,10 +69,10 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
         viewMessageThread(){
           let routeParams = {
             thread: this.thread,
-            senderId: this.senderId
+            recieverId: this.recieverId
           }
-              this.changeUnreadStatus();
-              this.$router.push({path: `/message/${this.senderId}/${this.sender}`, params: {routeParams}});
+              //this.changeUnreadStatus();
+              this.$router.push({path: `/message/${this.recieverId}/${this.reciever}`, params: {routeParams}});
               // this.$router.push({path: '/profile/'+ id, params: {id: id, userProfile: profile}});
         },
 

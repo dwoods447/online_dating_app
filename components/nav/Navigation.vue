@@ -3,20 +3,6 @@
     <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top navbar-expand-lg">
      <nuxt-link to="/" class="navbar-brand">ImSeekingGeeks.com</nuxt-link>
-    <!-- <div class="container">
-      <a class="navbar-brand" href="#">Websitename.com</a>
-           <nuxt-link to="/">
-           Home
-           <span class="sr-only">(current)</span>
-           </nuxt-link>
-            <nuxt-link class="nav-link" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
-            <nuxt-link class="nav-link" to="/basicsearch" v-if="this.$store.getters.isAutheticated">Search</nuxt-link>
-            <nuxt-link  to="/login" class="btn btn-primary" v-if="!this.$store.getters.isAutheticated">Login</nuxt-link>
-            <nuxt-link  to="/signup" class="btn btn-primary" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
-            <a href="#" class="nav-link" @click="goToEditUsersProfile"  v-if="this.$store.getters.isAutheticated" >Edit Profile</a>
-            <nuxt-link  class="nav-link" to="/signup" v-if="this.$store.getters.getLoggedInUsername">Welcome, {{ this.$store.getters.getLoggedInUsername}}</nuxt-link>
-            <a class="btn btn-primary" v-if="this.$store.getters.isAutheticated" @click="logOut">Log Out</a>
-    </div> -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,9 +31,6 @@
     </ul>
   </div>
   </nav>
-
-
-
   </div>
 </template>
 <script>

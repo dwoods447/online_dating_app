@@ -14,6 +14,7 @@
             :date="message.messageContent[0].date|dateFilter"
             :thread="message"
             :senderId="message._id.from"
+            :recieverId="message._id.to"
             :gender="message.messageContent[0].receiverGender"
             :random="message.messageContent[0].random"
             :class="{unread: message.messageContent[message.messageContent.length - 1].unread}"

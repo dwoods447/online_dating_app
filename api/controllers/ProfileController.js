@@ -69,6 +69,7 @@
             income,
             doesDateInteracially,
             interacialDatingPreferences,
+            raceDatingPreferences,
             isProfileCompleted
         } = req.body;
 
@@ -87,7 +88,7 @@
             if(postalCode) user.postalCode = postalCode;
             if(state) user.state = state;
             if(maritalStatus) user.maritalStatus = maritalStatus;
-            if(hasChildren == null || hasChildren !== '') user.hasChildren = true;
+            if(hasChildren !== null || hasChildren !== '') user.hasChildren = true;
             if(doesSmoke !== null || doesSmoke !== '') user.doesSmoke = true;
             if(doesDoDrugs !== '' || doesDoDrugs !== null) user.doesDoDrugs = true;
             if(doesDrink !== '' || doesDrink !== null) user.doesDrink = true;
@@ -101,6 +102,7 @@
             if(income) user.income = income;
             if(doesDateInteracially) user.doesDateInteracially = true;
             if(doesDateInteracially && interacialDatingPreferences.length > 0) user.interacialDatingPreferences.races = interacialDatingPreferences;
+            if(raceDatingPreferences.length > 0)user.raceDatingPreferences = raceDatingPreferences;
             user.isProfileCompleted = true;
             const savedUser = await user.save();
             if(!savedUser){
@@ -126,17 +128,17 @@
           const {userProfileId } = req.body;
           const currentUser = await User.findById(req.userId);
           if(!currentUser){
-            return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-            const personToRemove = await User.findById(userProfileId);
-            if(!personToRemove){
-              return res.status(404).json({message: 'This user was not found'});
-           }
-           const personRemoved = await currentUser.removeUserFromFavorites(personToRemove);
-           if(!personRemoved){
-              return res.status(422).json({message: 'User not removed!'});
-           }
-           return res.status(200).json({message: 'User successfully removed from favorites'});
+             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
+         const personToRemove = await User.findById(userProfileId);
+         if(!personToRemove){
+           return res.status(404).json({message: 'This user was not found'});
+        }
+        const personRemoved = await currentUser.removeUserFromFavorites(personToRemove);
+        if(!personRemoved){
+           return res.status(422).json({message: 'User not removed!'});
+        }
+        return res.status(200).json({message: 'User successfully removed from favorites'});
        },
        async getInboxMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});

@@ -33,16 +33,16 @@ import eventBus from '../../../middleware/eventBus/index'
     },
     methods: {
        async sendUserMessage(recieverId){
-          const sent  = await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message});
+          const sent  = (await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message})).data;
           console.log(`${JSON.stringify(sent)}`)
+            this.message = '';
+            this.status = '';
           if(sent.status == 200 && sent.blocked == false){
-              this.message = '';
-              this.status = '';
               this.status = 'Message sent succesfully';
               eventBus.$emit('message-sent');
               console.log(`Emitting message-sent`)
           } else if(sent.blocked == true) {
-            this.message = sent.message;
+            this.status = sent.message;
             this.isBlocked = sent.blocked;
           }
       }
