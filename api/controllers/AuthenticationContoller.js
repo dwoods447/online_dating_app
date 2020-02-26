@@ -151,10 +151,12 @@ module.exports = {
  },
 
  async userLogout(req, res, next){
-     const user1 = await User.findOne({_id: req.userId});
-     if(!user1){
-         return res.status(401).json({message: 'User 1 Not authneticated'});
-     }
+     const { userId } = req.body;
+     console.log(`User logout ID: ${userId}`);
+     const user1 = await User.findOne({_id: userId});
+    //  if(!user1){
+    //      return res.status(401).json({message: 'User 1 Not authneticated'});
+    //  }
      user1.onlineStatus = false;
      const userSaved = user1.save();
      if(!userSaved){

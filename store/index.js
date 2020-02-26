@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Cookie from 'js-cookie'
 import api from '../middleware/services/api/api'
 import UserServiceProfile from '../middleware/services/UserProfileService'
+import AuthService from '../middleware/services/AuthService'
 import cookieparser from 'cookieparser'
 import eventBus from '../middleware/eventBus/index'
 Vue.use(Vuex)
@@ -176,10 +177,11 @@ const createStore = () =>{
           context.dispatch('setLoggedInUserIdAction', user);
           },
 
-          async setOffLineStatus(context){
+          async setOffLineStatus(context, userId){
+            console.log(`User logout ID on client: ${userId.userId}`);
             const user = JSON.parse(localStorage.getItem('user'));
             const token = localStorage.getItem('token');
-            const offline = await api.post('/logout');
+            const offline = await AuthService.signOut(userId);
             return offline;
           },
           setLogOutAction(context){

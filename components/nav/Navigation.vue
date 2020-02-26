@@ -44,15 +44,16 @@ export default {
   },
   methods: {
     async logOut(){
-       this.$store.dispatch('setLogOutAction');
-       eventBus.$emit('setActiceLink', 'isShowHome');
-       this.$router.push({name: 'index'});
-      // const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-      // const offline = await this.$store.dispatch('setOffLineStatus');
-      // if(offline){
-      //     this.$store.dispatch('setLogOutAction');
-      //     this.$router.push({name: 'index'});
-      // }
+      let userId = this.$store.state.userId._id;
+      this.$store.dispatch('setLogOutAction');
+      eventBus.$emit('setActiceLink', 'isShowHome');
+      this.$router.push({name: 'index'});
+      const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+      const offline = await this.$store.dispatch('setOffLineStatus', {userId: userId});
+      if(offline){
+          this.$store.dispatch('setLogOutAction');
+          this.$router.push({name: 'index'});
+      }
     },
     goToEditUsersProfile(){
 

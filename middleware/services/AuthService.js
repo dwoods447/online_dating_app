@@ -7,6 +7,10 @@ export default {
   signUp(formData){
     return api.post('/register', formData)
   },
+  signOut(formData){
+    console.log(`signOut api data ${JSON.stringify(formData)}`);
+    return api.post('/logout', formData)
+  },
   checkEmailUnique(email){
     return api.post('/check/email/unique', email)
   },
