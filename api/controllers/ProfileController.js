@@ -434,8 +434,7 @@
             } = req.body;
             let findParams = {};
             if(gender) findParams.gender = gender;
-          //  if(minAge) findParams.age = {$gt: Number.parseInt(minAge)};
-            // if(maxAge) findParams.maxAge = {$lt: maxAge};
+            if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
             if(raceDatingPreferences) findParams.ethnicity = { $in: raceDatingPreferences };
             if(bodyType) findParams.bodyType = bodyType;
             if(datingIntent) findParams.datingIntent = datingIntent;
@@ -523,8 +522,7 @@
         } = req.body;
         const findParams = {};
         if(gender) findParams.gender = gender;
-        if(minAge) findParams.minAge = minAge;
-        if(maxAge) findParams.maxAge = maxAge;
+        if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
         if(raceDatingPreferences) findParams.ethnicity = { $in: raceDatingPreferences };
         if(bodyType) findParams.bodyType = bodyType;
         if(datingIntent) findParams.datingIntent = datingIntent;

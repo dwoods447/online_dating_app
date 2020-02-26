@@ -123,7 +123,7 @@ const createStore = () =>{
                 return res;
              }
             }catch(err){
-                 let errorMessage = 'Invalid username and password';
+                 let errorMessage = 'Invalid username/password';
                  context.commit('setErrorMessageMutation', errorMessage);
 
             }
