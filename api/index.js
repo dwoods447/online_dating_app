@@ -79,11 +79,12 @@ router.get('/inbox/messages', isAuthenticated, ProfileController.getInboxMessage
 router.get('/sender/:senderId/messages', isAuthenticated, ProfileController.getMessagesFromSender);
 router.get('/sent/messages', isAuthenticated, ProfileController.getSentMessagesForUser);
 router.get('/profile/views', isAuthenticated, ProfileController.getUserProfileViews);
-// router.get('/add/views', isAuthenticated, ProfileController.addUserProfileViews);
+router.get('/user-list/blocked', isAuthenticated, ProfileController.getUsersInBlockList);
+router.get('/user-list/favorites', isAuthenticated, ProfileController.getUsersInFavoriteList);
 router.get('/view/random/users', ProfileController.getRandomUsersInAuthUsersPostalCode);  // tested || works but need to adjust
 router.post('/user/update/userprofile', isAuthenticated, ProfileController.updateExtendedUserProfile);  // tested
-router.post('/favorites/add', isAuthenticated, ProfileController.addUserToFavorites);
-router.post('/favorites/remove', isAuthenticated, ProfileController.removeUserFromFavorites);
+router.post('/add/favorites', isAuthenticated, ProfileController.addUserToFavorites);
+router.post('/remove/favorites', isAuthenticated, ProfileController.removeUserFromFavorites);
 router.post('/user/block/add', isAuthenticated, ProfileController.addUserToBlockList);  // tested
 router.post('/user/block/remove', isAuthenticated, ProfileController.removeUserFromBlockList);
 router.post('/send/message', isAuthenticated, ProfileController.sendMessageToInbox); // tested

@@ -66,6 +66,17 @@ const createStore = () =>{
             if(state.userId !== null){
               return state.userId.isProfileCompleted;
             }
+          },
+
+          hasImages(state){
+            if(state.userId !== null){
+               if(state.userId.images){
+                 if(state.userId.images.imagePaths.length > 0){
+                    return state.userId.images.imagePaths;
+                 }
+               }
+            }
+            return false;
           }
       },
       actions :{
@@ -211,6 +222,13 @@ const createStore = () =>{
             if(userAddedToFavoritesList.message === 'User added to favorites successfully!'){
             }
              return userAddedToFavoritesList;
+          },
+
+          async removeUserFromFavoritesAction(context, userId){
+            const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+            const userRemovedFromFavoritesList = (await UserServiceProfile.removeUserFromFavoriteList(userId)).data;
+             console.log(`Remove Favorites Repsonse in store: ${JSON.stringify(userRemovedFromFavoritesList)}`);
+             return userRemovedFromFavoritesList;
           },
 
           async getUserDetailsAction(context, userId){

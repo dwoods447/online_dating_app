@@ -37,11 +37,11 @@ export default {
   },
 
   addUserToFavoriteList(userToAdd){
-    return api.post('/favorites/add', userToAdd);
+    return api.post('/add/favorites', userToAdd);
   },
 
   removeUserFromFavoriteList(userToRemove){
-    return api.post('/favorites/remove', userToRemove);
+    return api.post('/remove/favorites', userToRemove);
   },
 
   sendUserMessage(messageDetails){
@@ -77,6 +77,14 @@ export default {
 
   getSentMessagesForUser(){
     return api.get('/sent/messages');
+  },
+
+  getUsersInFavoriteList(){
+    return api.get('/user-list/favorites');
+  },
+
+  getUserInBlockList(){
+    return api.get('/user-list/blocked');
   }
 
 

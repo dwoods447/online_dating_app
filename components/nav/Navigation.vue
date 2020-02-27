@@ -21,7 +21,27 @@
       <li class="nav-item dropdown" v-if="this.$store.getters.isAutheticated">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" href="javascript:void(0);">
-          <i class="fas fa-user"></i>&nbsp;&nbsp;  Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>
+
+       <div v-if="this.$store.getters.hasImages" style="display: inline-block;">
+        <div v-if="this.$store.state.userId.random === 'true'">
+          <div v-if="this.$store.state.userId.gender === 'male'">
+                 <img :src="this.$store.getters.hasImages[0].path|maleImageSrcFilter" alt="" class="login-photo">
+          </div>
+           <div v-if="this.$store.state.userId.gender === 'female'">
+                <img :src="this.$store.getters.hasImages[0].path|femaleImageSrcFilter" alt="" class="login-photo">
+          </div>
+           <div v-if="this.$store.state.userId.gender === 'trans-male'" >
+                 <img :src="this.$store.getters.hasImages[0].path|transMaleImageSrcFilter" alt="" class="login-photo">
+          </div>
+           <div v-if="this.$store.state.userId.gender === 'trans-female'">
+                <img :src="this.$store.getters.hasImages[0].path|transFemaleImageSrcFilter" alt="" class="login-photo">
+          </div>
+        </div>
+        <div v-if="this.$store.state.userId.random === 'false'">
+             <img :src="this.$store.getters.hasImages[0].path|imageSrcFilter" alt="" class="login-photo">
+        </div>
+
+       </div><!-- <i class="fas fa-user"></i>--> Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>&nbsp;&nbsp;
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" >
           <nuxt-link class="dropdown-item" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
           <a href="#" class="dropdown-item" @click="goToEditUsersProfile"  v-if="this.$store.getters.isAutheticated" >Edit Profile</a>
@@ -59,6 +79,28 @@ export default {
 
           this.$router.push({path: '/edituserprofile', params: {user: this.$store.state.userId}});
     },
+  },
+  filters:{
+      imageSrcFilter(src){
+         return '../uploads/'+src;
+      },
+      maleImageSrcFilter(src){
+        return '../random-users/men/'+ src;
+      },
+      femaleImageSrcFilter(src){
+         return '../random-users/women/'+ src;
+      },
+      transMaleImageSrcFilter(src){
+         return '../random-users/men/'+ src;
+      },
+      transFemaleImageSrcFilter(src){
+        return '../random-users/women/'+ src;
+      },
   }
 }
 </script>
+<style>
+.login-photo{
+  max-width: 30px;
+}
+</style>

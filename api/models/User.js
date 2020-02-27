@@ -373,7 +373,7 @@ UserSchema.methods.addUserToFavorites = function(userId){
 
 UserSchema.methods.removeUserFromFavorites = function(user){
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
-                return user._id.toString() ===  searchedUser._id.toString();
+                return user._id.toString() ===  searchedUser.userId.toString();
         });
 
         const updatedFavorites = [...this.favorites.users];

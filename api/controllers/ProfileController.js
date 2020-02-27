@@ -147,7 +147,7 @@
         if(!personRemoved){
            return res.status(422).json({message: 'User not removed!'});
         }
-        return res.status(200).json({message: 'User successfully removed from favorites'});
+        return res.status(200).json({message: 'User successfully removed from favorites', favorites: currentUser.favorites.users});
        },
        async getInboxMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});
@@ -431,9 +431,9 @@
               gender,
               minAge,
               maxAge,
-              raceDatingPreferences,
               bodyType,
               datingIntent,
+              ethnicity,
               highestEducation,
               onlineStatus,
               city,
@@ -444,7 +444,7 @@
             let findParams = {};
             if(gender) findParams.gender = gender;
             if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
-            if(raceDatingPreferences) findParams.ethnicity = { $in: raceDatingPreferences };
+            if(ethnicity) findParams.ethnicity = { $in: ethnicity };
             if(bodyType) findParams.bodyType = bodyType;
             if(datingIntent) findParams.datingIntent = datingIntent;
             if(highestEducation) findParams.highestEducation = highestEducation;
@@ -715,6 +715,35 @@
         const readMessage = await message.markUserMessageAsRead(messageId);
        },
 
+       async getUsersInBlockList(req, res, next){
+          console.log(`Getting Block List ....`);
+          try {
+            let usersInBlockedList = [];
+            const user = await User.findById(req.userId).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+            if(!user){
+              return res.status(500).json({message: "User not found!"});
+            }
+            usersInBlockedList = user.blockedUsers.users;
+             return res.status(200).json({blockList: usersInBlockedList});
+          } catch(err){
+            next(err)
+          }
+       },
 
+
+       async getUsersInFavoriteList(req, res, next){
+        console.log(`Getting Favorite List ....`);
+        try {
+          let userInFavoritesList = [];
+          const user = await User.findById(req.userId).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+          if(!user){
+            return res.status(500).json({message: "User not found!"});
+          }
+          userInFavoritesList = user.favorites.users;
+          return res.status(200).json({favoriteList: userInFavoritesList});
+        } catch(err){
+          next(err)
+        }
+       }
    }
 

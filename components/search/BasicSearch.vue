@@ -2,6 +2,9 @@
   <div>
             <form @submit.prevent="search">
               <div class="row">
+                <p class="error">{{ errorMessage }}</p>
+              </div>
+              <div class="row">
                 <div class="col-sm-3">
                   <label for="">Min Age</label>
                   <select name="minAge" class="form-control" v-model="formData.minAge">
@@ -45,7 +48,7 @@
                 <div class="col-sm-3">
                      <label for="">State</label>
                       <select name="states" id="" class="form-control" v-model="formData.state">
-                        <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}-{{state.abbreviation}}</option>
+                        <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}</option>
                    </select>
                </div>
                 <div class="col-sm-3">
@@ -168,8 +171,9 @@ import eventBus from '../../middleware/eventBus/index'
               bodyType: '',
               milesFrom: '',
               postalCode: ''
-            }
+            },
 
+            errorMessage: '',
 
       }
     },
@@ -192,6 +196,8 @@ import eventBus from '../../middleware/eventBus/index'
             if(searchResults.data.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.data.users});
             }
+         } else {
+            this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles)."
          }
       }
 
@@ -208,6 +214,8 @@ import eventBus from '../../middleware/eventBus/index'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.error{
+  color :red;
+}
 </style>

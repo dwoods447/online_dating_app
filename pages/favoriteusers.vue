@@ -2,8 +2,9 @@
   <div>
      <h2>Favorite Users</h2>
       <section>
-        <div>
-
+        <div v-for="favorite in allFavorites" :key="favorite._id" style="margin: 10px; display: inline-block;">
+          <ProfilePreview   :profile="favorite.userId"  ></ProfilePreview>
+          <div><a href="javascript:void(0);" @click="removeFromFavorites(favorite._id)"><span style="color: red;">Remove From Favorites</span></a></div>
         </div>
       </section>
   </div>
@@ -14,10 +15,38 @@
   import ProfilePreview from '../components/profile/preview/ProfilePreview'
   export default {
     middleware: ['check-auth', 'auth', 'check-profile'],
+    components: { ProfilePreview },
+    created(){
+        this.getFavoriteUsersInList()
+    },
     data(){
       return {
-
+          favoritesList: [],
       }
+    },
+    methods:{
+        async getFavoriteUsersInList(){
+             const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+            const favoriteList = (await UserProfileService.getUsersInFavoriteList()).data
+            if(favoriteList){
+                this.favoritesList = favoriteList.favoriteList;
+            }
+        },
+
+        async removeFromFavorites(userId){
+          let userToRemove = {userProfileId: userId};
+          console.log(`Removed Favorite with ID: ${JSON.stringify(userId)}`);
+          const updatedFavorites = this.$store.dispatch('removeUserFromFavoritesAction', userToRemove);
+          console.log(`Removed Favorites Response: ${JSON.stringify(updatedFavorites)}`);
+                // if(updatedFavorites){
+                //   updatedFavorites.favorites = this.favoritesList
+                // }
+        }
+    },
+    computed: {
+       allFavorites(){
+         return this.favoritesList;
+       }
     }
   }
 </script>
