@@ -101,9 +101,18 @@
             if(longestRelationShip) user.longestRelationShip = longestRelationShip;
             if(income) user.income = income;
             if(doesDateInteracially) user.doesDateInteracially = true;
-            if(doesDateInteracially && interacialDatingPreferences.length > 0) user.interacialDatingPreferences.races = interacialDatingPreferences;
-            if(raceDatingPreferences.length > 0)user.raceDatingPreferences = raceDatingPreferences;
+            if(doesDateInteracially && interacialDatingPreferences) {
+              if(interacialDatingPreferences.length > 0){
+                user.interacialDatingPreferences.races = interacialDatingPreferences;
+              }
+            };
+            if(raceDatingPreferences){
+              if(raceDatingPreferences.length > 0){
+                user.raceDatingPreferences.races = raceDatingPreferences;
+              }
+            };
             user.isProfileCompleted = true;
+            console.log(`Updating user information on server: ${JSON.stringify(user)}`);
             const savedUser = await user.save();
             if(!savedUser){
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-     <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile</h2>
+     <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile  ----</h2>
      <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your main picture:
           <div v-if="randomVal === 'true'">
@@ -148,20 +148,81 @@
          </div>
 
 
-           <div class="form-group">
+
+
+           <!-- <div class="form-group">
             <div class="row">
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6"></div>
+            </div>
+         </div> -->
+
+               <h2>Dating Preferences</h2>
+          <hr/>
+           <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Do you date interracially?</label>
+                  <select class="form-control"  v-model="doesDateInteracially" @change="showInterracialChoices">
+                    <option v-for="(option, i) in doesDateInteraciallyChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                  </select>
+               </div>
+                <div class="col-sm-6">
+                  <div v-if="displayInterracialChoices">
+                     <label for="">Im interested in the follwing races:</label>
+                            <multiselect
+                            v-model="interacialDatingPreferences"
+                            :options="ethnicities"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
+                          </multiselect>
+                  </div>
+
+                </div>
             </div>
          </div>
 
            <div class="form-group">
             <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                   <label for="">Im prefer:</label>
+                            <multiselect
+                            v-model="selectedGenders"
+                            :options="genders"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ gender }"><strong>{{ gender.name }}</strong></template>
+                    </multiselect>
+                </div>
+                <div class="col-sm-6">
+                    <label for="">I will date someone with marital status of:</label>
+                      <multiselect
+                            v-model="selectedMaritalStatuses"
+                            :options="maritalStatuses"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ status }"><strong>{{ status.name }}</strong></template>
+                    </multiselect>
+                </div>
             </div>
          </div>
 
+
+
+           <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                   <label for="">I prefer the following races:</label>
+                           <multiselect
+                            v-model="raceDatingPreferences"
+                            :options="ethnicities"
+                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
+                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
+                          </multiselect>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+         </div>
 
          <button class="btn btn-primary">Update Your Profile </button>
        </form>
@@ -289,7 +350,8 @@
             </div>
          </div>
 
-
+          <h2>Dating Preferences</h2>
+          <hr/>
            <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
@@ -358,7 +420,7 @@
 
 
 
-         <div class="form-group">
+         <!-- <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
 
@@ -367,52 +429,9 @@
 
                 </div>
             </div>
-         </div>
+         </div> -->
 
 
-
-
-
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-
-                </div>
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-         </div>
-
-
-
-
-
-          <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-
-                </div>
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-         </div>
-
-
-
-
-
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-
-                </div>
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-         </div>
 
 
 
@@ -625,7 +644,7 @@
          profession: this.$store.state.userId.profession || '',
          city: this.$store.state.userId.city,
          doesDateInteracially: this.$store.state.userId.doesDateInteracially,
-         interacialDatingPreferences: this.$store.state.userId.interacialDatingPreferences.races || [],
+         interacialDatingPreferences: this.$store.state.userId.interacialDatingPreferences || [],
          secondLanguage: '',
          languages: [
            {name: 'Arabic', value: 'Arabic'},
@@ -656,7 +675,7 @@
               {name: 'Average', value: 'Average'},
               {name: 'A Few Extra Pounds', value: 'A Few Extra Pounds'},
          ],
-          raceDatingPreferences: this.$store.state.userId.raceDatingPreferences.races || [],
+          raceDatingPreferences: this.$store.state.userId.raceDatingPreferences || [],
            ethnicities: [
             {name: 'White/Caucasian', value: 'White/Caucasian', key: 'White/Caucasian'},
             {name: 'Black/African American', value: 'Black/African American', key: 'Black/African American'},
@@ -780,6 +799,7 @@
           if(this.raceDatingPreferences.length > 0) formData.raceDatingPreferences = this.raceDatingPreferences;
             formData.isProfileCompleted = true;
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+            console.log(`Sending udate: ${JSON.stringify(formData, null, 2)}`);
            const updated  = await UserProfileService.updateUserProfile(formData);
            let updatedUser = updated.data.user;
            if(updatedUser){
@@ -790,7 +810,7 @@
               Cookie.set('user', JSON.stringify(updatedUser));
               await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
               eventBus.$emit('setActiveLink', 'isShowSearch');
-              this.$router.push({name: 'basicsearch'});
+              // this.$router.push({name: 'basicsearch'});
            }
       },
 
