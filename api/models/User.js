@@ -200,16 +200,12 @@ UserSchema.methods.addImageToProfile = function(imagePath){
 }
 
 UserSchema.methods.removeImageFromProfile = function(imageId){
-  console.log(`Img id re'vd on server: ${JSON.stringify(imageId)}`)
+
     const targetImg = this.images.imagePaths.find(target =>{
       return target.imageId.toString() === imageId;
     })
-     console.log(`Target img obj: ${JSON.stringify(targetImg)}`)
-     console.log(`Target img obj path: ${JSON.stringify(targetImg.path)}`)
      const imgPth = path.join(__dirname + '/./../../static/uploads/', targetImg.path);
-     console.log(`Path that will be unlinked: ${imgPth}`);
      try{
-       console.log('Deleting file...')
        fs.unlinkSync(imgPth);
      } catch(err){
        console.error(`Error deleting file: ${err}`);
@@ -258,10 +254,9 @@ UserSchema.methods.addProfileViewer = function(userId){
     });
 
     const updatedProfileViews = [...this.profileViews.views];
-    console.log(`User ID rec'vd in profileAdder: ${JSON.stringify(userId)}`)
     if(userProfileIndex === -1 && this._id.toString() !== userId){
              // User is not in list of profile viewers
-          console.log(`Adding profile view....`);
+
           updatedProfileViews.push({
             userId: mongoose.Types.ObjectId(userId),
             date: new Date()
@@ -332,19 +327,15 @@ UserSchema.methods.removeUserFromBlockList = function(userId){
 
 
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
-  console.log(`Checking if ${userId} is  in the block list`);
+
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-            console.log(`Comparing ${userId} to ${searchedUser.userId.toString()}`);
         return userId.toString() ===  searchedUser.userId.toString();
     });
-    console.log(`Index from search result: ${userBlockedIndex}`);
+
     if(userBlockedIndex !== -1){
-      console.log(`${userId} IS in the block list Blocking...`);
         // User is already in blocked user list
-        console.log(`User with userdId: ${userId} is blocked by ${this._id.toString()}`);
         return true;
     }
-    console.log(`${userId} is NOT in the block list`);
     return false;
 }
 

@@ -25,10 +25,8 @@
       async getUserProfileViews(){
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         const userViews = (await UserProfileService.getUserProfileViews()).data
-        //console.log(`Profile Views Response: ${JSON.stringify(userViews)}`)
         if(userViews.views){
           this.views = userViews.views.profileViews.views;
-         console.log(`Profile Views Response: ${JSON.stringify(this.views, null ,2)}`)
         }
       }
     }

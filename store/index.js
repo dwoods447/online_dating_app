@@ -21,7 +21,7 @@ const createStore = () =>{
         },
 
         alertProfileIncomplete(state){
-          console.log('prilile not complet ein store')
+
         },
         clearToken (state){
           state.token = null;
@@ -96,7 +96,6 @@ const createStore = () =>{
 
                 } catch (err) {
                   // No valid cookie found
-                  console.log(`Error parsing cookie ${err}`);
                 }
               }
             }
@@ -149,7 +148,6 @@ const createStore = () =>{
             context.commit('setAuthTokenMutation', token);
           },
           setLoggedInUserIdAction(context, userId){
-            console.log(`loggeInUserAction: ${JSON.stringify(userId)}`);
             context.commit('setLoggedInUserIdMutation', userId);
           },
           setLogOutTimerAction(context, duration){
@@ -189,7 +187,6 @@ const createStore = () =>{
           },
 
           async setOffLineStatus(context, userId){
-            console.log(`User logout ID on client: ${userId.userId}`);
             const user = JSON.parse(localStorage.getItem('user'));
             const token = localStorage.getItem('token');
             const offline = await AuthService.signOut(userId);
@@ -227,16 +224,15 @@ const createStore = () =>{
           async removeUserFromFavoritesAction(context, userId){
             const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
             const userRemovedFromFavoritesList = (await UserServiceProfile.removeUserFromFavoriteList(userId)).data;
-             console.log(`Remove Favorites Repsonse in store: ${JSON.stringify(userRemovedFromFavoritesList)}`);
              return userRemovedFromFavoritesList;
           },
 
           async getUserDetailsAction(context, userId){
-            console.log(`Getting user details through store`);
+
             let userReturned;
             const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
             const userDetails = (await UserServiceProfile.getUserDetails(userId)).data;
-            console.log(`Data retunred in store ${JSON.stringify(userDetails)}`);
+
             if(userDetails.blocked == true){
               this.$router.push({path: '/blocked'})
               return userReturned;

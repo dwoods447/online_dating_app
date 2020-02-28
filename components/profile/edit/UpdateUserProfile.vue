@@ -437,7 +437,7 @@
 
 
 
-          <button class="btn btn-primary" style="width: 100%;">Update Your Profile </button>
+          <button class="btn btn-primary" style="width: 100%;" :disabled="onReadySubmit">Update Your Profile </button>
       </form>
      </div>
 
@@ -511,6 +511,7 @@
     },
     data(){
       return {
+         onReadySubmit: false,
          user: null,
          agePreferences: '',
          heightPreferences: '',
@@ -703,7 +704,6 @@
     },
     filters: {
       imageSrcFilter(src){
-        console.log('Filter src: '+ src);
         if(src){
           return 'uploads/'+ src
         }
@@ -723,11 +723,9 @@
       }
     },
     computed: {
-      fullImageSrc: function(){
+      fullImageSrc(){
         if(this.$store.state.hasOwnProperty("userId") && this.$store.state.userId !== {} || this.$store.state.userId !== null){
-          console.log('UserId obj is defined.');
           if(this.imagePaths.length > 0){
-             console.log('images key exits on userId obj');
               return this.url = this.imagePaths[0].path;
           }
         }
@@ -753,7 +751,6 @@
           const userReturned = (await UserProfileService.getUserDetails(userId)).data;
           if(userReturned){
             this.user = userReturned;
-            console.log(`Setting logged in user: ${JSON.stringify(this.user)}`);
             this.$store.dispatch('setLoggedInUserIdAction', this.user.user);
 
           }
@@ -770,7 +767,8 @@
       //     const uploadImg = await UserProfileService.uploadImg(formData);
       // },
       async updateExtentedUserProfile(){
-
+          this.onReadySubmit = true;
+          console.log(`updating profile....`);
          let formData = {};
           if(this.genderSeeking.length > 0) formData.seekingGender = this.genderSeeking;
           if(this.datingIntent) formData.datingIntent = this.datingIntent;
@@ -799,19 +797,19 @@
           if(this.raceDatingPreferences.length > 0) formData.raceDatingPreferences = this.raceDatingPreferences;
             formData.isProfileCompleted = true;
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-            console.log(`Sending udate: ${JSON.stringify(formData, null, 2)}`);
            const updated  = await UserProfileService.updateUserProfile(formData);
            let updatedUser = updated.data.user;
            if(updatedUser){
-             console.log(`Updated ${JSON.stringify(updatedUser)}`);
               localStorage.removeItem('user');
               Cookie.remove('user');
               localStorage.setItem('user', JSON.stringify(updatedUser));
               Cookie.set('user', JSON.stringify(updatedUser));
               await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
               eventBus.$emit('setActiveLink', 'isShowSearch');
-              // this.$router.push({name: 'basicsearch'});
+              this.onReadySubmit = false;
+              this.$router.push({name: 'basicsearch'});
            }
+
       },
 
 

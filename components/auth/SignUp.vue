@@ -74,7 +74,6 @@ import AuthService from '../../middleware/services/AuthService'
     methods: {
       async checkUsername(){
         this.errorMessage = '';
-        console.log(`User entered: ${this.formData.username}`);
         let username = {
           username: this.formData.username
         }
@@ -85,7 +84,6 @@ import AuthService from '../../middleware/services/AuthService'
       },
        async checkEmail(){
          this.errorMessage = '';
-        console.log(`User entered: ${this.formData.username}`);
         let email = {
           email: this.formData.email
         }

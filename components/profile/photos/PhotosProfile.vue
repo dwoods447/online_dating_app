@@ -32,7 +32,6 @@
       this.gender = this.user.gender;
       this.random = this.user.random;
       this.images = this.user.images.imagePaths;
-      console.log(`Photos for user: ${JSON.stringify(this.images)}`)
     },
     data(){
       return {

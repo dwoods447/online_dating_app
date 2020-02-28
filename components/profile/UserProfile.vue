@@ -163,7 +163,6 @@ import AddUserToFavoritesListButton from '../../components/profile/actions/AddUs
     },
     mounted(){
         //this.getUserDetails(this.userId);
-        console.log(`User Details in UserProfile ${JSON.stringify(this.user)}`);
         this.userReturned = this.user;
         this.images = this.user.images.imagePaths;
     },

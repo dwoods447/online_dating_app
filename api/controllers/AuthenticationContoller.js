@@ -152,7 +152,6 @@ module.exports = {
 
  async userLogout(req, res, next){
      const { userId } = req.body;
-     console.log(`User logout ID: ${userId}`);
      const user1 = await User.findOne({_id: userId});
     //  if(!user1){
     //      return res.status(401).json({message: 'User 1 Not authneticated'});

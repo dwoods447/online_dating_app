@@ -26,12 +26,10 @@ import eventBus from '../../middleware/eventBus/index'
     components: { MessageInbox, InboxNavBox, SentMessages },
     created(){
         eventBus.$on('showUserInbox',()=>{
-          console.log('Showing user inbox');
           this.showUserInbox = true;
           this.showUserSentMessages = false;
       })
         eventBus.$on('showUserSentMessages',()=>{
-            console.log('Showing user sent messages');
             this.showUserInbox = false;
             this.showUserSentMessages = true;
         })

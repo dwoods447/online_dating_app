@@ -35,9 +35,7 @@
 
         async removeFromFavorites(userId){
           let userToRemove = {userProfileId: userId};
-          console.log(`Removed Favorite with ID: ${JSON.stringify(userId)}`);
           const updatedFavorites = this.$store.dispatch('removeUserFromFavoritesAction', userToRemove);
-          console.log(`Removed Favorites Response: ${JSON.stringify(updatedFavorites)}`);
                 // if(updatedFavorites){
                 //   updatedFavorites.favorites = this.favoritesList
                 // }

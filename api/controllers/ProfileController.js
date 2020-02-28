@@ -18,23 +18,18 @@
            let projection = {password: 0, email: 0, "favorites.users": 0}
            const userWhoSearching = await User.findOne({_id: userWhoisRequestingSearch}, projection);
            const searchedUser = await User.findOne({_id: userId}, projection);
-
-           console.log(`Searched User On Server: ${JSON.stringify(searchedUser, null, 2)}`);
            if(!searchedUser){
                 return res.status(404).json({message: 'User with that ID not found!'});
             }
           await searchedUser.updateUserAge();
-          console.log(`Checking if your are blocked: ${userWhoisRequestingSearch}`);
+
           const userBlockedYou = await searchedUser.checkIfUserIsBlocked(userWhoisRequestingSearch);
           const youblockedUser = await userWhoSearching.checkIfUserIsBlocked(userId);
-          console.log(`Checking user blocked you: ${userId}`);
+
            if(userBlockedYou || youblockedUser){
             return res.status(200).json({message: 'This user has prohibited you from viewing their users profile', blocked: true});
            }
-           console.log(`User Requesting profile ${userWhoisRequestingSearch}`);
-           console.log(`Incoming userID ${userId}`);
              if(userId !== userWhoisRequestingSearch){
-               console.log(`adding profile viewer`);
                const profileViewAdded = await searchedUser.addProfileViewer(userWhoisRequestingSearch);
              }
        // userDetails = await User.findOne({_id: userId}).select(["-password", "-blockUsers.users", "-profileViews.views", "-favorites.users"]);
@@ -112,7 +107,7 @@
               }
             };
             user.isProfileCompleted = true;
-            console.log(`Updating user information on server: ${JSON.stringify(user)}`);
+
             const savedUser = await user.save();
             if(!savedUser){
 
@@ -154,7 +149,7 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-        console.log(`Getting messages for reciepient with id of ${user._id}`);
+
         const messages = await Message.find({'recipient.id': user._id});
         const myMesages = await Message.aggregate([
           {
@@ -181,7 +176,7 @@
             $sort : { "messageContent.date": -1 }
           }
         ])
-        console.log(`Server messages: ${JSON.stringify(myMesages)}`);
+
         // if(!messages){
         //   return res.status(500).json({message: 'Error retrieving messages'});
         // }
@@ -197,14 +192,12 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-        console.log('Running getMessagesFromSender');
-        console.log('Sender Id: '+ msgSender._id)
-        console.log('Reciver Id: '+ user._id)
+        // console.log('Running getMessagesFromSender');
+        // console.log('Sender Id: '+ msgSender._id)
+        // console.log('Reciver Id: '+ user._id)
         let messagesThread;
         const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
         const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-
-        console.log(`messagesThreadOne: ${JSON.stringify(messagesThreadOne)}`);
         //console.log(`messagesThreadTwo: ${JSON.stringify(messagesThreadTwo)}`);
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
@@ -218,7 +211,7 @@
           }
           return 0;
         })
-          console.log(`Conversations: ${JSON.stringify(messagesThread, null ,2)}`);
+;
         return res.status(200).json({messages: messagesThread});
        },
 
@@ -284,14 +277,9 @@
 
 
          const receiverOfMessage = await User.findById(userProfileId);
-         console.log(`User sent message..Checking block status.....`);
-         console.log(`Sender of message ${sender.username} with id ${sender._id}`);
-         console.log(`Reciever of message ${receiverOfMessage.username} with id ${receiverOfMessage._id}`);
          const userBlockedYou = await receiverOfMessage.checkIfUserIsBlocked(sender._id);
          const youblockedUser = await sender.checkIfUserIsBlocked(receiverOfMessage._id);
 
-         console.log(`If user blocked you: ${userBlockedYou}`);
-         console.log(`If you blocked user: ${youblockedUser}`);
          if(userBlockedYou || youblockedUser){
           statusCode = 200;
           return res.status(200).json({message: 'You are prohibited from sending a message to this user!', statusCode: statusCode, blocked: true});
@@ -349,7 +337,6 @@
             statusCode = 422;
             return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
          }
-         console.log('Message sent');
          statusCode = 200;
          return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
@@ -470,7 +457,6 @@
             //let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}; test if user is in block list
             let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
             findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]}
-            console.log(`Final Find params before send: ${JSON.stringify(findParams)}`);
             const searchedUsers = await User.find(findParams)
             // Return searched for users
             // check is the searching user in on any of ther searched users block list
@@ -637,7 +623,6 @@
          }
 
          let imgLength = user.images.imagePaths.length;
-         console.log('Image length ' + imgLength);
          if(imgLength <= 4){
          // const imageUrl = req.file.path;
           const imageUrl = req.file.filename;
@@ -710,13 +695,12 @@
 
        async markMessageAsRead(req, res, next){
         const { messageId } = req.body;
-        console.log(`Marking message as read, Message Id rec'vd ${JSON.stringify(messageId)}`);
+
         const message = await Message.findById({_id: messageId});
         const readMessage = await message.markUserMessageAsRead(messageId);
        },
 
        async getUsersInBlockList(req, res, next){
-          console.log(`Getting Block List ....`);
           try {
             let usersInBlockedList = [];
             const user = await User.findById(req.userId).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
@@ -732,7 +716,7 @@
 
 
        async getUsersInFavoriteList(req, res, next){
-        console.log(`Getting Favorite List ....`);
+
         try {
           let userInFavoritesList = [];
           const user = await User.findById(req.userId).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});

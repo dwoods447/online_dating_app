@@ -25,16 +25,13 @@
     components: { UserProfile, Tab, PhotosProfile },
     created(){
       eventBus.$on('showUserProfile',()=>{
-          console.log('Showing user profile');
           this.showProfileTab = true;
           this.showPhotoTab = false;
       })
       eventBus.$on('showUserPhotos',()=>{
-          console.log('Showing user photos');
           this.showProfileTab = false;
           this.showPhotoTab = true;
       })
-      console.log(`Preparing user with id: ${this.$route.params.id}`);
       this.getUser(this.$route.params.id);
     },
     data(){
@@ -46,10 +43,10 @@
     },
     methods: {
       async getUser(userId){
-        console.log(`Rec'vd id ${userId}`);
+
          let userData =  await this.$store.dispatch('getUserDetailsAction', userId);
          this.loadedUser = userData;
-         console.log(`Rec'vd user data: ${JSON.stringify(userData)}`);
+
       }
     },
     computed: {

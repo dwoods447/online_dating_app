@@ -73,7 +73,6 @@
         }
       },
       async removeImage(imageId){
-        console.log(`Deleting image with Id: ${imageId}`);
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
           const photoDeleted = await UserProfileService.removeUploadedImg({imageId: imageId});
           if(photoDeleted.data.message ==='Image removed successfully'){

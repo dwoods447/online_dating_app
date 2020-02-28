@@ -36,7 +36,6 @@ import eventBus from '../../../../middleware/eventBus/index'
     },
     created(){
         eventBus.$on('message-sent', ()=>{
-          console.log('Message-sent emit recvd');
           this.getSendersMessages();
         })
         this.getUserMessages();
@@ -83,7 +82,6 @@ import eventBus from '../../../../middleware/eventBus/index'
            const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
            if(messageData.data.messages.length > 0){
               this.senderMessages = messageData.data.messages;
-               console.log(`Message thread returned for user ${JSON.stringify(this.senderMessages, null ,2)}`);
            }
         }
     }
