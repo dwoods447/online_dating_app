@@ -1,11 +1,8 @@
 <template>
   <div>
-        Sent Messages:
-        <!-- <div v-for="message in messages" :key="message._id.to">
-            Reciever: {{ message.messageContent[0].receiver}}<br/>
-            {{ message.messageContent[0].content }}
-        </div> -->
-           <SentMessagesInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
+    <section>
+      <div style="margin: 1em; padding: 1em;">
+          <SentMessagesInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"
             :imageSrc="message.messageContent[0].image"
             :sender="message.messageContent[0].sender"
             :reciever="message.messageContent[0].receiver"
@@ -17,9 +14,12 @@
             :recieverId="message._id.to"
             :gender="message.messageContent[0].receiverGender"
             :random="message.messageContent[0].random"
-            :class="{unread: message.messageContent[message.messageContent.length - 1].unread}"
+            :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread}]"
             >
             </SentMessagesInboxPreview>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -59,6 +59,12 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.thread{
+  max-width: 945px;
+  margin: 0.1em auto;
+  border: 1px solid #2D6BB8;
+  background-color: #eee;
+  padding: 1.1em;
+}
 </style>

@@ -2,9 +2,10 @@
   <div>
     <div class="row">
       <div class="col-lg-12">
-             <div v-if="messages.length <= 0">You have No messages</div>
-            Messages
-            <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"  style="max-width: 945px; margin: 0 auto; border: 1px solid #000; padding: 1.7em;"
+        <section>
+          <div style="margin: 1em; padding: 1em;">
+              <div v-if="messages.length <= 0">You have No messages</div>
+            <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"
             :imageSrc="message.messageContent[0].image"
             :sender="message.messageContent[0].sender"
             :content="message.messageContent[message.messageContent.length - 1].content"
@@ -14,31 +15,12 @@
             :senderId="message._id.from"
             :gender="message.messageContent[0].gender"
             :random="message.messageContent[0].random"
-            :class="{unread: message.messageContent[message.messageContent.length - 1].unread}"
+            :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread} ]"
             >
             </MessageInboxPreview>
 
-
-
-
-
-              <!-- <div v-for="sender in messages" style="width: 90%; margin: 0 auto;">
-                <a href="#">
-                  <div  style="width: 900px; display: block; border: 2px solid #000;  box-shadow: 2px 3px #000; padding: 2em; margin: 10px;">
-                      <div> From: {{ sender.from }} </div>
-                       <div v-for="(message, i) in sender.inbox.messages">
-                      <div v-if="i == 0">{{message.content}}   <span v-if="sender.inbox.messages.length > 1">({{ sender.inbox.messages.length }})</span></div>
-                    </div>
-                  </div>
-                </a>
-             </div> -->
-
-             <div >
-
-                    <br/>
-
-
-             </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -100,8 +82,18 @@ import moment from 'moment'
 </script>
 
 <style scoped>
+.thread{
+  max-width: 945px;
+  margin: 0.1em auto;
+  border: 1px solid #2D6BB8;
+  background-color: #eee;
+  padding: 1.2em;
+}
+.thread > a{
+  color: #fff;
+}
  .unread{
-   background-color: #ee4;
+   background-color: #14ABE0;
    color: #fff;
  }
 </style>

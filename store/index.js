@@ -19,10 +19,6 @@ const createStore = () =>{
         setAuthTokenMutation(state, token){
           state.token = token;
         },
-
-        alertProfileIncomplete(state){
-
-        },
         clearToken (state){
           state.token = null;
           state.userId = null;

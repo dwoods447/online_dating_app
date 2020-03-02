@@ -155,7 +155,7 @@
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
 
-        const messages = await Message.find({'recipient.id': user._id});
+        //const messages = await Message.find({'recipient.id': user._id});
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }

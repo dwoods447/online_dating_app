@@ -3,7 +3,7 @@
       <h2>Blocked Users</h2>
       <section>
         <div v-for="blockedUser in allBlockedUsers" :key="blockedUser._id" style="margin: 10px; display: inline-block;">
-          <ProfilePreview   :profile="blockedUser.userId"  ></ProfilePreview>
+          <ProfilePreview   :profile="blockedUser.userId"></ProfilePreview>
           <div><a href="javascript:void(0);"><span style="color: red;">Remove From Blocked Users</span></a></div>
         </div>
       </section>

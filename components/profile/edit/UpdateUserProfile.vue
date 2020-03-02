@@ -1,6 +1,6 @@
 <template>
   <div>
-     <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile  ----</h2>
+     <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile</h2>
      <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
           Your main picture:
           <div v-if="randomVal === 'true'">
@@ -23,8 +23,8 @@
        </div>
      <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
      <div v-if="this.$store.state.userId">
-          <div v-if="this.$store.state.userId.isProfileCompleted !== true">
-       <form @submit.prevent="updateExtentedUserProfile" style="width: 50%; margin: 0 auto;">
+        <div v-if="this.$store.state.userId.isProfileCompleted !== true">
+         <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
            <div class="form-group">
           <div class="row">
               <div class="col-sm-6">
@@ -228,8 +228,8 @@
        </form>
        </div>
      <div v-else>
-          User has completed profile
-      <form @submit.prevent="updateExtentedUserProfile" style="width: 50%; margin: 0 auto;">
+          <!-- User has completed profile -->
+      <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
         <div class="form-group">
           <div class="row">
               <div class="col-sm-6">
@@ -755,17 +755,6 @@
 
           }
       },
-      // onFileSelect(event){
-      //   this.selectedFile = event.target.files[0];
-      //   if(this.selectedFile){
-      //     //file is selected
-      //   }
-      // },
-      // async onUpload(){
-      //     let formData = new FormData();
-      //     formData.append('image', this.selectedFile, this.selectedFile.name);
-      //     const uploadImg = await UserProfileService.uploadImg(formData);
-      // },
       async updateExtentedUserProfile(){
           this.onReadySubmit = true;
           console.log(`updating profile....`);

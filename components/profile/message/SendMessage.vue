@@ -1,8 +1,8 @@
 <template>
   <div>
 
-       <form @submit.prevent="sendUserMessage(userId)" style="max-width: 20%; margin: 0 auto;">
-       <textarea name="message" id="message" cols="30" rows="10" v-model="message" class="form-control"><slot></slot></textarea>
+       <form @submit.prevent="sendUserMessage(userId)" style="max-width: 40%; margin: 0 auto;">
+       <textarea name="message" id="message" cols="60" rows="10" v-model="message" class="form-control" placeholder="Please enter your message"><slot></slot></textarea>
        <button class="btn btn-success btn-custom" :disabled="isBlocked">Send</button>
        <div>
          <div v-if="status">{{ updateStatus }}</div>
