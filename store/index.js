@@ -223,7 +223,9 @@ const createStore = () =>{
 
           async removeUserFromFavoritesAction(context, userId){
             const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+            console.log(`Removing user ${JSON.stringify(userId)}`);
             const userRemovedFromFavoritesList = (await UserServiceProfile.removeUserFromFavoriteList(userId)).data;
+            console.log(`updated favs in store ${JSON.stringify(userRemovedFromFavoritesList)}`);
              return userRemovedFromFavoritesList;
           },
 

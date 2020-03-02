@@ -12,7 +12,10 @@
         </li>
         <li class="nav-item" @click="setActiveLink('isShowSearch')">
           <!-- <a href="" class="nav-link">Search</a> -->
-           <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Search</nuxt-link>
+           <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Basic Search</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <a href="javascript:void(0)" class="nav-item nav-link">Advanced Search</a>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowProfileViews')">
         <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Profile Views</nuxt-link>

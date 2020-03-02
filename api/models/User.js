@@ -279,7 +279,7 @@ UserSchema.methods.addProfileViewer = function(userId){
 
 UserSchema.methods.addUserToBlockList = function(userId){
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-        return userId ===  searchedUser.userId.toString();
+        return userId === searchedUser.userId.toString();
     });
 
     const updatedBlockedUsers = [...this.blockedUsers.users];
@@ -307,7 +307,6 @@ UserSchema.methods.removeUserFromBlockList = function(userId){
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
         return userId ===  searchedUser._id.toString();
     });
-
     const updatedBlockedUsers = [...this.blockedUsers.users];
     if(userBlockedIndex == -1){
         // User is not in the block list
@@ -340,10 +339,12 @@ UserSchema.methods.checkIfUserIsBlocked = function(userId){
 }
 
 UserSchema.methods.addUserToFavorites = function(userId){
+    console.log(`User Id to add to favorites: ${JSON.stringify(userId)}`);
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
-        return userId ===  searchedUser.userId.toString();
+      console.log(`Comparing ${userId._id.toString()} to ${searchedUser.userId.toString()}`);
+        return userId._id.toString() === searchedUser.userId.toString();
     });
-
+console.log(`User index in array: ${JSON.stringify(userFavoriteIndex) }`)
     const updatedFavorites = [...this.favorites.users];
 
     if(userFavoriteIndex === -1){
@@ -352,34 +353,36 @@ UserSchema.methods.addUserToFavorites = function(userId){
             userId: userId,
         })
     } else {
-        return;
-    }
-
-    const newFavorite = {
-        users:  updatedFavorites
-    }
-    this.favorites =  newFavorite;
+      // User is in favorites list DONT add them
+      return;
+  }
+    this.favorites.users = updatedFavorites;
     return this.save();
 }
 
 UserSchema.methods.removeUserFromFavorites = function(user){
+    console.log(`In removeUserFromFavorites and Removing user ${JSON.stringify(user)}`);
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
-                return user._id.toString() ===  searchedUser.userId.toString();
+                console.log(`Searched user: ${JSON.stringify(searchedUser)}`);
+                console.log(`Testing user: ${user._id.toString()} equal to ${searchedUser.userId.toString()}`);
+                return user._id.toString() === searchedUser.userId.toString();
         });
 
         const updatedFavorites = [...this.favorites.users];
-        if(userFavoriteIndex == -1){
+        console.log(`Array index of favorite ${userFavoriteIndex }`);
+        if(userFavoriteIndex === -1){
             // User was not found the list of favorites
+            console.log(`User was WAS NOT found the list of favorites returning false`);
             return false;
         }
         if(userFavoriteIndex >= 0){
+          console.log(`User WAS found the list of favorites removing`);
             updatedFavorites.splice(userFavoriteIndex, 1);
         }
 
-        const newFavorite = {
-            users:  updatedFavorites
-        }
-        this.favorites =  newFavorite;
+        const newFavorites = updatedFavorites
+
+        this.favorites.users =  newFavorites;
         return this.save();
 }
 

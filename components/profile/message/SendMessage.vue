@@ -5,7 +5,7 @@
        <textarea name="message" id="message" cols="30" rows="10" v-model="message" class="form-control"><slot></slot></textarea>
        <button class="btn btn-success btn-custom" :disabled="isBlocked">Send</button>
        <div>
-         <div v-if="status">{{ status }}</div>
+         <div v-if="status">{{ updateStatus }}</div>
        </div>
       </form>
 
@@ -37,14 +37,19 @@ import eventBus from '../../../middleware/eventBus/index'
           console.log(`${JSON.stringify(sent)}`)
             this.message = '';
             this.status = '';
-          if(sent.status == 200 && sent.blocked == false){
+          if(sent.blocked == false){
               this.status = 'Message sent succesfully';
               eventBus.$emit('message-sent');
               console.log(`Emitting message-sent`)
-          } else if(sent.blocked == true) {
+          } else {
             this.status = sent.message;
             this.isBlocked = sent.blocked;
           }
+      }
+    },
+    computed: {
+      updateStatus(){
+        return this.status;
       }
     }
   }

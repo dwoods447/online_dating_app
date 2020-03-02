@@ -180,6 +180,7 @@ import eventBus from '../../middleware/eventBus/index'
     methods: {
       async search(){
         let formSubmitData = {};
+        this.errorMessage = "";
         if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
         if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
         if(this.formData.gender) formSubmitData.gender =  this.formData.gender;
@@ -192,12 +193,16 @@ import eventBus from '../../middleware/eventBus/index'
         if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
-          const searchResults = await UserProfileService.basicUserSearch(formSubmitData);
-            if(searchResults.data.users.length > 0){
-              eventBus.$emit('search-results', {results: searchResults.data.users});
+          console.log(`Sending data: ${JSON.stringify(formSubmitData, null, 2)}`);
+          const searchResults = (await UserProfileService.basicUserSearch(formSubmitData)).data;
+          console.log(`Search Results ${JSON.stringify(searchResults)}`);
+            if(searchResults.users.length > 0){
+              eventBus.$emit('search-results', {results: searchResults.users});
+            } else {
+               this.errorMessage = "No users found matching search criteria!";
             }
          } else {
-            this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles)."
+            this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles).";
          }
       }
 

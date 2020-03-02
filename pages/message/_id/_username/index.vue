@@ -4,19 +4,31 @@
       <div style="width: 40%; margin: 0 auto;">
           <!-- <h3>Messages thread from:  {{this.$route.params.username}}</h3> -->
 
-            <ul>
-              <li v-for="(message, i) in usersMessages" :key="message.recipient.id+'-'+i">
-
-               <!-- <div v-if="message.sender.id == $store.state.userId._id" style="display: inline-block;">
-                  <p><strong> You:</strong></p>
+            <div>
+              <div v-for="(message, i) in usersMessages" :key="message.recipient.id+'-'+i" :class="[{ 'darker': i % 2 !== 0}, 'message-thread']">
+              <div>
+                <div  v-if="message.sender.random === 'true'">
+                  <div v-if="message.sender.gender === 'male'">
+                     <img :src="message.sender.imageSrc|maleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                  </div>
+                  <div v-if="message.sender.gender === 'female'">
+                     <img :src="message.sender.imageSrc|femaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                  </div>
+                  <div v-if="message.sender.gender === 'trans-male'">
+                     <img :src="message.recipient.imageSrc|transMaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                  </div>
+                   <div v-if="message.sender.gender === 'trans-female'">
+                      <img :src="message.recipient.imageSrc|transFemaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                  </div>
+                </div>
+                <div  v-if="message.sender.random === 'false'">
+                   <img :src="message.sender.imageSrc|imageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                </div>
+                <p></p>
+                </div>
+              <p :class="[{ 'align-right': i % 2 !== 0}]">{{message.content}}</p>
               </div>
-               <div v-if="message.recipient.id == $route.params.id" style="display: inline-block;">
-                  <p><strong> {{$route.params.username}}:</strong></p>
-               </div> -->
-              <strong>{{message.sender.username}}:</strong>
-              {{message.content}}
-              </li>
-          </ul>
+           </div>
 
       </div>
       <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
@@ -26,6 +38,7 @@
 </template>
 
 <script>
+import openSocket from 'socket.io-client'
 import UserProfileService from '../../../../middleware/services/UserProfileService'
 import SendMessage from '../../../../components/profile/message/SendMessage'
 import eventBus from '../../../../middleware/eventBus/index'
@@ -36,10 +49,18 @@ import eventBus from '../../../../middleware/eventBus/index'
     },
     created(){
         eventBus.$on('message-sent', ()=>{
+          console.log(`Re-retrieveing messages`);
           this.getSendersMessages();
         })
         this.getUserMessages();
         this.getSendersMessages();
+    },
+    mounted(){
+      this.socket = this.$nuxtSocket({
+        name: 'home',
+        channel:'',
+        reconnection: false,
+      })
     },
     data(){
       return {
@@ -51,6 +72,23 @@ import eventBus from '../../../../middleware/eventBus/index'
        usersMessages(){
          return this.senderMessages;
        }
+    },
+     filters:{
+        imageSrcFilter(src){
+          return '../../uploads/'+src;
+        },
+        maleImageSrcFilter(src){
+          return '../../random-users/men/'+ src;
+        },
+        femaleImageSrcFilter(src){
+          return '../../random-users/women/'+ src;
+        },
+        transMaleImageSrcFilter(src){
+          return '../../random-users/men/'+ src;
+        },
+        transFemaleImageSrcFilter(src){
+          return '../../random-users/women/'+ src;
+        },
     },
     methods:{
        async getUserMessages(){
@@ -74,6 +112,7 @@ import eventBus from '../../../../middleware/eventBus/index'
               })
               this.messages  =  messageToFilter;
              // console.log(`Message thread returned for user ${JSON.stringify(this.messages)}`);
+             //openSocket('http://localhost:3000')
             }
         },
 
@@ -82,12 +121,48 @@ import eventBus from '../../../../middleware/eventBus/index'
            const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
            if(messageData.data.messages.length > 0){
               this.senderMessages = messageData.data.messages;
+              console.log(`Messages: ${JSON.stringify(this.senderMessages, null, 2)}`)
            }
+
         }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+  .message-thread{
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  }
 
+  .darker {
+  border-color: #ccc;
+  background-color: #ddd;
+  }
+  .message-thread::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.message-thread img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.message-thread img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.align-right{
+  text-align: right;
+}
 </style>

@@ -121,29 +121,34 @@
                 const currentUser = await User.findById(req.userId);
                 const userToAdd = await User.findById(userProfileId);
                 const userAdded = await currentUser.addUserToFavorites(userToAdd);
-
-               if(!userAdded){
-                 return res.status(422).json({message :'There was an error adding the user'});
-               }
-
-               return res.status(200).json({message: 'User added to favorites successfully!'});
+             return res.status(200).json({message: 'User added to favorites successfully!'});
        },
+
+
        async removeUserFromFavorites(req, res, next){
-          const {userProfileId } = req.body;
-          const currentUser = await User.findById(req.userId);
+          console.log(`Removing user from favorites....`);
+          const { userProfileId } = req.body;
+          console.log(`Profile Id of Person: ${JSON.stringify(userProfileId)}`);
+          const currentUser = await User.findOne({_id: req.userId});
           if(!currentUser){
              return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
-         const personToRemove = await User.findById(userProfileId);
+         const personToRemove = await User.findOne({_id: userProfileId});
+         //console.log(`personToRemove ${JSON.stringify(personToRemove)}`);
          if(!personToRemove){
            return res.status(404).json({message: 'This user was not found'});
         }
+        console.log(`Id of person to remove ${JSON.stringify(personToRemove._id)}`);
         const personRemoved = await currentUser.removeUserFromFavorites(personToRemove);
         if(!personRemoved){
            return res.status(422).json({message: 'User not removed!'});
         }
-        return res.status(200).json({message: 'User successfully removed from favorites', favorites: currentUser.favorites.users});
+        const userFavs = await User.findOne({_id: req.userId}).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+        console.log(`Favs returned on server ${JSON.stringify(userFavs.favorites.users)}`);
+        return res.status(200).json({message: 'User successfully removed from favorites', favorites: userFavs.favorites.users});
        },
+
+
        async getInboxMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});
         if(!user){
@@ -196,8 +201,8 @@
         // console.log('Sender Id: '+ msgSender._id)
         // console.log('Reciver Id: '+ user._id)
         let messagesThread;
-        const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-        const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "recipient.imageSrc","sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
         //console.log(`messagesThreadTwo: ${JSON.stringify(messagesThreadTwo)}`);
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
@@ -449,19 +454,20 @@
 
             if(postalCode) findParams.postalCode = {$in: zipCodes};
             if(!zipCodes){
-              return res.status(422).json({message: 'There was an error retrieving zipcodes'});
+              return res.status(500).json({message: 'There was an error retrieving zipcodes'});
             }
 
             // let checkIfYouAreBlocked =  {"blockedUsers.users": { $elemMatch: { $ne: mongoose.Types.ObjectId(userWhoIsSearching) } }};
             let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}};
             //let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}; test if user is in block list
             let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
-            findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]}
+            findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
+            console.log(`Search params re'vd on server: ${JSON.stringify(findParams)}`);
             const searchedUsers = await User.find(findParams)
             // Return searched for users
             // check is the searching user in on any of ther searched users block list
             if(!searchedUsers){
-                return res.status(422).json({message: 'An error occured'});
+                return res.status(500).json({message: 'An error occured'});
             }
             // const filteredUsersWhoHaveNotBlockedMe = searchedUsers.filter( user => {
             //     return user.blockedUsers.users.map(a =>{
@@ -555,7 +561,7 @@
         // Return searched for users
         // check is the searching user in on any of ther searched users block list
         if(!searchedUsers){
-            return res.status(404).json({message: 'No users match your search criteria.'});
+            return res.status(500).json({message: 'An error occured.'});
         }
         const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
            return  user.blockedUsers.users.map(a =>{
