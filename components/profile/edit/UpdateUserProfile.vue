@@ -29,7 +29,7 @@
           <div class="row">
               <div class="col-sm-6">
               <label for="">Height</label>
-              <select class="form-control"  v-model="height">
+              <select class="form-control"  v-model="height" @change="setHeightInVuexStore">
                 <option v-for="(option, i) in heights" :key="'inches-'+i+'-'+option.value" :value="option.value">{{ option.name }}</option>
               </select>
 
@@ -234,7 +234,7 @@
           <div class="row">
               <div class="col-sm-6">
               <label for="">Height</label>
-               <select class="form-control"  v-model="height">
+               <select class="form-control"  v-model="height" @change="setHeightInVuexStore(height)">
                 <option v-for="(option, i) in heights" :key="'option-'+i+'-'+option.name" :value="option.value">{{ option.name }}</option>
               </select>
           </div>
@@ -497,6 +497,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
  import Multiselect from 'vue-multiselect'
  import states from '../../../data/states'
  import ImgUpload from '../../profile/image/ImgUpload'
@@ -736,7 +737,13 @@
 
     },
     methods: {
-
+      ...mapActions({
+       setHeightInVuexStore: 'profile/setHeightAction'
+      }),
+      // setHeightInVuexStore(){
+      //   console.log('Setting height in profile.js');
+      //   this.$store.dispatch('profile/submitProfileUpdateAction', this.height);
+      // },
       showInterracialChoices(){
         this.interacialDatingPreferences = [];
         if(this.doesDateInteracially.toLowerCase() == 'yes'){

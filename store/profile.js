@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-
 export const state = ()=>({
   height: '',
   hairColor: '',
@@ -145,12 +144,25 @@ export const actions = {
   },
 
   async submitProfileUpdateAction(context){
-    let profile = {
-      height: context.store.state.height,
-      eyeColor: context.store.state.eyeColor,
-      hairColor: context.store.state.hairColor
-    }
+    let profile = {};
+    if(context.store.state.height) profile.height = context.store.state.height;
+    if(context.store.state.eyeColor) profile.eyeColor = context.store.state.eyeColor
+    if(context.store.state.hairColor) profile.hairColor = context.store.state.maritalStatus
+    if(context.store.state.maritalStatus) profile.maritalStatus = context.store.state.maritalStatus;
+    if(context.store.state.religion) profile.religion = context.store.state.religion;
+    if(context.store.state.profession) profile.profession = context.store.state.profession;
+    if(context.store.state.education)  profile.education = context.store.state.education;
+    if(context.store.state.doesSmoke) profile.doesSmoke  = context.store.state.doesSmoke;
+    if(context.store.state.doesDrink) profile.doesDrink  = context.store.state.doesDrink
+    if(context.store.state.doesHaveChildren) profile.doesHaveChildren = context.store.state.doesHaveChildren
+    if(context.store.state.secondLanguage) profile.secondLanguage = context.store.state.secondLanguage;
+    if(context.store.state.city) profile.city = context.store.state.city;
+    if(context.store.state.usState) profile.state = context.store.state.usState;
+    if(context.store.state.postalCode) profile.postalCode = context.store.state.postalCode;
+    if(context.store.state.doesDateInteracially) profile.doesDateInteracially = context.store.state.doesDateInteracially;
+    if(context.store.state.selectedGenders) profile.selectedGenders = context.store.state.selectedGenders;
 
+    console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
   }
 
 }
@@ -158,3 +170,6 @@ export const actions = {
 export const getters = {
 
 }
+
+
+Vue.use(Vuex)
