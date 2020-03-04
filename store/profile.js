@@ -17,9 +17,9 @@ export const state = ()=>({
   usState: '',
   postalCode: '',
   doesDateInteracially: false,
-  raceDatingPreferences: [],
-  interacialDatingPreferences: [],
-  selectedGenders: [],
+  raceDatingPreferences: {races: []},
+  interacialDatingPreferences: {races: []},
+  selectedGenders: {genders:[]},
 
 })
 
@@ -46,13 +46,27 @@ export const mutations = {
     state.education = education;
   },
   setDoesDrinkMutation(state, doesDrink){
-    state.doesDrink = doesDrink;
+    if(doesDrink === 'yes'){
+      state.doesDrink = true;
+    } else {
+      state.doesDrink = false;
+    }
+
   },
   setDoesSmokeMutation(state, doesSmoke){
-    state.doesSmoke = doesSmoke;
+    if(doesSmoke === 'yes'){
+      state.doesSmoke = true;
+    } else {
+      state.doesSmoke = true;
+    }
   },
   setDoesHaveChildrenMutation(state, doesHaveChildren){
-    state.doesHaveChildren = doesHaveChildren;
+
+    if(doesHaveChildren === 'yes'){
+      state.doesHaveChildren = true;
+    }else {
+      state.doesHaveChildren = false;
+    }
   },
   setSecondLanguageMutation(state, secondLanguage){
     state.secondLanguage = secondLanguage;
@@ -69,42 +83,37 @@ export const mutations = {
   setDoesDateInteraciallyMutation(state, doesDateInteracially){
     state.doesDateInteracially = doesDateInteracially;
   },
-  setRaceDatingPreferencesMutation(state, raceDatingPreference){
-    if(state.raceDatingPreferences.indexOf(raceDatingPreference) === -1){
-      state.raceDatingPreferences.push(raceDatingPreference)
-    }
+  setRaceDatingPreferencesMutation(state, raceDatingPreferences){
+      state.raceDatingPreferences.races = raceDatingPreferences;
   },
-  setInteracialDatingPreferencesMutation(state, interacialDatingPreference){
-    if(state.interacialDatingPreferences.indexOf(interacialDatingPreference) === -1){
-      state.interacialDatingPreferences.push(interacialDatingPreference)
-    }
+  setInteracialDatingPreferencesMutation(state, interacialDatingPreferences){
+    state.interacialDatingPreferences.races = interacialDatingPreferences;
   },
-  setSelectedGendersMutation(state, selectedGender){
-    if(state.selectedGenders.indexOf(selectedGender) === -1){
-      state.selectedGenders.push(selectedGender);
-    }
+  setSelectedGendersMutation(state, selectedGenders){
+    state.selectedGenders.genders = selectedGenders;
   },
 
-  async submitProfileUpdateMutation(state){
-    let profile = {};
-    if(state.height) profile.height = state.height;
-    if(state.eyeColor) profile.eyeColor = state.eyeColor
-    if(state.hairColor) profile.hairColor = state.maritalStatus
-    if(state.maritalStatus) profile.maritalStatus = state.maritalStatus;
-    if(state.religion) profile.religion = state.religion;
-    if(state.profession) profile.profession = state.profession;
-    if(state.education)  profile.education = state.education;
-    if(state.doesSmoke) profile.doesSmoke  = state.doesSmoke;
-    if(state.doesDrink) profile.doesDrink  = state.doesDrink
-    if(state.doesHaveChildren) profile.doesHaveChildren = state.doesHaveChildren
-    if(state.secondLanguage) profile.secondLanguage = state.secondLanguage;
-    if(state.city) profile.city = state.city;
-    if(state.usState) profile.state = state.usState;
-    if(state.postalCode) profile.postalCode = state.postalCode;
-    if(state.doesDateInteracially) profile.doesDateInteracially = state.doesDateInteracially;
-    if(state.selectedGenders) profile.selectedGenders = state.selectedGenders;
-    console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
-  }
+  // submitProfileUpdateMutation(state){
+  //   let profile = {};
+  //   if(state.height) profile.height = state.height;
+  //   if(state.eyeColor) profile.eyeColor = state.eyeColor
+  //   if(state.hairColor) profile.hairColor = state.maritalStatus
+  //   if(state.maritalStatus) profile.maritalStatus = state.maritalStatus;
+  //   if(state.religion) profile.religion = state.religion;
+  //   if(state.profession) profile.profession = state.profession;
+  //   if(state.education)  profile.education = state.education;
+  //   if(state.doesSmoke) profile.doesSmoke  = state.doesSmoke;
+  //   if(state.doesDrink) profile.doesDrink  = state.doesDrink
+  //   if(state.doesHaveChildren) profile.doesHaveChildren = state.doesHaveChildren
+  //   if(state.secondLanguage) profile.secondLanguage = state.secondLanguage;
+  //   if(state.city) profile.city = state.city;
+  //   if(state.usState) profile.state = state.usState;
+  //   if(state.postalCode) profile.postalCode = state.postalCode;
+  //   if(state.doesDateInteracially) profile.doesDateInteracially = state.doesDateInteracially;
+
+  //   if(state.selectedGenders.genders) profile.selectedGenders = state.selectedGenders.genders;
+  //   console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
+  // }
 
 }
 
@@ -154,19 +163,19 @@ export const actions = {
   setDoesDateInteraciallyAction(context, doesDateInteracially){
     context.commit('setDoesDateInteraciallyMutation', doesDateInteracially);
   },
-  setRaceDatingPreferencesAction(context, raceDatingPreference){
-      context.commit('setRaceDatingPreferencesMutation', raceDatingPreference);
+  setRaceDatingPreferencesAction(context, raceDatingPreferences){
+      context.commit('setRaceDatingPreferencesMutation', raceDatingPreferences);
   },
-  setInteracialDatingPreferencesAction(context, interacialDatingPreference){
-    context.commit('setInteracialDatingPreferencesMutation', interacialDatingPreference);
+  setInteracialDatingPreferencesAction(context, interacialDatingPreferences){
+    context.commit('setInteracialDatingPreferencesMutation', interacialDatingPreferences);
   },
-  setSelectedGendersAction(context, selectedGender){
-    context.commit('setSelectedGendersMutation', selectedGender);
+  setSelectedGendersAction(context, selectedGenders){
+    context.commit('setSelectedGendersMutation', selectedGenders);
   },
 
-  submitProfileUpdateAction(context){
-    context.commit('submitProfileUpdateMutation');
-  }
+  // submitProfileUpdateAction(context){
+  //   context.commit('submitProfileUpdateMutation');
+  // }
 
 }
 
