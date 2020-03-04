@@ -765,6 +765,7 @@ import { mapActions } from 'vuex'
       async updateExtentedUserProfile(){
           this.onReadySubmit = true;
           console.log(`updating profile....`);
+          await this.$store.dispatch('profile/submitProfileUpdateAction');
          let formData = {};
           if(this.genderSeeking.length > 0) formData.seekingGender = this.genderSeeking;
           if(this.datingIntent) formData.datingIntent = this.datingIntent;

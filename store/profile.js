@@ -85,6 +85,27 @@ export const mutations = {
     }
   },
 
+  async submitProfileUpdateMutation(state){
+    let profile = {};
+    if(state.height) profile.height = state.height;
+    if(state.eyeColor) profile.eyeColor = state.eyeColor
+    if(state.hairColor) profile.hairColor = state.maritalStatus
+    if(state.maritalStatus) profile.maritalStatus = state.maritalStatus;
+    if(state.religion) profile.religion = state.religion;
+    if(state.profession) profile.profession = state.profession;
+    if(state.education)  profile.education = state.education;
+    if(state.doesSmoke) profile.doesSmoke  = state.doesSmoke;
+    if(state.doesDrink) profile.doesDrink  = state.doesDrink
+    if(state.doesHaveChildren) profile.doesHaveChildren = state.doesHaveChildren
+    if(state.secondLanguage) profile.secondLanguage = state.secondLanguage;
+    if(state.city) profile.city = state.city;
+    if(state.usState) profile.state = state.usState;
+    if(state.postalCode) profile.postalCode = state.postalCode;
+    if(state.doesDateInteracially) profile.doesDateInteracially = state.doesDateInteracially;
+    if(state.selectedGenders) profile.selectedGenders = state.selectedGenders;
+    console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
+  }
+
 }
 
 export const actions = {
@@ -143,26 +164,8 @@ export const actions = {
     context.commit('setSelectedGendersMutation', selectedGender);
   },
 
-  async submitProfileUpdateAction(context){
-    let profile = {};
-    if(context.store.state.height) profile.height = context.store.state.height;
-    if(context.store.state.eyeColor) profile.eyeColor = context.store.state.eyeColor
-    if(context.store.state.hairColor) profile.hairColor = context.store.state.maritalStatus
-    if(context.store.state.maritalStatus) profile.maritalStatus = context.store.state.maritalStatus;
-    if(context.store.state.religion) profile.religion = context.store.state.religion;
-    if(context.store.state.profession) profile.profession = context.store.state.profession;
-    if(context.store.state.education)  profile.education = context.store.state.education;
-    if(context.store.state.doesSmoke) profile.doesSmoke  = context.store.state.doesSmoke;
-    if(context.store.state.doesDrink) profile.doesDrink  = context.store.state.doesDrink
-    if(context.store.state.doesHaveChildren) profile.doesHaveChildren = context.store.state.doesHaveChildren
-    if(context.store.state.secondLanguage) profile.secondLanguage = context.store.state.secondLanguage;
-    if(context.store.state.city) profile.city = context.store.state.city;
-    if(context.store.state.usState) profile.state = context.store.state.usState;
-    if(context.store.state.postalCode) profile.postalCode = context.store.state.postalCode;
-    if(context.store.state.doesDateInteracially) profile.doesDateInteracially = context.store.state.doesDateInteracially;
-    if(context.store.state.selectedGenders) profile.selectedGenders = context.store.state.selectedGenders;
-
-    console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
+  submitProfileUpdateAction(context){
+    context.commit('submitProfileUpdateMutation');
   }
 
 }
