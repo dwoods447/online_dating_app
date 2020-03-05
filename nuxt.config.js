@@ -19,7 +19,7 @@ export default {
       { rel: 'stylesheet', type: 'text/css', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' },
-
+       {rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css'}
     ]
   },
   /*

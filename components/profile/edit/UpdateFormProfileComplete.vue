@@ -1,6 +1,7 @@
 <template>
   <div>
-              <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
+       <h5>Update your completed profile</h5>
+      <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
         <div class="form-group">
           <div class="row">
               <div class="col-sm-6">
@@ -121,77 +122,6 @@
             </div>
          </div>
 
-          <h2>Dating Preferences</h2>
-          <hr/>
-           <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-                  <label for="">Do you date interracially?</label>
-                  <select class="form-control"  v-model="doesDateInteracially" @change="showInterracialChoices">
-                    <option v-for="(option, i) in doesDateInteraciallyChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
-                  </select>
-               </div>
-                <div class="col-sm-6">
-                  <div v-if="displayInterracialChoices">
-                     <label for="">Im interested in:</label>
-                            <multiselect
-                            v-model="interacialDatingPreferences"
-                            :options="ethnicities"
-                            @change="setInteracialDatingPreferencesInVuexStore(interacialDatingPreferences)"
-                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
-                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
-                          </multiselect>
-                  </div>
-
-                </div>
-            </div>
-         </div>
-
-           <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-                   <label for="">Im prefer:</label>
-                            <multiselect
-                            v-model="selectedGenders"
-                            :options="genders"
-                            @change="setSelectedGendersInVuexStore(selectedGenders)"
-                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
-                            <template slot="singleLabel" slot-scope="{ gender }"><strong>{{ gender.name }}</strong></template>
-                    </multiselect>
-                </div>
-                <div class="col-sm-6">
-                    <label for="">I will date someone with marital status of:</label>
-                      <multiselect
-                            v-model="selectedMaritalStatuses"
-                            :options="maritalStatuses"
-                             @change="setMaritalStatusesInVuexStore(selectedMaritalStatuses)"
-                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
-                            <template slot="singleLabel" slot-scope="{ status }"><strong>{{ status.name }}</strong></template>
-                    </multiselect>
-                </div>
-            </div>
-         </div>
-
-
-
-           <div class="form-group">
-            <div class="row">
-                <div class="col-sm-6">
-                   <label for="">Im prefer:</label>
-                           <multiselect
-                            v-model="raceDatingPreferences"
-                            :options="ethnicities"
-                             @change="setRaceDatingPreferenceInVuexStore(raceDatingPreferences)"
-                            :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
-                            <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
-                          </multiselect>
-                </div>
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-         </div>
-
 
 
 
@@ -212,7 +142,7 @@
 
 
 
-          <button class="btn btn-primary" style="width: 100%;" :disabled="onReadySubmit">Update Your Profile </button>
+          <!-- <button class="btn btn-primary" style="width: 100%;" :disabled="onReadySubmit">Update Your Profile </button> -->
       </form>
   </div>
 </template>
@@ -257,21 +187,7 @@ import { mapActions } from 'vuex'
       },
 
        async updateExtentedUserProfile(){
-           const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-           const updated  = await UserProfileService.updateUserProfile(this.$store.state.profile);
-           let updatedUser = updated.data.user;
-           if(updatedUser){
-              localStorage.removeItem('user');
-              Cookie.remove('user');
-              localStorage.setItem('user', JSON.stringify(updatedUser));
-              Cookie.set('user', JSON.stringify(updatedUser));
-              await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
-              eventBus.$emit('setActiveLink', 'isShowSearch');
-              this.onReadySubmit = false;
-              this.$router.push({name: 'basicsearch'});
-           }
-
-      }
+       }
     },
     data(){
       return {

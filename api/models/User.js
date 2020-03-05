@@ -328,7 +328,7 @@ UserSchema.methods.removeUserFromBlockList = function(userId){
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
 
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-        return userId.toString() ===  searchedUser.userId.toString();
+        return userId ===  searchedUser.userId.toString();
     });
 
     if(userBlockedIndex !== -1){

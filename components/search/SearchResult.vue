@@ -22,6 +22,6 @@ import ProfilePreview from '../../components/profile/preview/ProfilePreview'
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

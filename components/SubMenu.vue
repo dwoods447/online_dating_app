@@ -15,7 +15,8 @@
            <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Basic Search</nuxt-link>
         </li>
         <li class="nav-item">
-          <a href="javascript:void(0)" class="nav-item nav-link">Advanced Search</a>
+          <!-- <a href="javascript:void(0)" class="nav-item nav-link">Advanced Search</a> -->
+          <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']" to="/advancedsearch" v-if="this.$store.getters.isAutheticated">Advanced Search</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowProfileViews')">
         <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Profile Views</nuxt-link>
@@ -102,6 +103,17 @@ import eventBus from '../middleware/eventBus/index'
               this.isShowHome  = false;
           }
 
+          if(activeChoice === 'isAvancedSearch'){
+              this.isShowFavorites = false;
+              this.isShowBlockedUsers = false;
+              this.isShowProfileViews = false;
+              this.isShowSearch = false;
+              this.isShowPhotos = false;
+              this.isShowInbox = false;
+              this.isShowHome  = false;
+              this.isAvancedSearch = true;
+          }
+
 
       })
     },
@@ -115,6 +127,7 @@ import eventBus from '../middleware/eventBus/index'
         isShowFavorites: false,
         isShowFavorites: false,
         isShowBlockedUsers: false,
+        isAvancedSearch: false,
 
       }
     },

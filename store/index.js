@@ -122,12 +122,12 @@ export const actions = {
         context.commit('setLoggedInUserIdMutation', res.data.user);
         context.dispatch('setLogOutTimerAction', tokenExpr);
             //  test if  this.user.isProfileCompleted = true
-            if(res.data.user.isProfileCompleted !== 'true' || res.data.user.isProfileCompleted !== true){
-              // if not redirect to completed profile
-              this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
+            // console.log(JSON.stringify(res.data));
+            if(res.data.user.isProfileCompleted == true){
+              this.$router.push({name: 'index', params: {user: res.data.user}})
             } else {
              $emit('setActiveLink', 'isShowSearch');
-               this.$router.push({name: 'basicsearch', params: {user: res.data.user}})
+             this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
             }
         return res;
      }
@@ -163,6 +163,7 @@ export const actions = {
        token = localStorage.getItem("token");
        expiresDate = JSON.parse(localStorage.getItem("tokenExpiration"));
        user  = JSON.parse(localStorage.getItem("user"));
+       results = JSON.parse(localStorage.getItem("results"));
     } else {
       if(req.headers.cookie){
         const parsed = cookieparser.parse(req.headers.cookie);
@@ -195,10 +196,12 @@ export const actions = {
     Cookie.remove('jwt');
     Cookie.remove('expiresDate');
     Cookie.remove('user');
+    Cookie.remove('results');
     if(process.client){
       localStorage.removeItem('token');
       localStorage.removeItem('tokenExpiration');
       localStorage.removeItem('user');
+      localStorage.removeItem('results');
     }
 
   },

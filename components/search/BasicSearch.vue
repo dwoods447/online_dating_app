@@ -88,6 +88,8 @@
 import StateList from '../../data/states.js'
 import UserProfileService from '../../middleware/services/UserProfileService';
 import eventBus from '../../middleware/eventBus/index'
+import Cookie from 'js-cookie'
+import cookieparser from 'cookieparser'
   export default {
     data(){
       return {
@@ -198,6 +200,9 @@ import eventBus from '../../middleware/eventBus/index'
           console.log(`Search Results ${JSON.stringify(searchResults)}`);
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
+                   let resultsData = JSON.stringify(searchResults.users);
+                   localStorage.setItem('results', resultsData);
+
             } else {
                this.errorMessage = "No users found matching search criteria!";
             }
