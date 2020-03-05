@@ -1,7 +1,7 @@
 <template>
   <div>
 
-       <form @submit.prevent="sendUserMessage(userId)" style="max-width: 40%; margin: 0 auto;">
+       <form @submit.prevent="sendUserMessage(userId)">
        <textarea name="message" id="message" cols="60" rows="10" v-model="message" class="form-control" placeholder="Please enter your message"><slot></slot></textarea>
        <button class="btn btn-success btn-custom" :disabled="isBlocked">Send</button>
        <div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <div style="width: 40%; margin: 0 auto;">
+      <div  class="message-thread-container" style="width: 65%; margin: 15px auto; max-height: 550px; overflow: auto;">
           <!-- <h3>Messages thread from:  {{this.$route.params.username}}</h3> -->
 
             <div>
@@ -165,4 +165,19 @@ import eventBus from '../../../../middleware/eventBus/index'
 .align-right{
   text-align: right;
 }
+
+
+.message-thread-container::-webkit-scrollbar {
+    width: 1em;
+}
+
+.message-thread-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.message-thread-container::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 </style>
