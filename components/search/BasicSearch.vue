@@ -5,80 +5,77 @@
                 <p class="error">{{ errorMessage }}</p>
               </div>
               <div class="row">
-                <div class="col-sm-3">
+
                   <label for="">Min Age</label>
-                  <select name="minAge" class="form-control" v-model="formData.minAge">
+                  <select name="minAge" class="form-control" v-model="formData.minAge" @change="setMinAgeInVuexStore(formData.minAge)">
                       <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                   </select>
-                </div>
-                <div class="col-sm-3">
+
+
                    <label for="">Max Age</label>
-                   <select name="maxAge" id="" class="form-control" v-model="formData.maxAge">
+                   <select name="maxAge" id="" class="form-control" v-model="formData.maxAge" @change="setMaxAgeInVuexStore(formData.maxAge)">
                      <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                    </select>
-                </div>
-                <div class="col-sm-3">
+
+
                   <label for="">Gender</label>
-                  <select name="seekingGender" id="" class="form-control" v-model="formData.gender">
+                  <select name="seekingGender" id="" class="form-control" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">
                       <option v-for="gender in seekingGenders" :key="gender.key" :value="gender.value">{{gender.name}}</option>
                   </select>
-                </div>
-                <div class="col-sm-3">
+
+
+
                   <label for="">Dating Intent</label>
-                  <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent">
+                  <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
                    <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
                   </select>
-                </div>
+
 
               </div>
 
              <div class="row">
-               <div class="col-sm-3">
+
                   <label for="">Highest Education</label>
-                  <select name="educations" id="" class="form-control" v-model="formData.education">
+                  <select name="educations" id="" class="form-control" v-model="formData.education" @change="setHighestEducationInVuexStore(formData.education)">
                       <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
                   </select>
-               </div>
-                <div class="col-sm-3">
+
+
                     <label for="">Ethnicity</label>
-                    <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity">
+                    <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)">
                       <option v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">{{ethnicity.name}}</option>
                    </select>
-               </div>
-                <div class="col-sm-3">
+
+
                      <label for="">State</label>
-                      <select name="states" id="" class="form-control" v-model="formData.state">
+                      <select name="states" id="" class="form-control" v-model="formData.state" @change="setUsStateInVuexStore(formData.state)">
                         <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}</option>
                    </select>
-               </div>
-                <div class="col-sm-3">
+
+
                   <label for="">Body Type</label>
-                  <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType">
+                  <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType" @change="setBodyTypeInVuexStore(formData.bodyType)">
                    <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
                 </select>
-               </div>
+
              </div>
               <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-6">
+
                       <label for="">Zipcode</label>
-                      <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode">
-                    </div>
-                       <div class="col-lg-6">
+                      <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode" @change="setPostalCodeInVuexStore(formData.postalCode)">
+
+
                       <label for="">Miles</label>
-                        <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom">
+                        <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom" @change="setDistanceInMilesInVuexStore(formData.milesFrom)">
                         <option v-for="(mile, i) in miles" :key="'miles-'+i">{{mile.name}}</option>
                       </select>
 
-                    </div>
+
                 </div>
               </div>
-              <div class="form-group">
               <div class="row">
-                <div class="col-lg-6">
                     <button class="btn btn-primary">Search</button>
-                </div>
-              </div>
               </div>
             </form>
   </div>
@@ -90,6 +87,7 @@ import UserProfileService from '../../middleware/services/UserProfileService';
 import eventBus from '../../middleware/eventBus/index'
 import Cookie from 'js-cookie'
 import cookieparser from 'cookieparser'
+import { mapActions } from 'vuex'
   export default {
     data(){
       return {
@@ -180,23 +178,37 @@ import cookieparser from 'cookieparser'
       }
     },
     methods: {
+      ...mapActions({
+        setMinAgeInVuexStore: 'basicsearch/setMinAgeAction',
+        setMaxAgeInVuexStore: 'basicsearch/setMaxAgeAction',
+        setGenderInVuexStore: 'basicsearch/setGenderAction',
+        setDatingIntentInVuexStore: 'basicsearch/setDatingIntentAction',
+        setHighestEducationInVuexStore: 'basicsearch/setHighestEducationAction',
+        setEthnicityInVuexStore: 'basicsearch/setEthnicityAction',
+        setUsStateInVuexStore: 'basicsearch/setUsStateAction',
+        setBodyTypeInVuexStore: 'basicsearch/setBodyTypeAction',
+        setPostalCodeInVuexStore: 'basicsearch/setPostalCodeAction',
+        setDistanceInMilesInVuexStore: 'basicsearch/setDistanceInMilesAction',
+        setSearchResultsInVuexStore: 'basicsearch/setSearchResultsAction',
+        clearSearchResultsInVuexStore: 'basicsearch/clearSearchResultsAction'
+      }),
       async search(){
         let formSubmitData = {};
         this.errorMessage = "";
-        if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
-        if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
-        if(this.formData.gender) formSubmitData.gender =  this.formData.gender;
-        if(this.formData.datingIntent) formSubmitData.datingIntent =  this.formData.datingIntent;
-        if(this.formData.education) formSubmitData.education =  this.formData.education;
-        if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
-        if(this.formData.state) formSubmitData.state =  this.formData.state;
-        if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
-        if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode.trim();
-        if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
+        // if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
+        // if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
+        // if(this.formData.gender) formSubmitData.gender =  this.formData.gender;
+        // if(this.formData.datingIntent) formSubmitData.datingIntent =  this.formData.datingIntent;
+        // if(this.formData.education) formSubmitData.education =  this.formData.education;
+        // if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
+        // if(this.formData.state) formSubmitData.state =  this.formData.state;
+        // if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
+        // if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode.trim();
+        // if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
           console.log(`Sending data: ${JSON.stringify(formSubmitData, null, 2)}`);
-          const searchResults = (await UserProfileService.basicUserSearch(formSubmitData)).data;
+          const searchResults = (await UserProfileService.basicUserSearch(this.$store.state.basicsearch)).data;
           console.log(`Search Results ${JSON.stringify(searchResults)}`);
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});

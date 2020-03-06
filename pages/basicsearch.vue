@@ -1,13 +1,18 @@
 <template>
-  <div>
-      <div style="width: 75%; margin: 0 auto;">
-         <h2>Basic Search</h2>
-         <BasicSearch></BasicSearch>
-         <SearchResult/>
+  <section>
+    <div style="width: 75%; margin: 0 auto;">
+        <div class="row">
+         <div class="col-lg-4">
+           <h2>Basic Search</h2>
+           <BasicSearch></BasicSearch>
+         </div>
+         <div class="col-lg-8">
+             <SearchResult/>
+         </div>
       </div>
+    </div>
 
-
-  </div>
+  </section>
 </template>
 
 <script>

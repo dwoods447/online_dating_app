@@ -16,10 +16,10 @@ export const state = ()=>({
 })
 export const mutations = {
   setMinAgeMutation(state, minAge){
-    state.minAge = minAge;
+    state.minAge = Number.parseInt(minAge);
   },
   setMaxAgeMutation(state, maxAge){
-    state.maxAge = maxAge;
+    state.maxAge = Number.parseInt(maxAge);
   },
   setGenderMutation(state,gender){
     state.gender = gender;
@@ -40,10 +40,10 @@ export const mutations = {
     state.bodyType = bodyType;
   },
   setPostalCodeMutation(state,postalCode){
-    state.postalCode = postalCode;
+    state.postalCode = postalCode.trim();
   },
   setDistanceInMilesMutation(state, miles){
-    state.miles = miles;
+    state.miles = Number.parseInt(miles.split(" "));
   },
   setSearchResultsMutation(state, results){
     state.results = [];
@@ -61,7 +61,42 @@ export const getters = {
 }
 
 export const actions = {
-
+  setMinAgeAction(context, minAge){
+    context.commit('setMinAgeMutation', minAge);
+ },
+ setMaxAgeAction(context, maxAge){
+   context.commit('setMaxAgeMutation', maxAge);
+ },
+ setGenderAction(context,gender){
+   context.commit('setGenderMutation', gender);
+ },
+ setDatingIntentAction(context,datingIntent){
+  context.commit('setDatingIntentMutation', datingIntent);
+ },
+ setHighestEducationAction(context,highestEducation){
+   context.commit('setHighestEducationMutation', highestEducation);
+ },
+ setEthnicityAction(context,ethnicity){
+   context.commit('setEthnicityMutation', ethnicity);
+ },
+ setUsStateAction(context,usState){
+   context.commit('setUsStateMutation', usState);
+ },
+ setBodyTypeAction(context,bodyType){
+  context.commit('setBodyTypeMutation', bodyType);
+ },
+ setPostalCodeAction(context, postalCode){
+   context.commit('setPostalCodeMutation', postalCode);
+ },
+ setDistanceInMilesAction(context, miles){
+  context.commit('setDistanceInMilesMutation', miles);
+ },
+ setSearchResultsAction(context, results){
+  context.commit('setSearchResultsMutation', results);
+ },
+ clearSearchResultsAction(context){
+   context.commit('clearSearchResultsMutation');
+ }
 }
 
 Vue.use(Vuex)

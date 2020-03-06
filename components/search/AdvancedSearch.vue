@@ -83,7 +83,22 @@
 import StateList from '../../data/states.js'
 import UserProfileService from '../../middleware/services/UserProfileService';
 import eventBus from '../../middleware/eventBus/index'
+import { mapActions } from 'vuex'
   export default {
+    ...mapActions({
+      setMinAgeInVuexStore: 'advancedsearch/setMinAgeAction',
+      setMaxAgeInVuexStore: 'advancedsearch/setMaxAgeAction',
+      setGenderInVuexStore: 'advancedsearch/setGenderAction',
+      setDatingIntentInVuexStore: 'advancedsearch/setDatingIntentAction',
+      setHighestEducationInVuexStore: 'advancedsearch/setHighestEducationAction',
+      setEthnicityInVuexStore: 'advancedsearch/setEthnicityAction',
+      setUsStateInVuexStore: 'advancedsearch/setUsStateAction',
+      setBodyTypeInVuexStore: 'advancedsearch/setBodyTypeAction',
+      setPostalCodeInVuexStore: 'advancedsearch/setPostalCodeAction',
+      setDistanceInMilesInVuexStore: 'advancedsearch/setDistanceInMilesAction',
+      setSearchResultsInVuexStore: 'advancedsearch/setSearchResultsAction',
+      clearSearchResultsInVuexStore: 'advancedsearch/clearSearchResultsAction'
+    }),
     data(){
       return {
           seekingGenders: [
@@ -173,6 +188,7 @@ import eventBus from '../../middleware/eventBus/index'
       }
     },
     methods: {
+
       async search(){
         let formSubmitData = {};
         this.errorMessage = "";

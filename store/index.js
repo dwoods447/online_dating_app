@@ -82,6 +82,7 @@ export const actions = {
   nuxtServerInit (context, { req }) {
     let token = null;
     let user = null;
+    let results = null;
     if(req){
       if (req.headers.cookie) {
        const parsed = cookieparser.parse(req.headers.cookie);
@@ -91,7 +92,7 @@ export const actions = {
         try {
           token = parsed.jwt.replace(/\\/g, '').trim();
           user =  parsed.user.replace(/\\/g, '').trim();
-
+          results =  parsed.results.replace(/\\/g, '').trim();
         } catch (err) {
           // No valid cookie found
         }
@@ -159,6 +160,7 @@ export const actions = {
     let token;
     let expiresDate;
     let user;
+    let results;
     if(!req){
        token = localStorage.getItem("token");
        expiresDate = JSON.parse(localStorage.getItem("tokenExpiration"));
@@ -170,6 +172,7 @@ export const actions = {
         if(parsed){
           token = parsed.jwt.replace(/\\/g, '').trim();
           user =  parsed.user.replace(/\\/g, '').trim();
+
          }
 
       }
