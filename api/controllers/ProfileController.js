@@ -150,12 +150,42 @@
 
 
        async getInboxMessagesForUser(req, res, next){
+        let currentPage =  1;
         let user = await User.findOne({_id: req.userId});
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
 
+        let perPage = 2;
+        let totalItems = await Message.aggregate([
+          {
+            $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
+          },
+          {
+            $group : {
+              _id: {from: "$sender.id"},
+            messageContent: {
+                 $push: {
+                   messageId: "$_id",
+                   sender: "$sender.username",
+                   image: "$sender.imageSrc",
+                   date: "$date",
+                   content: "$content",
+                   unread: "$unread",
+                   random: "$sender.random",
+                   gender: "$sender.gender"
+                 }
+               },
+             },
+
+          },
+          {
+            $count: "total_messages"
+          }
+
+        ])
         //const messages = await Message.find({'recipient.id': user._id});
+        console.log(totalItems[0].total_messages)
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
@@ -179,14 +209,17 @@
           },
           {
             $sort : { "messageContent.date": -1 }
-          }
+          },
+          { $skip : (currentPage  - 1 ) *  perPage },
+          { $limit:  perPage},
+
         ])
 
         // if(!messages){
         //   return res.status(500).json({message: 'Error retrieving messages'});
         // }
 
-        return res.status(200).json({messages: myMesages});
+        return res.status(200).json({messages: myMesages, totalItems: totalItems[0].total_messages});
        },
 
 

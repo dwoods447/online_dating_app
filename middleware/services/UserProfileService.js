@@ -48,8 +48,10 @@ export default {
     return api.post('/send/message', messageDetails);
   },
 
-  getUserMessages(){
-    return api.get('/inbox/messages');
+  getUserMessages(page){
+    return api.get('/inbox/messages', {
+      params: page
+    });
   },
 
 

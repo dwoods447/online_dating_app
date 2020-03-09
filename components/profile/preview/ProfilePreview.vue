@@ -69,6 +69,6 @@ import eventBus from '../../../middleware/eventBus/index'
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

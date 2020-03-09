@@ -5,7 +5,7 @@
         <section>
           <div style="margin: 1em; padding: 1em;">
               <div v-if="messages.length <= 0">You have No messages</div>
-            <MessageInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"
+            <MessageInboxPreview v-for="(message, index) in myMessages" :key="'message-user'+'_'+index"
             :imageSrc="message.messageContent[0].image"
             :sender="message.messageContent[0].sender"
             :content="message.messageContent[message.messageContent.length - 1].content"
@@ -53,9 +53,14 @@ import moment from 'moment'
       return {
         messages: [],
         inboxData: [],
+        page: 1,
       }
     },
-
+    computed:{
+      myMessages(){
+        return this.messages;
+      }
+    },
     methods: {
         // async getUserMessages(){
         //     const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
@@ -68,13 +73,32 @@ import moment from 'moment'
         // },
         async getUserMessages(){
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-            const messageData = await UserProfileService.getUserMessages();
+            const messageData = await UserProfileService.getUserMessages(this.page);
            // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
                console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             }
         },
+
+        async nextPage(page){
+              const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+            const messageData = await UserProfileService.getUserMessages(page);
+           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
+            if(messageData.data.messages.length > 0 ){
+                this.messages = messageData.data.messages;
+               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+            }
+        },
+        async prevPage(page){
+            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+            const messageData = await UserProfileService.getUserMessages(page);
+           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
+            if(messageData.data.messages.length > 0 ){
+                this.messages = messageData.data.messages;
+               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+            }
+        }
 
 
     },
