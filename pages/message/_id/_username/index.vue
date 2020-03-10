@@ -15,10 +15,10 @@
                      <img :src="message.sender.imageSrc|femaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
                   </div>
                   <div v-if="message.sender.gender === 'trans-male'">
-                     <img :src="message.recipient.imageSrc|transMaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                     <img :src="message.sender.imageSrc|transMaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
                   </div>
                    <div v-if="message.sender.gender === 'trans-female'">
-                      <img :src="message.recipient.imageSrc|transFemaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                      <img :src="message.sender.imageSrc|transFemaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
                   </div>
                 </div>
                 <div  v-if="message.sender.random === 'false'">

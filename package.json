@@ -30,7 +30,8 @@
     "nuxt": "^2.0.0",
     "nuxt-socket-io": "^1.0.18",
     "passport-jwt": "^4.0.0",
-    "vue-multiselect": "^2.1.6"
+    "vue-multiselect": "^2.1.6",
+    "vue-paginate": "^3.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

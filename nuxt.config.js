@@ -46,7 +46,8 @@ export default {
 //    }
 //  },
   plugins: [
-    '~/plugins/moment'
+    '~/plugins/moment',
+    '~/plugins/vuepaginate'
   ],
   /*
   ** Nuxt.js dev-modules

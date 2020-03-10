@@ -5,19 +5,25 @@
         <section>
           <div style="margin: 1em; padding: 1em;">
               <div v-if="messages.length <= 0">You have No messages</div>
-            <MessageInboxPreview v-for="(message, index) in myMessages" :key="'message-user'+'_'+index"
-            :imageSrc="message.messageContent[0].image"
-            :sender="message.messageContent[0].sender"
-            :content="message.messageContent[message.messageContent.length - 1].content"
-            :messageLength="message.messageContent.length"
-            :date="message.messageContent[0].date|dateFilter"
-            :thread="message"
-            :senderId="message._id.from"
-            :gender="message.messageContent[0].gender"
-            :random="message.messageContent[0].random"
-            :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread} ]"
-            >
-            </MessageInboxPreview>
+              <div v-if="messages.length > 0">
+                 <paginate name="messages" :list="messages" :per="2">
+                  <MessageInboxPreview v-for="(message, index) in paginated('messages')" :key="'message-user'+'_'+index"
+                  :imageSrc="message.messageContent[0].image"
+                  :sender="message.messageContent[0].sender"
+                  :content="message.messageContent[message.messageContent.length - 1].content"
+                  :messageLength="message.messageContent.length"
+                  :date="message.messageContent[0].date|dateFilter"
+                  :thread="message"
+                  :senderId="message._id.from"
+                  :gender="message.messageContent[0].gender"
+                  :random="message.messageContent[0].random"
+                  :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread} ]"
+                  >
+                  </MessageInboxPreview>
+
+                  </paginate>
+                  <paginate-links for="messages" :async="true"></paginate-links>
+              </div>
 
           </div>
         </section>
@@ -54,6 +60,7 @@ import moment from 'moment'
         messages: [],
         inboxData: [],
         page: 1,
+        paginate:['messages']
       }
     },
     computed:{
@@ -81,24 +88,24 @@ import moment from 'moment'
             }
         },
 
-        async nextPage(page){
-              const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-            const messageData = await UserProfileService.getUserMessages(page);
-           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
-            if(messageData.data.messages.length > 0 ){
-                this.messages = messageData.data.messages;
-               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
-            }
-        },
-        async prevPage(page){
-            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-            const messageData = await UserProfileService.getUserMessages(page);
-           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
-            if(messageData.data.messages.length > 0 ){
-                this.messages = messageData.data.messages;
-               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
-            }
-        }
+        // async nextPage(page){
+        //       const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+        //     const messageData = await UserProfileService.getUserMessages(page);
+        //    // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
+        //     if(messageData.data.messages.length > 0 ){
+        //         this.messages = messageData.data.messages;
+        //        console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+        //     }
+        // },
+        // async prevPage(page){
+        //     const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+        //     const messageData = await UserProfileService.getUserMessages(page);
+        //    // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
+        //     if(messageData.data.messages.length > 0 ){
+        //         this.messages = messageData.data.messages;
+        //        console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+        //     }
+        // }
 
 
     },

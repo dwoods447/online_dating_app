@@ -156,7 +156,7 @@
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
 
-        let perPage = 2;
+        let perPage = 3;
         let totalItems = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
