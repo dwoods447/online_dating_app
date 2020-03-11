@@ -181,7 +181,7 @@ import eventBus from '../../../middleware/eventBus/index'
   align-content: center;
 }
 .step-header{
-  width: 95%;
+  width: 66%;
   margin: 0 auto;
 }
   .step-header-item{

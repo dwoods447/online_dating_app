@@ -17,12 +17,15 @@
                   :senderId="message._id.from"
                   :gender="message.messageContent[0].gender"
                   :random="message.messageContent[0].random"
-                  :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread} ]"
+                  :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread}]"
                   >
                   </MessageInboxPreview>
 
                   </paginate>
-                  <paginate-links for="messages" :async="true"></paginate-links>
+                  <div class="flex-container">
+                     <paginate-links for="messages" :async="true" :classes="{'ul':'pagination', 'li':'page-item', 'a':'page-link'}"></paginate-links>
+                  </div>
+
               </div>
 
           </div>
@@ -126,5 +129,12 @@ import moment from 'moment'
  .unread{
    background-color: #14ABE0;
    color: #fff;
+ }
+
+ .flex-container{
+   display: flex;
+   flex-direction: row;
+   align-content: center;
+   justify-content: center;
  }
 </style>

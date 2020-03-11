@@ -4,24 +4,51 @@
               <div class="row">
                 <p class="error">{{ errorMessage }}</p>
               </div>
-              <div class="row">
 
-                  <label for="">Min Age</label>
+                <h5>Filters:</h5>
+
+                <div class="row">
+                  <div class="col-md-6 col-xs-12">
+                          <label for="">Min Age</label>
                   <select name="minAge" class="form-control" v-model="formData.minAge" @change="setMinAgeInVuexStore(formData.minAge)">
                       <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                   </select>
-
-
-                   <label for="">Max Age</label>
+                  </div>
+                  <div class="col-md-6 col-xs-12">
+                         <label for="">Max Age</label>
                    <select name="maxAge" id="" class="form-control" v-model="formData.maxAge" @change="setMaxAgeInVuexStore(formData.maxAge)">
                      <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
                    </select>
+                  </div>
+                </div>
 
-
-                  <label for="">Gender</label>
+                <div class="row">
+                  <div class="col-md-6 col-xs-12">
+                    <label for="">Min Height</label>
+                    <select name="" id="" v-model="minHeight" class="form-control">
+                      <option :value="height.value" v-for="(height, i) in heights" :key="'min-height-'+i">{{height.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-xs-12">
+                      <label for="">Max Height</label>
+                    <select name="" id="" v-model="maxHeight" class="form-control">
+                      <option :value="height.value" v-for="(height, i) in heights" :key="'max-height-'+i">{{height.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                       <!-- <label for="">Gender</label>
                   <select name="seekingGender" id="" class="form-control" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">
                       <option v-for="gender in seekingGenders" :key="gender.key" :value="gender.value">{{gender.name}}</option>
-                  </select>
+                  </select> -->
+                  <p-input  v-for="gender in seekingGenders" :key="gender.key" type="radio" name="radio" color="info" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">{{ gender.name }}</p-input>
+
+                  </div>
+                </div>
+
+
+
 
 
 
@@ -31,14 +58,14 @@
                   </select>
 
 
-              </div>
 
-             <div class="row">
 
+
+<!--
                   <label for="">Highest Education</label>
                   <select name="educations" id="" class="form-control" v-model="formData.education" @change="setHighestEducationInVuexStore(formData.education)">
                       <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
-                  </select>
+                  </select> -->
 
 
                     <label for="">Ethnicity</label>
@@ -58,9 +85,8 @@
                    <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
                 </select>
 
-             </div>
-              <div class="form-group">
-                <div class="row">
+
+
 
                       <label for="">Zipcode</label>
                       <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode" @change="setPostalCodeInVuexStore(formData.postalCode)">
@@ -72,11 +98,9 @@
                       </select>
 
 
-                </div>
-              </div>
-              <div class="row">
+
                     <button class="btn btn-primary">Search</button>
-              </div>
+
             </form>
   </div>
 </template>
@@ -175,6 +199,42 @@ import { mapActions } from 'vuex'
 
             errorMessage: '',
 
+         heights: [
+           {name: "4'5", value: 53, key: ""},
+           {name: "4'6", value: 54, key: ""},
+           {name: "4'7", value: 55, key: ""},
+           {name: "4'8", value: 56, key: ""},
+           {name: "4'9", value: 57, key: ""},
+           {name: "4'10", value: 58, key: ""},
+           {name: "4'11", value: 59, key: ""},
+           {name: "5'0", value: 60, key: ""},
+           {name: "5'1", value: 61, key: ""},
+           {name: "5'2", value: 62, key: ""},
+           {name: "5'3", value: 63, key: ""},
+           {name: "5'4", value: 64, key: ""},
+           {name: "5'5", value: 65, key: ""},
+           {name: "5'6", value: 66, key: ""},
+           {name: "5'7", value: 67, key: ""},
+           {name: "5'8", value: 68, key: ""},
+           {name: "5'9", value: 69, key: ""},
+           {name: "5'10", value: 70, key: ""},
+           {name: "5'11", value: 71, key: ""},
+           {name: "6'0", value: 72, key: ""},
+           {name: "6'1", value: 73, key: ""},
+           {name: "6'2", value: 74, key: ""},
+           {name: "6'3", value: 75, key: ""},
+           {name: "6'4", value: 76, key: ""},
+           {name: "6'5", value: 77, key: ""},
+           {name: "6'6", value: 78, key: ""},
+           {name: "6'7", value: 79, key: ""},
+           {name: "6'8", value: 80, key: ""},
+           {name: "6'9", value: 81, key: ""},
+           {name: "7,0", value: 82, key: ""},
+           {name: "7,1", value: 83, key: ""},
+         ],
+         minHeight: '',
+         maxHeight: '',
+
       }
     },
     methods: {
@@ -209,11 +269,15 @@ import { mapActions } from 'vuex'
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
           console.log(`Sending data: ${JSON.stringify(formSubmitData, null, 2)}`);
           const searchResults = (await UserProfileService.basicUserSearch(this.$store.state.basicsearch)).data;
-          console.log(`Search Results ${JSON.stringify(searchResults)}`);
+         // console.log(`Search Results ${JSON.stringify(searchResults)}`);
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
                    let resultsData = JSON.stringify(searchResults.users);
+                   console.log(`Setting Cookies... ${resultsData}`);
                    localStorage.setItem('results', resultsData);
+                   Cookie.set('results', resultsData);
+                   Cookie.set('resultsData', 'result');
+                   this.$store.dispatch('basicsearch/setSearchResultsAction' , searchResults.users);
 
             } else {
                this.errorMessage = "No users found matching search criteria!";

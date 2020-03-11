@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Cookie from 'js-cookie'
+import cookieparser from 'cookieparser'
+import createPersistedState from 'vuex-persistedstate'
 export const state = ()=>({
   minAge: '',
   maxAge: '',
@@ -46,8 +48,12 @@ export const mutations = {
     state.miles = Number.parseInt(miles.split(" "));
   },
   setSearchResultsMutation(state, results){
-    state.results = [];
-    state.results = results;
+    let resultsFromLocal = results;
+    if(process.client){
+      resultsFromLocal = localStorage.getItem("results");
+
+    }
+    state.results = resultsFromLocal;
   },
   clearSearchResultsMutation(state){
     state.results = [];
@@ -61,6 +67,25 @@ export const getters = {
 }
 
 export const actions = {
+  nuxtServerInit (context, { req }) {
+    console.log(`Nuxt Sever init runnig in basicsearch.js`)
+    let results = null;
+    if(req){
+      if (req.headers.cookie) {
+       const parsed = cookieparser.parse(req.headers.cookie);
+        if(!parsed){
+          return;
+        }
+        try {
+          results =  parsed.results.replace(/\\/g, '').trim();
+        } catch (err) {
+          // No valid cookie found
+        }
+      }
+    }
+    console.log(`Setting search results... ${JSON.stringify(results)}`)
+    context.commit('setSearchResultsMutation', results);
+  },
   setMinAgeAction(context, minAge){
     context.commit('setMinAgeMutation', minAge);
  },
@@ -99,4 +124,17 @@ export const actions = {
  }
 }
 
+
+
+// export const plugins = [
+//   createPersistedState({
+//     storage: {
+//       getItem: key => Cookies.get(key),
+//       // Please see https://github.com/js-cookie/js-cookie#json, on how to handle JSON.
+//       setItem: (key, value) =>
+//         Cookies.set(key, value, { expires: 3, secure: true }),
+//       removeItem: key => Cookies.remove(key)
+//     }
+//   })
+// ]
 Vue.use(Vuex)

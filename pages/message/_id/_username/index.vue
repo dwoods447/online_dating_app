@@ -10,19 +10,24 @@
                 <div  v-if="message.sender.random === 'true'">
                   <div v-if="message.sender.gender === 'male'">
                      <img :src="message.sender.imageSrc|maleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                     <p :class="[{ 'align-right': i % 2 !== 0}]">{{ message.sender.username }}</p>
                   </div>
                   <div v-if="message.sender.gender === 'female'">
                      <img :src="message.sender.imageSrc|femaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                      <p :class="[{ 'align-right': i % 2 !== 0}]">{{ message.sender.username }}</p>
                   </div>
                   <div v-if="message.sender.gender === 'trans-male'">
                      <img :src="message.sender.imageSrc|transMaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                      <p :class="[{ 'align-right': i % 2 !== 0}]">{{ message.sender.username }}</p>
                   </div>
                    <div v-if="message.sender.gender === 'trans-female'">
                       <img :src="message.sender.imageSrc|transFemaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                       <p :class="[{ 'align-right': i % 2 !== 0}]">{{ message.sender.username }}</p>
                   </div>
                 </div>
                 <div  v-if="message.sender.random === 'false'">
                    <img :src="message.sender.imageSrc|imageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
+                    <p :class="[{ 'align-right': i % 2 !== 0}]">{{ message.sender.username }}</p>
                 </div>
                 <p></p>
                 </div>
@@ -56,11 +61,11 @@ import eventBus from '../../../../middleware/eventBus/index'
         this.getSendersMessages();
     },
     mounted(){
-      this.socket = this.$nuxtSocket({
-        name: 'home',
-        channel:'',
-        reconnection: false,
-      })
+      // this.socket = this.$nuxtSocket({
+      //   name: 'home',
+      //   channel:'',
+      //   reconnection: false,
+      // })
     },
     data(){
       return {

@@ -170,8 +170,15 @@ export const actions = {
       if(req.headers.cookie){
         const parsed = cookieparser.parse(req.headers.cookie);
         if(parsed){
-          token = parsed.jwt.replace(/\\/g, '').trim();
-          user =  parsed.user.replace(/\\/g, '').trim();
+          if("jwt" in parsed){
+            token = parsed.jwt.replace(/\\/g, '').trim();
+          }
+          if("user" in parsed){
+            user =  parsed.user.replace(/\\/g, '').trim();
+          }
+          if("results" in parsed){
+            results = parsed.results.replace(/\\/g, '').trim();
+          }
 
          }
 

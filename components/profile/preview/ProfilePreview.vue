@@ -1,29 +1,31 @@
 <template>
   <div>
         <div>
-          <div class="">
+          <div>
             <a @click="goToProfileDetail(profile._id, profile)" href="#">
-              <div style="max-width: 127px; max-height:127px;">
+              <div>
                 <div v-if="profile.random === 'true'">
-                  <div v-if="profile.gender ==='male'">
+                  <div v-if="profile.gender ==='male'" style="max-width: 127px;">
                     <img :src="profile | maleImageSrcFilter" alt="" style="width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='female'">
+                  <div v-if="profile.gender ==='female'" style="max-width: 127px;">
                     <img :src="profile | femaleImageSrcFilter" alt="" style="width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='trans-male'">
+                  <div v-if="profile.gender ==='trans-male'" style="max-width: 127px;">
                     <img :src="profile | transMaleImageSrcFilter" alt="" style="width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='trans-female'">
+                  <div v-if="profile.gender ==='trans-female'" style="max-width: 127px;">
                     <img :src="profile | transFemaleImageSrcFilter" alt="" style="width: 100%;">
                   </div>
                 </div>
-                <div v-if="profile.random === 'false'">
+                <div v-if="profile.random === 'false'" style="max-width: 127px;">
                   <img :src="profile | imageSrcFilter" alt="" style="width: 100%;">
                 </div>
               </div>
-              <br/>{{ profile.username }}
+              <br/>{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus !== true }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus !== false}]"></span>
             </a>
+             <br/>
+              <span v-if="profile.city && profile.state">{{ profile.city }}, {{ profile.state }}</span>
           </div>
         </div>
   </div>
@@ -70,5 +72,20 @@ import eventBus from '../../../middleware/eventBus/index'
 </script>
 
 <style scoped>
-
+.is-online{
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid green;
+  border-radius: 50%;
+  background: green;
+}
+.is-offline{
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  background: gray;
+}
 </style>

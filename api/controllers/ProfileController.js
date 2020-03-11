@@ -49,6 +49,7 @@
             bodyType,
             postalCode,
             state,
+            city,
             maritalStatus,
             hasChildren,
             doesSmoke,
@@ -82,6 +83,7 @@
             if(bodyType) user.bodyType = bodyType;
             if(postalCode) user.postalCode = postalCode;
             if(state) user.state = state;
+            if(city) user.city = city;
             if(maritalStatus) user.maritalStatus = maritalStatus;
             if(hasChildren !== null || hasChildren !== '') user.hasChildren = true;
             if(doesSmoke !== null || doesSmoke !== '') user.doesSmoke = true;
@@ -150,13 +152,13 @@
 
 
        async getInboxMessagesForUser(req, res, next){
-        let currentPage =  1;
+       // let currentPage =  1;
         let user = await User.findOne({_id: req.userId});
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
 
-        let perPage = 3;
+       // let perPage = 3;
         let totalItems = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
@@ -210,8 +212,8 @@
           {
             $sort : { "messageContent.date": -1 }
           },
-          { $skip : (currentPage  - 1 ) *  perPage },
-          { $limit:  perPage},
+          // { $skip : (currentPage  - 1 ) *  perPage },
+          // { $limit:  perPage},
 
         ])
 

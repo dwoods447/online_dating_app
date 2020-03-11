@@ -2,7 +2,8 @@
   <div>
     <section>
       <div style="margin: 1em; padding: 1em;">
-          <SentMessagesInboxPreview v-for="(message, index) in messages" :key="'message-user'+'_'+index"
+        <paginate name="messages" :list="messages" :per="2">
+          <SentMessagesInboxPreview v-for="(message, index) in paginated('messages')" :key="'message-user'+'_'+index"
             :imageSrc="message.messageContent[0].image"
             :sender="message.messageContent[0].sender"
             :reciever="message.messageContent[0].receiver"
@@ -17,6 +18,10 @@
             :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread}]"
             >
             </SentMessagesInboxPreview>
+             </paginate>
+                  <div class="flex-container">
+                     <paginate-links for="messages" :async="true" :classes="{'ul':'pagination', 'li':'page-item', 'a':'page-link'}"></paginate-links>
+                  </div>
       </div>
     </section>
 
@@ -35,7 +40,8 @@
     },
     data(){
       return {
-          messages: []
+          messages: [],
+          paginate:['messages']
       }
     },
     filters: {
@@ -67,4 +73,10 @@
   background-color: #eee;
   padding: 1.1em;
 }
+ .flex-container{
+   display: flex;
+   flex-direction: row;
+   align-content: center;
+   justify-content: center;
+ }
 </style>

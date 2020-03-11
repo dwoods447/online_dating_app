@@ -30,11 +30,14 @@
     "nuxt": "^2.0.0",
     "nuxt-socket-io": "^1.0.18",
     "passport-jwt": "^4.0.0",
+    "pretty-checkbox": "^3.0.3",
     "vue-multiselect": "^2.1.6",
-    "vue-paginate": "^3.6.0"
+    "vue-paginate": "^3.6.0",
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "pretty-checkbox-vue": "^1.1.9"
   },
   "mdSeed": {
     "seedersFolder": "./api/seeders/"
