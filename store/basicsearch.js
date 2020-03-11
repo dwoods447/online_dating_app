@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookie from 'js-cookie'
 import cookieparser from 'cookieparser'
-import createPersistedState from 'vuex-persistedstate'
 export const state = ()=>({
   minAge: '',
   maxAge: '',
