@@ -6,8 +6,8 @@
               </div>
 
                 <h5>Filters:</h5>
-
-                <div class="row">
+               <div class="form-group">
+                   <div class="row">
                   <div class="col-md-6 col-xs-12">
                           <label for="">Min Age</label>
                   <select name="minAge" class="form-control" v-model="formData.minAge" @change="setMinAgeInVuexStore(formData.minAge)">
@@ -21,31 +21,43 @@
                    </select>
                   </div>
                 </div>
+               </div>
 
-                <div class="row">
+
+
+
+
+              <div class="form-group">
+                 <div class="row">
                   <div class="col-md-6 col-xs-12">
                     <label for="">Min Height</label>
-                    <select name="" id="" v-model="minHeight" class="form-control">
+                    <select name="" id="" v-model="formData.minHeight" class="form-control" @change="setMinHeightInVuexStore(formData.minHeight)">
                       <option :value="height.value" v-for="(height, i) in heights" :key="'min-height-'+i">{{height.name}}</option>
                     </select>
                   </div>
                   <div class="col-md-6 col-xs-12">
                       <label for="">Max Height</label>
-                    <select name="" id="" v-model="maxHeight" class="form-control">
+                    <select name="" id="" v-model="formData.maxHeight" class="form-control" @change="setMaxHeightInVuexStore(formData.maxHeight)">
                       <option :value="height.value" v-for="(height, i) in heights" :key="'max-height-'+i">{{height.name}}</option>
                     </select>
                   </div>
                 </div>
-                <div class="row">
+              </div>
+
+              <div class="form-group row">
+                 <div class="row">
                   <div class="col-xs-12">
                        <!-- <label for="">Gender</label>
                   <select name="seekingGender" id="" class="form-control" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">
                       <option v-for="gender in seekingGenders" :key="gender.key" :value="gender.value">{{gender.name}}</option>
                   </select> -->
-                  <p-input  v-for="gender in seekingGenders" :key="gender.key" type="radio" name="radio" color="info" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">{{ gender.name }}</p-input>
-
+                  <div style="margin-left: 30px;">
+                    <p-input  v-for="gender in seekingGenders" :key="gender.key" type="radio" name="radio" color="info" v-model="formData.gender" :value="gender.value" @change="setGenderInVuexStore(gender.value)">{{ gender.name }}</p-input>
+                  </div>
                   </div>
                 </div>
+              </div>
+
 
 
 
@@ -67,39 +79,69 @@
                       <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
                   </select> -->
 
-
+<!--
                     <label for="">Ethnicity</label>
                     <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)">
                       <option v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">{{ethnicity.name}}</option>
-                   </select>
+                   </select> -->
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div style="margin-left: 30px;">
+                          <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
+                            <p-check  name="check"   v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
-                     <label for="">State</label>
-                      <select name="states" id="" class="form-control" v-model="formData.state" @change="setUsStateInVuexStore(formData.state)">
-                        <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}</option>
-                   </select>
+               <div class="form-group">
+                 <div class="row">
+                   <div class="col-lg-12 col-md-12 col-xs-12">
+                      <label for="">State</label>
+                        <select name="states" id="" class="form-control" v-model="formData.state" @change="setUsStateInVuexStore(formData.state)">
+                          <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}</option>
+                    </select>
+                   </div>
+                 </div>
+               </div>
+
+              <div class="form-group">
+                 <div class="row">
+                   <div class="col-lg-12  col-md-12 col-xs-12">
+                        <label for="">Body Type</label>
+                      <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType" @change="setBodyTypeInVuexStore(formData.bodyType)">
+                      <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
+                    </select>
+                   </div>
+                  </div>
+               </div>
 
 
-                  <label for="">Body Type</label>
-                  <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType" @change="setBodyTypeInVuexStore(formData.bodyType)">
-                   <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
-                </select>
 
-
-
-
-                      <label for="">Zipcode</label>
+              <div class="form-group">
+                 <div class="row">
+                    <div class="col-lg-6 col-xs-12">
+                       <label for="">Zipcode</label>
                       <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode" @change="setPostalCodeInVuexStore(formData.postalCode)">
-
-
+                    </div>
+                    <div class="col-lg-6 col-xs-12">
                       <label for="">Miles</label>
                         <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom" @change="setDistanceInMilesInVuexStore(formData.milesFrom)">
                         <option v-for="(mile, i) in miles" :key="'miles-'+i">{{mile.name}}</option>
                       </select>
+                    </div>
+                  </div>
+               </div>
+                <div class="form-group">
+                 <div class="row">
+                    <div class="col-lg-12  col-md-12 col-xs-12">
+                    <button class="btn btn-primary btn-custom">Search</button>
+                    </div>
+                 </div>
+               </div>
 
-
-
-                    <button class="btn btn-primary">Search</button>
 
             </form>
   </div>
@@ -190,11 +232,13 @@ import { mapActions } from 'vuex'
               gender: '',
               datingIntent: '',
               education :'',
-              ethnicity: '',
+              ethnicity: [],
               state: '',
               bodyType: '',
               milesFrom: '',
-              postalCode: ''
+              postalCode: '',
+              minHeight: '',
+              maxHeight: '',
             },
 
             errorMessage: '',
@@ -232,8 +276,7 @@ import { mapActions } from 'vuex'
            {name: "7,0", value: 82, key: ""},
            {name: "7,1", value: 83, key: ""},
          ],
-         minHeight: '',
-         maxHeight: '',
+
 
       }
     },
@@ -241,6 +284,8 @@ import { mapActions } from 'vuex'
       ...mapActions({
         setMinAgeInVuexStore: 'basicsearch/setMinAgeAction',
         setMaxAgeInVuexStore: 'basicsearch/setMaxAgeAction',
+        setMinHeightInVuexStore: 'basicsearch/setMinHeightAction',
+        setMaxHeightInVuexStore: 'basicsearch/setMaxHeightAction',
         setGenderInVuexStore: 'basicsearch/setGenderAction',
         setDatingIntentInVuexStore: 'basicsearch/setDatingIntentAction',
         setHighestEducationInVuexStore: 'basicsearch/setHighestEducationAction',
@@ -275,8 +320,8 @@ import { mapActions } from 'vuex'
                    let resultsData = JSON.stringify(searchResults.users);
                    console.log(`Setting Cookies... ${resultsData}`);
                    localStorage.setItem('results', resultsData);
-                   Cookie.set('results', resultsData);
-                   Cookie.set('resultsData', 'result');
+                   //Cookie.set('results', JSON.stringify(searchResults.users));
+                  // Cookie.set('resultsData', 'result');
                    this.$store.dispatch('basicsearch/setSearchResultsAction' , searchResults.users);
 
             } else {

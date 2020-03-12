@@ -16,6 +16,9 @@
                   <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|transMaleImageSrcFilter" style="width: 100%;"></div>
               </div>
           </div>
+          <div class="col-lg-12" v-if="images[0].length <= 0">
+            <img src="http://placehold.it/127x127" alt="">
+          </div>
            <div v-if="userReturned.random === 'false'">
                <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|imageSrcFilter" alt=""></div>
           </div>
@@ -91,14 +94,17 @@
 
         <div class="row">
           <div class="col-lg-12">
-               <SendMessage :userId="messageReciever" >Send Message</SendMessage>
+            <div style="width: 60%; margin: 0 auto;">
+              <SendMessage :userId="messageReciever" >Send Message</SendMessage>
+            </div>
+
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-12">
 
-                  <h2>Dating Preferences</h2>
+                  <h2>Geek Dating Preferences</h2>
                   <p> Im looking for....</p>
                   <div class="row">
                     <div class="col-lg-6">
@@ -117,6 +123,9 @@
                             Age preferences
                           </li>
                           <li>
+                            Height preferences
+                          </li>
+                          <li>
                             Someone who does/doesnot want children
                           </li>
                           <li>
@@ -128,6 +137,9 @@
                           </li>
                             <li>
                             Race dating  preferences
+                                <!-- <span v-if="raceDatingPreferences.length > 0">
+                                  <span>{{ raceDatingPreferences.races.name}}</span>
+                                </span> -->
                             </li>
 
                             <li>
@@ -201,7 +213,9 @@ import AddUserToFavoritesListButton from '../../components/profile/actions/AddUs
       return {
           userReturned: {},
           messageReciever: this.user._id,
-          images: []
+          images: [],
+          // raceDatingPreferences:userReturned.raceDatingPreferences.races,
+          // interRacialDatingPreferences: userReturned.interRacialDatingPreferences.races,
       }
     },
     methods: {

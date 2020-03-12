@@ -441,7 +441,7 @@
       //  },
 
        async getUserProfileViews(req, res, next){
-        const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']}).select(["-password"]);
+        const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']}).select(["-password"]);
        // console.log(`User Views resp ${JSON.stringify(userViews, null, 2)}`);
         if(!userViews){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
@@ -458,6 +458,8 @@
               gender,
               minAge,
               maxAge,
+              minHeight,
+              maxHeight,
               bodyType,
               datingIntent,
               ethnicity,
@@ -471,6 +473,7 @@
             let findParams = {};
             if(gender) findParams.gender = gender;
             if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
+            if(minHeight || minHeight) findParams.height = {$gt: Number.parseInt(minHeight), $lt: Number.parseInt(maxHeight)};
             if(ethnicity) findParams.ethnicity = { $in: ethnicity };
             if(bodyType) findParams.bodyType = bodyType;
             if(datingIntent) findParams.datingIntent = datingIntent;
@@ -744,7 +747,7 @@
        async getUsersInBlockList(req, res, next){
           try {
             let usersInBlockedList = [];
-            const user = await User.findById(req.userId).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+            const user = await User.findById(req.userId).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']});
             if(!user){
               return res.status(500).json({message: "User not found!"});
             }
@@ -760,7 +763,7 @@
 
         try {
           let userInFavoritesList = [];
-          const user = await User.findById(req.userId).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+          const user = await User.findById(req.userId).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']});
           if(!user){
             return res.status(500).json({message: "User not found!"});
           }

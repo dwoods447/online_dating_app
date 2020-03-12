@@ -1,31 +1,32 @@
 <template>
-  <div>
+  <div style="display: inline-block; width: 250px; margin-right: 0.4em;">
         <div>
           <div>
             <a @click="goToProfileDetail(profile._id, profile)" href="#">
               <div>
                 <div v-if="profile.random === 'true'">
-                  <div v-if="profile.gender ==='male'" style="max-width: 127px;">
-                    <img :src="profile | maleImageSrcFilter" alt="" style="width: 100%;">
+                  <div v-if="profile.gender ==='male'">
+                    <img :src="profile | maleImageSrcFilter" alt="" style="display: block; width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='female'" style="max-width: 127px;">
-                    <img :src="profile | femaleImageSrcFilter" alt="" style="width: 100%;">
+                  <div v-if="profile.gender ==='female'">
+                    <img :src="profile | femaleImageSrcFilter" alt="" style="display: block; width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='trans-male'" style="max-width: 127px;">
-                    <img :src="profile | transMaleImageSrcFilter" alt="" style="width: 100%;">
+                  <div v-if="profile.gender ==='trans-male'">
+                    <img :src="profile | transMaleImageSrcFilter" alt="" style="display: block; width: 100%;">
                   </div>
-                  <div v-if="profile.gender ==='trans-female'" style="max-width: 127px;">
-                    <img :src="profile | transFemaleImageSrcFilter" alt="" style="width: 100%;">
+                  <div v-if="profile.gender ==='trans-female'">
+                    <img :src="profile | transFemaleImageSrcFilter" alt="" style="display: block; width: 100%;">
                   </div>
                 </div>
-                <div v-if="profile.random === 'false'" style="max-width: 127px;">
-                  <img :src="profile | imageSrcFilter" alt="" style="width: 100%;">
+                <div v-if="profile.random === 'false'">
+                  <img :src="profile | imageSrcFilter" alt="" style="display: block; width: 100%;">
                 </div>
               </div>
-              <br/>{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus !== true }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus !== false}]"></span>
+             <div style="padding: 0; text-align: center;">{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus === false }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus === true}]"></span></div>
             </a>
-             <br/>
+            <div style="padding: 0; text-align: center;">
               <span v-if="profile.city && profile.state">{{ profile.city }}, {{ profile.state }}</span>
+            </div>
           </div>
         </div>
   </div>
@@ -44,19 +45,40 @@ import eventBus from '../../../middleware/eventBus/index'
     },
      filters: {
       imageSrcFilter(profile){
-         return '../uploads/'+profile.images.imagePaths[0].path;
+        if(profile.images.imagePaths.length > 0){
+           return '../uploads/'+profile.images.imagePaths[0].path;
+        } else {
+           return 'http://placehold.it/200x200';
+        }
+
       },
       maleImageSrcFilter(profile){
-        return '../random-users/men/'+ profile.images.imagePaths[0].path;
+         if(profile.images.imagePaths.length > 0){
+            return '../random-users/men/'+ profile.images.imagePaths[0].path;
+          } else {
+           return 'http://placehold.it/200x200';
+        }
       },
       femaleImageSrcFilter(profile){
+         if(profile.images.imagePaths.length > 0){
          return '../random-users/women/'+ profile.images.imagePaths[0].path;
+         } else {
+           return 'http://placehold.it/200x200';
+        }
       },
       transMaleImageSrcFilter(profile){
+         if(profile.images.imagePaths.length > 0){
          return '../random-users/men/'+ profile.images.imagePaths[0].path;
+          } else {
+           return 'http://placehold.it/200x200';
+        }
       },
       transFemaleImageSrcFilter(profile){
-        return '../random-users/women/'+ profile.images.imagePaths[0].path;
+         if(profile.images.imagePaths.length > 0){
+            return '../random-users/women/'+ profile.images.imagePaths[0].path;
+          } else {
+           return 'http://placehold.it/200x200';
+        }
       }
     },
     methods: {

@@ -5,6 +5,8 @@ import cookieparser from 'cookieparser'
 export const state = ()=>({
   minAge: '',
   maxAge: '',
+  minHeight: '',
+  maxHeight: '',
   gender: '',
   datingIntent: '',
   highestEducation: '',
@@ -21,6 +23,12 @@ export const mutations = {
   },
   setMaxAgeMutation(state, maxAge){
     state.maxAge = Number.parseInt(maxAge);
+  },
+  setMinHeightMutation(state, minHeight){
+    state.minHeight = Number.parseInt(minHeight);
+  },
+  setMaxHeightMutation(state, maxHeight){
+    state.maxHeight = Number.parseInt(maxHeight);
   },
   setGenderMutation(state,gender){
     state.gender = gender;
@@ -47,12 +55,18 @@ export const mutations = {
     state.miles = Number.parseInt(miles.split(" "));
   },
   setSearchResultsMutation(state, results){
-    let resultsFromLocal = results;
-    if(process.client){
-      resultsFromLocal = localStorage.getItem("results");
-
+    let storedResults = {};
+    if(typeof results === 'string'){
+      console.log('Results are a srting PARSING...')
+      let searchResutls;
+       searchResutls = JSON.parse(results);
+       storedResults = {...searchResutls}
+       state.results = storedResults;
     }
-    state.results = resultsFromLocal;
+    console.log(`Setting Results in Store Mutation`)
+    storedResults = {...results};
+    state.userId = storedResults;
+
   },
   clearSearchResultsMutation(state){
     state.results = [];
@@ -82,7 +96,7 @@ export const actions = {
         }
       }
     }
-    console.log(`Setting search results... ${JSON.stringify(results)}`)
+    console.log(`Setting search results...}`);
     context.commit('setSearchResultsMutation', results);
   },
   setMinAgeAction(context, minAge){
@@ -91,6 +105,12 @@ export const actions = {
  setMaxAgeAction(context, maxAge){
    context.commit('setMaxAgeMutation', maxAge);
  },
+ setMinHeightAction(context, minHeight){
+  context.commit('setMinHeightMutation', minHeight);
+},
+setMaxHeightAction(context, maxHeight){
+ context.commit('setMaxHeightMutation', maxHeight);
+},
  setGenderAction(context,gender){
    context.commit('setGenderMutation', gender);
  },
@@ -115,12 +135,20 @@ export const actions = {
  setDistanceInMilesAction(context, miles){
   context.commit('setDistanceInMilesMutation', miles);
  },
- setSearchResultsAction(context, results){
-  context.commit('setSearchResultsMutation', results);
+ setSearchResultsAction(context){
+   if(process.client){
+     console.log(`Running on client`)
+    let resultData = localStorage.getItem("results");
+    let results = JSON.parse(resultData)
+    console.log(`Results from local storage ${JSON.stringify(results)}`);
+    context.commit('setSearchResultsMutation', results);
+   }
+
+
  },
  clearSearchResultsAction(context){
    context.commit('clearSearchResultsMutation');
- }
+ },
 }
 
 

@@ -19,7 +19,7 @@
 import BasicSearch from '../components/search/BasicSearch'
 import SearchResult from '../components/search/SearchResult'
   export default {
-    middleware: ['check-auth', 'auth', 'check-profile'],
+    middleware: ['check-auth', 'auth', 'check-profile', 'check-results'],
     components: {
       BasicSearch,
       SearchResult
