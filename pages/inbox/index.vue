@@ -1,10 +1,7 @@
 <template>
   <div>
-      Inbox Page
 
-
-
-         <InboxNavBox></InboxNavBox>
+         <InboxNavBox style="width: 65%; margin: 1em auto;"></InboxNavBox>
           <div v-if="showUserInbox">
              <MessageInbox></MessageInbox>
           </div>

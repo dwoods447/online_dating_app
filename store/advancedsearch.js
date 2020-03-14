@@ -4,11 +4,14 @@ import Vuex from 'vuex'
 export const state = ()=>({
   minAge: '',
   maxAge: '',
+  minHeight: '',
+  maxHeight: '',
   gender: '',
   datingIntent: '',
   highestEducation: '',
   ethnicity: '',
   usState: '',
+  city: '',
   bodyType: '',
   postalCode: '',
   miles: '',
@@ -20,6 +23,12 @@ export const mutations = {
   },
   setMaxAgeMutation(state, maxAge){
     state.maxAge = maxAge;
+  },
+  setMinHeightMutation(state, minHeight){
+    state.minHeight = Number.parseInt(minHeight);
+  },
+  setMaxHeightMutation(state, maxHeight){
+    state.maxHeight = Number.parseInt(maxHeight);
   },
   setGenderMutation(state,gender){
     state.gender = gender;
@@ -49,6 +58,12 @@ export const mutations = {
     state.results = [];
     state.results = results;
   },
+  setCityMutation(state, city){
+    state.city = city;
+  },
+  setEducationMutation(state, education){
+    state.education = education;
+  },
   clearSearchResultsMutation(state){
     state.results = [];
   }
@@ -67,6 +82,12 @@ export const actions = {
  setMaxAgeAction(context, maxAge){
    context.commit('setMaxAgeMutation', maxAge);
  },
+ setMinHeightAction(context, minHeight){
+  context.commit('setMinHeightMutation', minHeight);
+},
+setMaxHeightAction(context, maxHeight){
+ context.commit('setMaxHeightMutation', maxHeight);
+},
  setGenderAction(context,gender){
    context.commit('setGenderMutation', gender);
  },
@@ -93,6 +114,12 @@ export const actions = {
  },
  setSearchResultsAction(context, results){
   context.commit('setSearchResultsMutation', results);
+ },
+ setCityAction(context, city){
+  context.commit('setCityMutation', city);
+ },
+ setEducationAction(context, education){
+  context.commit('setEducationMutation', education);
  },
  clearSearchResultsAction(context){
    context.commit('clearSearchResultsMutation');

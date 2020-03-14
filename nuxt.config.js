@@ -50,6 +50,7 @@ export default {
     '~/plugins/moment',
     '~/plugins/vuepaginate',
     '~/plugins/prettycheckbox',
+    '~/plugins/vue-slide-toggle',
     { src: '~/plugins/vuex-persist', ssr: false }
   ],
   /*
@@ -96,7 +97,7 @@ export default {
   },
 
   serverMiddleware: [
-    bodyParser.json(),
+    bodyParser.json({limit: '50mb'}),
     '~/api'
   ]
 }

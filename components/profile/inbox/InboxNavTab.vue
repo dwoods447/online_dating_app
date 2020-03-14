@@ -2,10 +2,10 @@
   <div>
        <nav class="nav nav-tabs" >
           <a href="#" @click="showUserInbox" :class="[{active: isInboxActive},'nav-item', 'nav-link']">
-              <i class="fa fa-home"></i>&nbsp;&nbsp;User Inbox
+              <i class="fas fa-envelope"></i>&nbsp;&nbsp;User Inbox Messages
           </a>
           <a href="#" @click="showUserSentMessages" :class="[{active: isSentMessagesActive}, 'nav-item', 'nav-link']">
-              <i class="fa fa-user"></i>&nbsp;&nbsp;Sent Messages
+              <i class="fas fa-share-square"></i>&nbsp;&nbsp;Sent Messages
           </a>
       </nav>
   </div>

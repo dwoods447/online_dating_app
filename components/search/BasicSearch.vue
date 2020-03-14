@@ -6,44 +6,69 @@
               </div>
 
                 <h5>Filters:</h5>
-               <div class="form-group">
-                   <div class="row">
-                  <div class="col-md-6 col-xs-12">
-                          <label for="">Min Age</label>
-                  <select name="minAge" class="form-control" v-model="formData.minAge" @change="setMinAgeInVuexStore(formData.minAge)">
-                      <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
-                  </select>
-                  </div>
-                  <div class="col-md-6 col-xs-12">
-                         <label for="">Max Age</label>
-                   <select name="maxAge" id="" class="form-control" v-model="formData.maxAge" @change="setMaxAgeInVuexStore(formData.maxAge)">
-                     <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
-                   </select>
-                  </div>
+                <div v-if="!togglePersonalAppearanceVisibility">
+                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp;  <h3 class="filter-section-title">Personal Appearance</h3>
                 </div>
-               </div>
-
-
-
-
-
-              <div class="form-group">
-                 <div class="row">
-                  <div class="col-md-6 col-xs-12">
-                    <label for="">Min Height</label>
-                    <select name="" id="" v-model="formData.minHeight" class="form-control" @change="setMinHeightInVuexStore(formData.minHeight)">
-                      <option :value="height.value" v-for="(height, i) in heights" :key="'min-height-'+i">{{height.name}}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 col-xs-12">
-                      <label for="">Max Height</label>
-                    <select name="" id="" v-model="formData.maxHeight" class="form-control" @change="setMaxHeightInVuexStore(formData.maxHeight)">
-                      <option :value="height.value" v-for="(height, i) in heights" :key="'max-height-'+i">{{height.name}}</option>
-                    </select>
-                  </div>
+                <div v-else>
+                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
-              </div>
+                <div class="toggle-section">
+                      <VueSlideToggle :open="isPersonalApprearanceOpen">
+                      <div class="form-group">
+                          <div class="row">
+                          <div class="col-md-6 col-xs-12">
+                                  <label for="">Min Age</label>
+                          <select name="minAge" class="form-control" v-model="formData.minAge" @change="setMinAgeInVuexStore(formData.minAge)">
+                              <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
+                          </select>
+                          </div>
+                          <div class="col-md-6 col-xs-12">
+                                <label for="">Max Age</label>
+                          <select name="maxAge" id="" class="form-control" v-model="formData.maxAge" @change="setMaxAgeInVuexStore(formData.maxAge)">
+                            <option v-for="(age , i) in rangeOfAges" :key="i+'-'+age">{{age}}</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-6 col-xs-12">
+                            <label for="">Min Height</label>
+                            <select name="" id="" v-model="formData.minHeight" class="form-control" @change="setMinHeightInVuexStore(formData.minHeight)">
+                              <option :value="height.value" v-for="(height, i) in heights" :key="'min-height-'+i">{{height.name}}</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-xs-12">
+                              <label for="">Max Height</label>
+                            <select name="" id="" v-model="formData.maxHeight" class="form-control" @change="setMaxHeightInVuexStore(formData.maxHeight)">
+                              <option :value="height.value" v-for="(height, i) in heights" :key="'max-height-'+i">{{height.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
 
+                        <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-12  col-md-12 col-xs-12">
+                                <label for="">Body Type</label>
+                              <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType" @change="setBodyTypeInVuexStore(formData.bodyType)">
+                              <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
+                            </select>
+                          </div>
+                          </div>
+                      </div>
+                    </VueSlideToggle>
+                </div>
+
+
+               <div v-if="!toggleGenderEthnicVisibility">
+                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Gender & Ethnic Background</h3>
+                </div>
+                <div v-else>
+                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                </div>
+                 <div class="toggle-section">
+               <VueSlideToggle :open="isGenderEthnicOpen" class="toggle-section">
               <div class="form-group row">
                  <div class="row">
                   <div class="col-xs-12">
@@ -58,21 +83,15 @@
                 </div>
               </div>
 
-
-
-
-
-
-
-                  <label for="">Dating Intent</label>
-                  <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
-                   <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
-                  </select>
-
-
-
-
-
+                    <div class="form-group">
+                      <div class="row">
+                        <div style="margin-left: 30px;">
+                          <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
+                            <p-check  name="check"   v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 <!--
                   <label for="">Highest Education</label>
                   <select name="educations" id="" class="form-control" v-model="formData.education" @change="setHighestEducationInVuexStore(formData.education)">
@@ -84,56 +103,57 @@
                     <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)">
                       <option v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">{{ethnicity.name}}</option>
                    </select> -->
+                 </VueSlideToggle>
+                 </div>
 
-                    <div class="form-group">
-                      <div class="row">
-                        <div style="margin-left: 30px;">
-                          <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
-                            <p-check  name="check"   v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
+
+
+
+                <!-- <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-12  col-md-12 col-xs-12">
+                    <label for="">Dating Intent</label>
+                    <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
+                    <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
+                    </select>
+                  </div>
+              </div>
+            </div> -->
+                <div v-if="!toggleLocationVisibility">
+                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Location</h3>
+                </div>
+                <div v-else>
+                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                </div>
+                <div class="toggle-section">
+                      <VueSlideToggle :open="isLocationOpen">
+                        <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12 col-xs-12">
+                              <label for="">State</label>
+                                <select name="states" id="" class="form-control" v-model="formData.state" @change="setUsStateInVuexStore(formData.state)">
+                                  <option v-for="(state, i) in states" :key="'state-'+i">{{state.name}}</option>
+                            </select>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-
-               <div class="form-group">
-                 <div class="row">
-                   <div class="col-lg-12 col-md-12 col-xs-12">
-                      <label for="">State</label>
-                        <select name="states" id="" class="form-control" v-model="formData.state" @change="setUsStateInVuexStore(formData.state)">
-                          <option v-for="(state, i) in states" :key="'ethnicity-'+i">{{state.name}}</option>
-                    </select>
-                   </div>
+                      <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12">
+                              <label for=""><span style="color: red;">*</span>&nbsp;Zipcode</label>
+                              <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode" @change="setPostalCodeInVuexStore(formData.postalCode)">
+                            </div>
+                            <div class="col-lg-6 col-xs-12">
+                              <label for=""><span style="color: red;">*</span>&nbsp;Miles</label>
+                                <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom" @change="setDistanceInMilesInVuexStore(formData.milesFrom)">
+                                <option v-for="(mile, i) in miles" :key="'miles-'+i">{{mile.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                      </div>
+                      </VueSlideToggle>
                  </div>
-               </div>
-
-              <div class="form-group">
-                 <div class="row">
-                   <div class="col-lg-12  col-md-12 col-xs-12">
-                        <label for="">Body Type</label>
-                      <select name="bodyTypes" id="" class="form-control" v-model="formData.bodyType" @change="setBodyTypeInVuexStore(formData.bodyType)">
-                      <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType-'+i">{{bodyType.name}}</option>
-                    </select>
-                   </div>
-                  </div>
-               </div>
-
-
-
-              <div class="form-group">
-                 <div class="row">
-                    <div class="col-lg-6 col-xs-12">
-                       <label for="">Zipcode</label>
-                      <input type="text" name="postalCode" class="form-control" v-model="formData.postalCode" @change="setPostalCodeInVuexStore(formData.postalCode)">
-                    </div>
-                    <div class="col-lg-6 col-xs-12">
-                      <label for="">Miles</label>
-                        <select name="bodyTypes" id="" class="form-control" v-model="formData.milesFrom" @change="setDistanceInMilesInVuexStore(formData.milesFrom)">
-                        <option v-for="(mile, i) in miles" :key="'miles-'+i">{{mile.name}}</option>
-                      </select>
-                    </div>
-                  </div>
-               </div>
                 <div class="form-group">
                  <div class="row">
                     <div class="col-lg-12  col-md-12 col-xs-12">
@@ -154,9 +174,19 @@ import eventBus from '../../middleware/eventBus/index'
 import Cookie from 'js-cookie'
 import cookieparser from 'cookieparser'
 import { mapActions } from 'vuex'
+import { VueSlideToggle } from 'vue-slide-toggle'
   export default {
+    components: {
+      VueSlideToggle
+    },
     data(){
       return {
+          isPersonalApprearanceOpen: false,
+          isPersonalApprearanceVisible: false,
+          isGenderEthnicOpen: false,
+          isGenderEthnicVisible: false,
+          isLocationOpen: true,
+          isLocationVisible: true,
           seekingGenders: [
             {name: 'Male', value: 'male', key: 'gender-1'},
             {name: 'Female', value: 'female', key: 'gender-2'},
@@ -281,6 +311,18 @@ import { mapActions } from 'vuex'
       }
     },
     methods: {
+      togglePersonalAppearance(){
+          this.isPersonalApprearanceOpen = !this.isPersonalApprearanceOpen;
+          this.isPersonalApprearanceVisible = !this.isPersonalApprearanceVisible;
+      },
+      toggleGenderEthnicBackground(){
+          this.isGenderEthnicOpen = !this.isGenderEthnicOpen;
+          this.isGenderEthnicVisible = !this.isGenderEthnicVisible;
+      },
+      toggleLocation(){
+         this.isLocationOpen = !this.isLocationOpen;
+         this.isLocationVisible = !this.isLocationVisible;
+      },
       ...mapActions({
         setMinAgeInVuexStore: 'basicsearch/setMinAgeAction',
         setMaxAgeInVuexStore: 'basicsearch/setMaxAgeAction',
@@ -330,7 +372,8 @@ import { mapActions } from 'vuex'
          } else {
             this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles).";
          }
-      }
+      },
+
 
     },
     computed: {
@@ -340,6 +383,15 @@ import { mapActions } from 'vuex'
            ages.push(i)
          }
          return ages;
+      },
+      togglePersonalAppearanceVisibility(){
+        return this.isPersonalApprearanceVisible;
+      },
+      toggleGenderEthnicVisibility(){
+        return this.isGenderEthnicVisible;
+      },
+      toggleLocationVisibility(){
+        return this.isLocationVisible;
       }
     }
   }
@@ -348,5 +400,19 @@ import { mapActions } from 'vuex'
 <style  scoped>
 .error{
   color :red;
+}
+
+.toggle-section{
+  margin: 0.3em;
+  /*padding: 0.3em;*/
+}
+.filter-section-title{
+   display: inline-block;
+   color: #1E2341;
+   font-weight: 600;
+}
+
+.filter-btn{
+  display: inline-block;
 }
 </style>

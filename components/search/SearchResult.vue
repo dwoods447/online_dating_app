@@ -1,6 +1,13 @@
 <template>
   <div>
-        <ProfilePreview v-for="user in users" :profile="user" :key="user._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
+      <div v-if="users.length > 0">
+       <paginate name="users" :list="users" :per="6">
+        <ProfilePreview v-for="user in paginated('users')" :profile="user" :key="user._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
+       </paginate>
+       </div>
+         <div class="flex-container">
+              <paginate-links for="users" :async="true" :classes="{'ul':'pagination', 'li':'page-item', 'a':'page-link'}"></paginate-links>
+         </div>
   </div>
 </template>
 
@@ -17,6 +24,7 @@ import ProfilePreview from '../../components/profile/preview/ProfilePreview'
     data(){
       return {
             users: [],
+            paginate:['users']
       }
     },
   }

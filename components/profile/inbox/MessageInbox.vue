@@ -118,8 +118,9 @@ import moment from 'moment'
 <style scoped>
 .thread{
   max-width: 945px;
-  margin: 0.1em auto;
+  margin: 0.3em auto;
   border: 1px solid #2D6BB8;
+  border-radius: 6px;
   background-color: #eee;
   padding: 1.2em;
 }

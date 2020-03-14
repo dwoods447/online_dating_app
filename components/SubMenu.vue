@@ -19,7 +19,7 @@
           <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']" to="/advancedsearch" v-if="this.$store.getters.isAutheticated">Advanced Search</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowProfileViews')">
-        <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Profile Views</nuxt-link>
+        <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Who's viewed your profile</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowFavorites')" >
           <nuxt-link  :class="[{active: isShowFavorites},'nav-item', 'nav-link']" to="/favoriteusers"  v-if="this.$store.getters.isAutheticated">Favorite Users</nuxt-link>
