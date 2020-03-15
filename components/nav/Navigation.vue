@@ -2,7 +2,9 @@
   <div>
     <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top navbar-expand-lg">
-     <nuxt-link to="/" class="navbar-brand">ImSeekingGeeks.com</nuxt-link>
+     <nuxt-link to="/" class="navbar-brand">
+          <span class="navbar-brand">ImSeekingGeeks.com</span>
+     </nuxt-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -102,5 +104,10 @@ export default {
 <style>
 .login-photo{
   max-width: 30px;
+}
+.navbar-brand{
+  font-weight: 900;
+  font-size: 1.46em;
+  color: #02102C;
 }
 </style>

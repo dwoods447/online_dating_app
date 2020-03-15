@@ -95,12 +95,7 @@
                       </select>
                    </div>
 
-                   <div class="col-lg-12">
-                        <label for="">Does have children </label>
-                    <select class="form-control"  v-model="doesHaveChildren" @change="setDoesHaveChildrenInVuexStore(doesHaveChildren)">
-                    <option v-for="(option, i) in doesHaveChildrenChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
-                  </select>
-                   </div>
+
                  </div>
                </VueSlideToggle>
             </div>
@@ -119,19 +114,41 @@
               <div class="form-group">
               <div class="row">
                 <div class="col-lg-12 col-xs-12">
-                  <label for="">Gender</label>
+                  <label for="">Who's gender is</label>
                    <div style="margin-left: 30px;">
                     <p-input  v-for="gender in seekingGenders" :key="gender.key" type="radio" name="radio" color="info" v-model="formData.gender" :value="gender.value" @change="setGenderInVuexStore(gender.value)">{{ gender.name }}</p-input>
                   </div>
                 </div>
                  <div class="col-lg-12 col-xs-12">
-                  <label for="">Ethnicity</label>
+                  <label for="">Someone whose ethnicity is</label>
                   <div style="margin-left: 30px;">
                       <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
                             <p-check  name="check"   v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
                       </div>
                   </div>
-
+                 </div>
+                  <div class="col-lg-12 col-xs-12">
+                  <label for="">Someone who prefers to date</label>
+                  <div style="margin-left: 30px;">
+                      <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
+                            <p-check  name="check"   v-model="formData.raceDatingPreferences" @change="setRaceDatingPreferencesInVuexStore(formData.raceDatingPreferences)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
+                      </div>
+                  </div>
+                 </div>
+                  <div class="col-lg-12 col-xs-12">
+                    <label>Who dates interracially</label>
+                    <select name="" id="" v-model="doesDateInteracially" class="form-control" @change="showInterracialChoices">
+                      <option value=""></option>
+                      <option v-for="(interracialChoice, i) in doesDateInteraciallyChoices" :key="'interracialChoice'+i">{{interracialChoice.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-12 col-xs-12" v-if="displayInterracialChoices">
+                  <label for="">Who interracial preferences is</label>
+                  <div style="margin-left: 30px;">
+                      <div v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">
+                            <p-check  name="check"   v-model="formData.interacialDatingPreferences" @change="setInterRacialDatingPreferencesInVuexStore(formData.interacialDatingPreferences)" :value="ethnicity.name">{{ethnicity.name}}</p-check>
+                      </div>
+                  </div>
                  </div>
               </div>
             </div>
@@ -141,27 +158,57 @@
 
 
             <div v-if="!toggleEducationDatingPreferencesVisibility">
-              <button @click="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Education & Background</h3>
+              <button @click="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Education & Dating Preferences</h3>
             </div>
             <div v-else>
                <button @click="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
             </div>
             <div class="toggle-section">
                <VueSlideToggle :open="isEducationDatingPreferencesOpen" class="toggle-section">
+                  <div class="row">
+                       <div class="col-lg-12 col-xs-12">
+                            <label for="">Dating Intent</label>
+                            <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
+                            <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
+                            </select>
+                        </div>
 
-              <div class="row">
-                  <label for="">Dating Intent</label>
-                  <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
-                   <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
-                  </select>
-              </div>
+                      <div class="col-lg-12 col-xs-12">
+                        <label for="">Highest Education</label>
+                        <select name="educations" id="" class="form-control" v-model="formData.education" @change="setEducationInVuexStore(formData.education)">
+                          <option v-for="(education, i) in educations" :key="'education-'+i" :value="education.value">{{education.name}}</option>
+                        </select>
+                      </div>
 
-             <div class="row">
-                  <label for="">Highest Education</label>
-                  <select name="educations" id="" class="form-control" v-model="formData.education" @change="setEducationInVuexStore(formData.education)">
-                      <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
-                  </select>
-             </div>
+                        <div class="col-lg-12 col-xs-12">
+                          <label for="">Someone who has children </label>
+                            <select class="form-control"  v-model="doesHaveChildren" @change="setDoesHaveChildrenInVuexStore(doesHaveChildren)">
+                            <option v-for="(option, i) in doesHaveChildrenChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-12 col-xs-12">
+                           <label for="">Has a Martial Status of: </label>
+                             <div style="margin-left: 30px;">
+                              <div v-for="(maritalStatus, i) in maritalStatuses" :key="'ethnicity-'+i">
+                                    <p-check  name="check" v-model="formData.maritalStatus" @change="setMaritalStatusInVuexStore(formData.maritalStatus)">{{maritalStatus.name}}</p-check>
+                              </div>
+                             </div>
+                        </div>
+
+
+                        <div class="col-lg-12 col-xs-12">
+                          <label for="">Has an income above: </label>
+                          <input type="text" v-model="formData.income" class="form-control" @change="setIncomeInVuexStore(formData.income)">
+                        </div>
+
+                        <div class="col-lg-12 col-xs-12">
+                         <label for="">Has a religion of </label>
+                          <div v-for="(religion, i) in religions" :key="'religion-'+i">
+                             <p-check  name="check" v-model="formData.religion" @change="setReligionInVuexStore(formData.religion)">{{religion.name}}</p-check>
+                          </div>
+                        </div>
+                  </div>
                </VueSlideToggle>
             </div>
 
@@ -254,13 +301,13 @@ import { mapActions } from 'vuex'
           ],
 
           educations: [
-            {name: "High school", value: ""},
-            {name: "Some college", value: ""},
-            {name: "Some University", value: ""},
-            {name: "Associates degree", value: ""},
-            {name: "Bachelors degree", value: ""},
-            {name: "Masters degree", value: ""},
-            {name: "PhD/Post Doctoral", value: ""},
+            {name: "High school", value: "high school"},
+            {name: "Some college", value: "some college"},
+            {name: "Some University", value: "some university"},
+            {name: "Associates degree", value: "associates degree"},
+            {name: "Bachelors degree", value: "bachelors degree"},
+            {name: "Masters degree", value: "masters  degree"},
+            {name: "PhD/Post Doctoral", value: "phd/post doctoral"},
           ],
 
            ethnicities: [
@@ -270,7 +317,7 @@ import { mapActions } from 'vuex'
             {name: "Indian", value: ""},
             {name: "Middle Eastern", value: ""},
             {name: "Native American", value: ""},
-            {name: "Asain", value: ""},
+            {name: "Asian", value: ""},
             {name: "Mixed Race", value: ""},
             {name: "Other", value: ""},
           ],
@@ -292,7 +339,50 @@ import { mapActions } from 'vuex'
              {name: '200 miles', value: 200},
 
             ],
+         religions: [
+           {name: 'Chrisitan - other', value: 'chrisitan - other', key: ''},
+           {name: 'New age', value: 'new age', key: ''},
+           {name: 'Muslim', value: 'muslim', key: ''},
+           {name: 'Jewish', value: 'jewish', key: ''},
+           {name: 'Catholic', value: 'catholic', key: ''},
+           {name: 'Buddhist', value: 'buddhist', key: ''},
+           {name: 'Hindu', value: 'hindu', key: ''},
+           {name: 'Anglican', value: 'anglican', key: ''},
+           {name: 'Sikh', value: 'sikh', key: ''},
+           {name: 'Methodist', value: 'methodist', key: ''},
+           {name: 'Baptist', value: 'baptist', key: ''},
+           {name: 'Lutheran', value: 'lutheran', key: ''},
+           {name: 'Presbyterian', value: 'presbyterian', key: ''},
+           {name: 'Other', value: 'other', key: ''}
+         ],
+        maritalStatuses: [
+           {name: 'single', value: 'single', key: 'single-0'},
+           {name: 'married', value: 'married', key: 'married-1'},
+           {name: 'widowed', value: 'widowed', key: 'widowed-2'},
+           {name: 'divorced', value: 'divorced', key: 'divorced-3'},
+         ],
 
+          languages: [
+           {name: 'Arabic', value: 'Arabic'},
+           {name: 'Dutch', value: 'Dutch'},
+           {name: 'Chinese', value: 'Chinese'},
+           {name: 'English', value: 'English'},
+           {name: 'French', value: 'French'},
+           {name: 'German', value: 'German'},
+           {name: 'Hebrew', value: 'Hebrew'},
+           {name: 'Hindi', value: 'Hindi'},
+           {name: 'Italian', value: 'Italian'},
+           {name: 'Japanese', value: 'Japanese'},
+           {name: 'Norwegian', value: 'Norwegian'},
+           {name: 'Portguese', value: 'Portguese'},
+           {name: 'Russian', value: 'Russian'},
+           {name: 'Spanish', value: 'Spanish'},
+           {name: 'Swedish', value: 'Swedish'},
+           {name: 'Tagalog', value: 'Tagalog'},
+           {name: 'Urdu', value: 'Urdu'},
+           {name: 'Other', value: 'Other'},
+
+         ],
 
         heights: [
            {name: "4'5", value: 53, key: ""},
@@ -352,10 +442,17 @@ import { mapActions } from 'vuex'
               minHeight: '',
               maxHeight: '',
               city: '',
+              maritalStatus: [],
+              income: 0,
+              raceDatingPreferences: [],
+              interacialDatingPreferences: [],
+              religion: [],
             },
 
-            errorMessage: '',
-              doesSmoke: false,
+         errorMessage: '',
+         doesSmoke: false,
+         doesDateInteracially: '',
+         displayInterracialChoices: false,
          doesSmokeChoices: [
            {name: 'yes', value: true, key: 'doesSmokeChoices-yes'},
            {name: 'no', value: false, key: 'doesSmokeChoices-no'},
@@ -394,8 +491,11 @@ import { mapActions } from 'vuex'
       setMinHeightInVuexStore: 'advancedsearch/setMinHeightAction',
       setMaxHeightInVuexStore: 'advancedsearch/setMaxHeightAction',
       setGenderInVuexStore: 'advancedsearch/setGenderAction',
+      setMaritalStatusInVuexStore: 'advancedsearch/setMaritalStatusAction',
       setDatingIntentInVuexStore: 'advancedsearch/setDatingIntentAction',
       setHighestEducationInVuexStore: 'advancedsearch/setHighestEducationAction',
+      setIncomeInVuexStore: 'advancedsearch/setIncomeAction',
+      setReligionInVuexStore: 'advancedsearch/setReligionAction',
       setEthnicityInVuexStore: 'advancedsearch/setEthnicityAction',
       setUsStateInVuexStore: 'advancedsearch/setUsStateAction',
       setBodyTypeInVuexStore: 'advancedsearch/setBodyTypeAction',
@@ -404,7 +504,9 @@ import { mapActions } from 'vuex'
       setPostalCodeInVuexStore: 'advancedsearch/setPostalCodeAction',
       setDistanceInMilesInVuexStore: 'advancedsearch/setDistanceInMilesAction',
       setSearchResultsInVuexStore: 'advancedsearch/setSearchResultsAction',
-      clearSearchResultsInVuexStore: 'advancedsearch/clearSearchResultsAction'
+      clearSearchResultsInVuexStore: 'advancedsearch/clearSearchResultsAction',
+      setRaceDatingPreferencesInVuexStore: 'advancedsearch/setRaceDatingPreferencesAction',
+      setInterRacialDatingPreferencesInVuexStore: 'advancedsearch/setInterRacialDatingPreferencesAction',
     }),
       togglePersonalAppearance(){
           this.isPersonalApprearanceOpen = !this.isPersonalApprearanceOpen;
@@ -426,23 +528,26 @@ import { mapActions } from 'vuex'
         this.isEducationDatingPreferencesVisible = !this.isEducationDatingPreferencesVisible;
         this.isEducationDatingPreferencesOpen = !this.isEducationDatingPreferencesOpen;
       },
+      showInterracialChoices(){
+        this.interacialDatingPreferences = [];
+        if(this.doesDateInteracially.toLowerCase() == 'yes'){
+          this.displayInterracialChoices = true;
+          this.$store.dispatch('advancedsearch/setDoesDateInterraciallyAction', true);
+        } else if(this.doesDateInteracially.toLowerCase() == 'no') {
+          this.displayInterracialChoices = false;
+          this.$store.dispatch('advancedsearch/setDoesDateInterraciallyAction', false);
+        } else {
+           this.$store.dispatch('advancedsearch/setDoesDateInterraciallyAction', null);
+        }
+
+      },
       async search(){
         let formSubmitData = {};
         this.errorMessage = "";
-        if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
-        if(this.formData.maxAge) formSubmitData.maxAge = this.formData.maxAge;
-        if(this.formData.gender) formSubmitData.gender =  this.formData.gender;
-        if(this.formData.datingIntent) formSubmitData.datingIntent =  this.formData.datingIntent;
-        if(this.formData.education) formSubmitData.education =  this.formData.education;
-        if(this.formData.ethnicity) formSubmitData.ethnicity =  this.formData.ethnicity;
-        if(this.formData.state) formSubmitData.state =  this.formData.state;
-        if(this.formData.bodyType) formSubmitData.minAge =  this.formData.bodyType;
-        if(this.formData.postalCode) formSubmitData.postalCode =  this.formData.postalCode.trim();
-        if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
-          console.log(`Sending data: ${JSON.stringify(formSubmitData, null, 2)}`);
-          const searchResults = (await UserProfileService.basicUserSearch(formSubmitData)).data;
+          console.log(`Sending data: ${JSON.stringify(this.$store.state.advancedsearch, null, 2)}`);
+          const searchResults = (await UserProfileService.advancedUserSearch(this.$store.state.advancedsearch)).data;
           console.log(`Search Results ${JSON.stringify(searchResults)}`);
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
@@ -452,7 +557,7 @@ import { mapActions } from 'vuex'
          } else {
             this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles).";
          }
-      }
+      },
 
     },
 

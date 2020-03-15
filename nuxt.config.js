@@ -51,7 +51,6 @@ export default {
     '~/plugins/vuepaginate',
     '~/plugins/prettycheckbox',
     '~/plugins/vue-slide-toggle',
-    { src: '~/plugins/vuex-persist', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules

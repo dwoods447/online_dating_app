@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block; width: 250px; margin-right: 0.4em;">
+  <div style="display: inline-block; width: 250px; margin-right: 0.4em; margin-top: 10px;">
         <div>
           <div>
             <a @click="goToProfileDetail(profile._id, profile)" href="#">
@@ -26,6 +26,7 @@
             </a>
             <div style="padding: 0; text-align: center;">
               <span v-if="profile.city && profile.state">{{ profile.city }}, {{ profile.state }}</span>
+              <span v-else>&nbsp;</span>
             </div>
           </div>
         </div>

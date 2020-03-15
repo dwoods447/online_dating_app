@@ -1,6 +1,6 @@
 <template>
   <div>
-          <button class="btn btn-primary" @click="addUserUToBlockList()">Block this User</button>
+          <button class="btn btn-primary" @click="addUserUToBlockList()"><i class="fas fa-ban"></i> &nbsp;Block this User</button>
           <!-- <input type="hidden" name="userId" :value="this.userId"> -->
   </div>
 </template>

@@ -287,20 +287,6 @@
             $sort : { "messageContent.date": 1 }
           }
         ])
-
-
-
-        // sentMessages.sort((a, b)=>{
-        //   let aDate = new Date(a.date);
-        //   let bDate = new Date(b.date);
-        //   if(aDate < bDate){
-        //     return -1;
-        //   }
-        //   if(aDate > bDate){
-        //     return 1;
-        //   }
-        //   return 0;
-        // })
         return res.status(200).json({messages: mySentMesages});
        },
 
@@ -472,8 +458,8 @@
             } = req.body;
             let findParams = {};
             if(gender) findParams.gender = gender;
-            if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
-            if(minHeight || minHeight) findParams.height = {$gt: Number.parseInt(minHeight), $lt: Number.parseInt(maxHeight)};
+            if(minAge || maxAge) findParams.age = {$gte: Number.parseInt(minAge), $lte: Number.parseInt(maxAge)};
+            if(minHeight || minHeight) findParams.height = {$gte: Number.parseInt(minHeight), $lte: Number.parseInt(maxHeight)};
             if(ethnicity) findParams.ethnicity = { $in: ethnicity };
             if(bodyType) findParams.bodyType = bodyType;
             if(datingIntent) findParams.datingIntent = datingIntent;
@@ -529,16 +515,20 @@
        },
 
        async advancedUsersSearch(req, res, next){
+         console.log('Advanced search....')
         const userWhoIsSearching = req.userId;
         // Get user search parameters
         const {
           gender,
           minAge,
           maxAge,
+          minHeight,
+          maxHeight,
+          ethnicity,
           raceDatingPreferences,
           bodyType,
           highestEducation,
-          onlineStatus,
+         // onlineStatus,
           city,
           postalCode,
           miles,
@@ -549,40 +539,78 @@
           doesDoDrugs,
           doesDrink,
           religion,
-          profession,
-          doesHavePets,
-          personality,
-          ambitiousness,
+         // personality,
+         // ambitiousness,
           datingIntent,
           longestRelationShip,
           income,
           doesDateInteracially,
           interacialDatingPreferences
         } = req.body;
-        const findParams = {};
+        let findParams = {};
         if(gender) findParams.gender = gender;
-        if(minAge || maxAge) findParams.age = {$gt: Number.parseInt(minAge), $lt: Number.parseInt(maxAge)};
-        if(raceDatingPreferences) findParams.ethnicity = { $in: raceDatingPreferences };
+        if(minAge || maxAge) findParams.age = {$gte: Number.parseInt(minAge), $lte: Number.parseInt(maxAge)};
+        if(minHeight || maxHeight) findParams.height = {$gte: Number.parseInt(minHeight), $lte: Number.parseInt(maxHeight)};
+        if(ethnicity.length > 0) findParams.ethnicity = { $in: ethnicity };
         if(bodyType) findParams.bodyType = bodyType;
         if(datingIntent) findParams.datingIntent = datingIntent;
-        if(highestEducation) findParams.highestEducation = highestEducation;
-        if(onlineStatus) findParams.onlineStatus = onlineStatus;
+        if(highestEducation) {
+          let educationalBackground;
+          if(findParams.highestEducation === 'high school'){
+            educationalBackground = ['high school'];
+          }
+          if(findParams.highestEducation === 'some college'){
+            educationalBackground = ['high school', 'some college'];
+          }
+          if(findParams.highestEducation === 'some university'){
+            educationalBackground = ['high school', 'some college', 'some university'];
+          }
+          if(findParams.highestEducation === 'associates degree'){
+            educationalBackground = ['high school', 'some college', 'some university', 'associates degree'];
+          }
+          if(findParams.highestEducation === 'bachelors degree'){
+            educationalBackground = ['high school', 'some college', 'some university', 'associates degree', 'bachelors degree'];
+          }
+          if(findParams.highestEducation === 'bachelors degree'){
+            educationalBackground = ['high school', 'some college', 'some university', 'associates degree', 'bachelors degree'];
+          }
+          if(findParams.highestEducation === 'masters degree'){
+            educationalBackground = ['high school', 'some college', 'some university', 'associates degree', 'bachelors degree', 'masters degree'];
+          }
+          if(findParams.highestEducation === 'phd/post doctoral'){
+            educationalBackground = ['high school', 'some college', 'some university', 'associates degree', 'bachelors degree', 'masters degree', 'phd/post doctoral'];
+          }
+          findParams.highestEducation = { $in: educationalBackground };
+        }
+       // if(onlineStatus) findParams.onlineStatus = onlineStatus;
         if(city) findParams.city = city;
         if(state) findParams.state = state;
-        if(martialStatus) findParams.martialStatus = martialStatus;
+        if(martialStatus) findParams.martialStatus = { $in: martialStatus };
         if(hasChildren) findParams.hasChildren = hasChildren;
         if(doesSmoke) findParams.doesSmoke = doesSmoke;
         if(doesDoDrugs) findParams.doesDoDrugs = doesDoDrugs;
         if(doesDrink) findParams.doesDrink = doesDrink;
-        if(religion) findParams.religion = religion;
-        if(profession) findParams.profession = profession;
-        if(doesHavePets) findParams.doesHavePets = doesHavePets;
-        if(personality) findParams.personality = personality;
-        if(ambitiousness) findParams.ambitiousness =ambitiousness ;
-        if(longestRelationShip) findParams.longestRelationShip = longestRelationShip;
-        if(income) findParams.income = { $gt: income };
+        if(religion.length > 0) findParams.religion = { $in: religion };
+        // if(profession) findParams.profession = profession;
+        // if(doesHavePets) findParams.doesHavePets = doesHavePets;
+        // if(personality) findParams.personality = personality;
+        // if(ambitiousness) findParams.ambitiousness =ambitiousness ;
+        // if(longestRelationShip) findParams.longestRelationShip = longestRelationShip;
+        if(income) findParams.income = { $gte: Number.parseInt(income) };
         if(doesDateInteracially) findParams.doesDateInteracially = doesDateInteracially;
-        if(interacialDatingPreferences) findParams.interacialDatingPreferences = {$in: interacialDatingPreferences};
+        console.log(`Advanced Search - Interacial Dating Preference: ${JSON.stringify(interacialDatingPreferences)}`);
+         if(doesDateInteracially && interacialDatingPreferences.length > 0){
+              console.log(`Advanced Search - Interacial Dating Preference: ${JSON.stringify(interacialDatingPreferences)}`);
+                let datingPreference = {'interacialDatingPreferences.races': {$in: interacialDatingPreferences}}
+                findParams = {...findParams, ...datingPreference};
+         }
+        console.log(`Advanced Search - Race Dating Preference: ${JSON.stringify(raceDatingPreferences)}`);
+
+          if(raceDatingPreferences.length > 0){
+            console.log(`Advanced Search - Race Dating Preference: ${JSON.stringify(raceDatingPreferences)}`);
+            let datingPreference = {'raceDatingPreferences.races': {$in: raceDatingPreferences}}
+            findParams = {...findParams, ...datingPreference};
+          }
         // Filter User search based on parameters
         //https://www.zipcodeapi.com/rest/zuOeAFr1BUb04kxoozJUQPt2Ll1GVnnaxrWN8zI9RG5ekH47oPn6zrdCqqprh7bI/radius.json/71260/25/mile
         const zipCodesObjs = await fetch(`${config.ZIPCODE_API.URL}/${config.ZIPCODE_API.API_KEY}/radius.json/${postalCode}/${miles}/mile`);
@@ -594,25 +622,31 @@
         if(!zipCodes){
           return res.status(500).json({message: 'There was an error retrieving zipcodes'});
         }
-
+      // let checkIfYouAreBlocked =  {"blockedUsers.users": { $elemMatch: { $ne: mongoose.Types.ObjectId(userWhoIsSearching) } }};
+      let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
+      let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
+      findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
+      console.log(`Search params re'vd on server: ${JSON.stringify(findParams)}`);
         const searchedUsers = await User.find(findParams)
         // Return searched for users
         // check is the searching user in on any of ther searched users block list
+        // if(!searchedUsers){
+        //     return res.status(500).json({message: 'An error occured.'});
+        // }
+        // const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
+        //    return  user.blockedUsers.users.map(a =>{
+        //     return a.userId;
+        //    }).indexOf(mongoose.Types.ObjectId(userWhoIsSearching)) == -1;
+        // })
+        //   // and filter them out of users search
+        //   // and filter the user who is searching
+        // const filteredForUserWhoIsSearching = filteredUsersWhoAreNotBlocked.filter(user  =>{
+        //     return user._id.toString() != userWhoIsSearching;
+        // })
         if(!searchedUsers){
-            return res.status(500).json({message: 'An error occured.'});
+          return res.status(500).json({message: 'An error occured'});
         }
-        const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
-           return  user.blockedUsers.users.map(a =>{
-            return a.userId;
-           }).indexOf(mongoose.Types.ObjectId(userWhoIsSearching)) == -1;
-        })
-          // and filter them out of users search
-          // and filter the user who is searching
-        const filteredForUserWhoIsSearching = filteredUsersWhoAreNotBlocked.filter(user  =>{
-            return user._id.toString() != userWhoIsSearching;
-        })
-        const userSearchResults = filteredForUserWhoIsSearching;
-        return res.status(200).json({users: userSearchResults});
+        return res.status(200).json({users: searchedUsers});
        },
 
        async usernameLookUp(req, res, next){

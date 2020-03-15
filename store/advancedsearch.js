@@ -9,20 +9,26 @@ export const state = ()=>({
   gender: '',
   datingIntent: '',
   highestEducation: '',
-  ethnicity: '',
-  usState: '',
-  city: '',
+  ethnicity: [],
+  usState: null,
+  city: null,
   bodyType: '',
   postalCode: '',
   miles: '',
   results: [],
+  maritalStatus: [],
+  doesDateInteracially: '',
+  raceDatingPreferences: [],
+  interacialDatingPreferences: [],
+  income: 0,
+  religion: [],
 })
 export const mutations = {
   setMinAgeMutation(state, minAge){
-    state.minAge = minAge;
+    state.minAge = Number.parseInt(minAge);
   },
   setMaxAgeMutation(state, maxAge){
-    state.maxAge = maxAge;
+    state.maxAge = Number.parseInt(maxAge);
   },
   setMinHeightMutation(state, minHeight){
     state.minHeight = Number.parseInt(minHeight);
@@ -52,17 +58,45 @@ export const mutations = {
     state.postalCode = postalCode;
   },
   setDistanceInMilesMutation(state, miles){
-    state.miles = miles;
+    state.miles = Number.parseInt(miles.split(" "));
   },
   setSearchResultsMutation(state, results){
-    state.results = [];
-    state.results = results;
+    let storedResults = {};
+    if(typeof results === 'string'){
+      console.log('Results are a srting PARSING...')
+      let searchResutls;
+       searchResutls = JSON.parse(results);
+       storedResults = {...searchResutls}
+       state.results = storedResults;
+    }
+    console.log(`Setting Results in Store Mutation`)
+    storedResults = {...results};
+    state.userId = storedResults;
   },
   setCityMutation(state, city){
     state.city = city;
   },
   setEducationMutation(state, education){
     state.education = education;
+  },
+  setMaritalStatusMutation(state, maritalStatus){
+    state.maritalStatus = maritalStatus;
+  },
+  setReligionMutation(state, religion){
+    state.religion = religion;
+  },
+  setDoesDateInterraciallyMutation(state, date){
+    state.doesDateInteracially = date;
+  },
+  setRaceDatingPreferencesMutation(state, race){
+    state.raceDatingPreferences = race;
+  },
+  setIncomeMutation(state, income){
+    state.income = 0;
+    state.income += Number.parseInt(income);
+  },
+  setInterRacialDatingPreferencesMutation(state, race){
+    state.interacialDatingPreferences = race;
   },
   clearSearchResultsMutation(state){
     state.results = [];
@@ -120,6 +154,24 @@ setMaxHeightAction(context, maxHeight){
  },
  setEducationAction(context, education){
   context.commit('setEducationMutation', education);
+ },
+ setMaritalStatusAction(context, maritalStatus){
+  context.commit('setMaritalStatusMutation', maritalStatus);
+ },
+ setReligionAction(context, religion){
+  context.commit('setReligionMutation', religion);
+ },
+ setIncomeAction(context, income){
+  context.commit('setIncomeMutation', income);
+ },
+ setDoesDateInterraciallyAction(context, date){
+  context.commit('setDoesDateInterraciallyMutation', date);
+ },
+ setRaceDatingPreferencesAction(context, race){
+  context.commit('setRaceDatingPreferencesMutation', race);
+ },
+ setInterRacialDatingPreferencesAction(context, race){
+  context.commit('setInterRacialDatingPreferencesMutation', race);
  },
  clearSearchResultsAction(context){
    context.commit('clearSearchResultsMutation');

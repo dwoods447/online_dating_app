@@ -1,6 +1,6 @@
 <template>
   <div>
-       <button class="btn btn-primary" @click="addUserToFavorites()">Add to Favorites</button>
+       <button class="btn btn-primary" @click="addUserToFavorites()"><i class="fas fa-heart"></i> &nbsp;Add to Favorites</button>
   </div>
 </template>
 
