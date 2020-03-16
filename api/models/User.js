@@ -52,6 +52,9 @@ const UserSchema = new Schema({
     relationshipTypeSeeking: {
         type: String
     },
+    description: {
+      type: String
+    },
     hairColor: {
         type: String
     },

@@ -205,7 +205,6 @@
 
         ])
         //const messages = await Message.find({'recipient.id': user._id});
-        console.log(totalItems[0].total_messages)
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
@@ -238,8 +237,13 @@
         // if(!messages){
         //   return res.status(500).json({message: 'Error retrieving messages'});
         // }
-
-        return res.status(200).json({messages: myMesages, totalItems: totalItems[0].total_messages});
+        console.log(`Totalitems: ${JSON.stringify(totalItems)}`);
+        if(totalItems.length > 0){
+          if(totalItems[0].hasOwnProperty("total_messages")){
+            return res.status(200).json({messages: myMesages, totalItems: totalItems[0].total_messages});
+          }
+         }
+          return res.status(200).json({messages: myMesages, totalItems: []});
        },
 
 
