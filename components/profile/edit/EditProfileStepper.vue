@@ -82,13 +82,38 @@ import eventBus from '../../../middleware/eventBus/index'
       },
       validateStep(step){
         if(step == 1){
-          console.log(`Validating step ${step}`)
+          console.log(`Validating step ${step}`);
+          if(
+            this.$store.state.profile.height !== ''
+            && this.$store.state.profile.hairColor !== ''
+            && this.$store.state.profile.eyeColor !== ''
+            && this.$store.state.profile.maritalStatus !== ''
+            && this.$store.state.profile.religion !== ''
+            && this.$store.state.profile.profession !== ''
+           // && this.$store.state.profile.eudcation !== ''
+            && this.$store.state.profile.doesSmoke !== ''
+            && this.$store.state.profile.doesDrink !== ''
+            && this.$store.state.profile.doesHaveChildren !==''
+            && this.$store.state.profile.secondLanguage !== ''
+            && this.$store.state.profile.city !== ''
+            && this.$store.state.profile.state !== ''
+            && this.$store.state.profile.postalCode !== ''
+            ){
+              this.step++;
+          } else {
+            console.log('Please complete all required fields...')
+          }
         }
         if(step == 2){
            console.log(`Validating step ${step}`)
+
+           if(this.$store.getters.hasImages.length > 0 ){
+               this.step++;
+           }
         }
         if(step == 3){
            console.log(`Validating step ${step}`)
+            this.step++;
         }
         if(step == 4){
            console.log(`Validating step ${step}`)
@@ -130,7 +155,6 @@ import eventBus from '../../../middleware/eventBus/index'
         },
 
          nextStep: function(){
-          this.step++;
           this.validateStep(this.step);
           if(this.step == 1){
             console.log('On step 1');
@@ -181,7 +205,7 @@ import eventBus from '../../../middleware/eventBus/index'
   align-content: center;
 }
 .step-header{
-  width: 66%;
+  width: 50%;
   margin: 0 auto;
 }
   .step-header-item{

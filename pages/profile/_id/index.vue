@@ -4,13 +4,13 @@
         <p>Their ID: {{ this.$route.params.id }}</p>
         <p>your ID: {{ this.$store.state.userId._id}}</p>
           <p>Profile: {{ this.$route.params.userProfile }}</p> -->
-          <Tab :user="loadedUser"></Tab>
-          <div v-if="loadedUser && showProfileTab">
+          <!-- <Tab :user="loadedUser"></Tab> -->
+          <div v-if="loadedUser">
             <UserProfile  :user="loadedUser"></UserProfile>
           </div>
-          <div v-if="loadedUser && showPhotoTab">
+          <!-- <div v-if="loadedUser && showPhotoTab">
             <PhotosProfile  :user="loadedUser"></PhotosProfile>
-          </div>
+          </div> -->
 
 
   </div>

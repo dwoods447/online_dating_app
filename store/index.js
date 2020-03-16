@@ -240,6 +240,17 @@ export const actions = {
      return userRemovedFromFavoritesList;
   },
 
+  async removeFromBlockedUsersAction(context, userId){
+    const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
+    console.log(`Removing user ${JSON.stringify(userId)}`);
+    const userRemovedFromBlockedList = (await UserServiceProfile.removeUserFromBlockList(userId)).data;
+    console.log(`updated favs in store ${JSON.stringify(userRemovedFromBlockedList)}`);
+     return userRemovedFromBlockedList;
+  },
+
+
+
+
   async getUserDetailsAction(context, userId){
 
     let userReturned;

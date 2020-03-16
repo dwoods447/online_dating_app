@@ -150,6 +150,24 @@
         return res.status(200).json({message: 'User successfully removed from favorites', favorites: userFavs.favorites.users});
        },
 
+       async removeUserFromBlockList(req, res, next){
+        const { userProfileId } = req.body;
+        const blocker = await User.findOne({_id: req.userId});
+        if(!blocker){
+            return res.status(401).json({message: 'Unauthorized you are not logged in!'});
+        }
+        const personToUnBlock = await User.findOne({_id: userProfileId});
+        console.log(`Id of person to remove ${JSON.stringify(personToUnBlock._id)}`);
+         const userUnBlocked = await blocker.removeUserFromBlockList(personToUnBlock);
+         if(!userUnBlocked){
+            return res.status(422).json({message: 'There was an error trying to remove the user from block list!'});
+         }
+         const blockedUsers = await User.findOne({_id: req.userId}).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
+         console.log(`Favs returned on server ${JSON.stringify(blockedUsers.blockedUsers.users)}`);
+         return res.status(200).json({message: 'User removed from your block list', blockList: blockedUsers});
+       },
+
+
 
        async getInboxMessagesForUser(req, res, next){
        // let currentPage =  1;
@@ -676,18 +694,6 @@
          return res.status(200).json({message: 'User added to your block list'});
        },
 
-       async removeUserFromBlockList(req, res, next){
-        const {userThatsBlockedId } = req.body;
-        const blocker = await User.findById(req.userId);
-        if(!blocker){
-            return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-        }
-         const userUnBlocked = await blocker.removeUserFromBlockList(userThatsBlockedId);
-         if(!userUnBlocked){
-            return res.status(422).json({message: 'There was an error trying to remove the user from block list!'});
-         }
-         return res.status(200).json({message: 'User removed from your block list'});
-       },
 
        async uploadImage(req, res, next){
 

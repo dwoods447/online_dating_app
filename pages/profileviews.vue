@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h2>Profile Views</h2>
-    <section>
+
+    <section style="max-width: 1200px; margin: 0 auto;">
+       <h2>Profile Views</h2>
       <ProfilePreview v-for="view in views" :profile="view.userId" :key="view._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
     </section>
   </div>

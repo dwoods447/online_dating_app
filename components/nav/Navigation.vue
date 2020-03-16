@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top navbar-expand-lg">
+  <nav class="navbar fixed-top static-top navbar-expand-lg"  style="background-color: #ddd;">
      <nuxt-link to="/" class="navbar-brand">
           <span class="navbar-brand">ImSeekingGeeks.com</span>
      </nuxt-link>

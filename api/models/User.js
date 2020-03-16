@@ -303,27 +303,6 @@ UserSchema.methods.addUserToBlockList = function(userId){
 
 
 
-UserSchema.methods.removeUserFromBlockList = function(userId){
-    const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-        return userId ===  searchedUser._id.toString();
-    });
-    const updatedBlockedUsers = [...this.blockedUsers.users];
-    if(userBlockedIndex == -1){
-        // User is not in the block list
-        return false;
-    }
-    if(userBlockedIndex >= 0){
-         // User is in block user list remove them
-         updatedBlockedUsers.splice(userBlockedIndex, 1);
-    }
-
-    const newBlockList = {
-        users:  updatedBlockedUsers
-    }
-    this.blockedUsers =  newBlockList;
-    return this.save();
-}
-
 
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
 
@@ -385,6 +364,27 @@ UserSchema.methods.removeUserFromFavorites = function(user){
         this.favorites.users =  newFavorites;
         return this.save();
 }
+
+
+UserSchema.methods.removeUserFromBlockList = function(userId){
+  const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
+    return userId._id.toString() === searchedUser.userId.toString();
+  });
+  const updatedBlockedUsers = [...this.blockedUsers.users];
+  if(userBlockedIndex == -1){
+      // User is not in the block list
+      return false;
+  }
+  if(userBlockedIndex >= 0){
+       // User is in block user list remove them
+       updatedBlockedUsers.splice(userBlockedIndex, 1);
+  }
+
+  const newBlockList = updatedBlockedUsers;
+  this.blockedUsers.users = newBlockList;
+  return this.save();
+}
+
 
 
 UserSchema.methods.updateUserAge = function(){

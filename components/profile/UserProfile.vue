@@ -7,44 +7,26 @@
     </div>
     <div class="col-lg-6">
       <div class="row">
-        <div class="col-lg-6">
-          <AddUserToFavoritesListButton :userId="userReturned._id"></AddUserToFavoritesListButton>
-        </div>
-         <div class="col-lg-6">
-            <AddUserToBlockListButton :userId="userReturned._id"></AddUserToBlockListButton>
+        <div class="col-lg-12">
+          <div class="flex-container">
+            <AddUserToFavoritesListButton :userId="userReturned._id" class="block-btn-custom"></AddUserToFavoritesListButton>
+            <AddUserToBlockListButton :userId="userReturned._id" class="block-btn-custom"></AddUserToBlockListButton>
+          </div>
         </div>
       </div>
-
-
     </div>
-
   </div>
 
   <div class="row">
     <div class="col-lg-6">
-      <div class="main-image-container"><img src="http://placehold.it/500x500"></div>
+      <div class="main-image-container" v-if="renderMainImage">
+        <ProfileMainImg :imageSrc="mainImgSrc" :imageIndex="mainImageIndex" :genderType="mainGenderValue" :randomType="mainRandomVal"></ProfileMainImg>
+      </div>
       <div class="thumbnail-container">
         <ul class="image-thumbs" v-if="images.length > 0">
-          <li>
-          <div v-if="userReturned.random === 'true'">
-           <div v-if="userReturned.gender === 'male'">
-             <div style="width: 100%; display: block;"><img :src="images[0].path|maleImageSrcFilter" style="width: 100%;"></div>
-           </div>
-             <div v-if="userReturned.gender === 'female'">
-              <div style="width: 100%; display: block;"><img :src="images[0].path|femaleImageSrcFilter" style="width: 100%;"> </div>
-             </div>
-             <div v-if="userReturned.gender === 'trans-female'">
-             <div style="width: 100%; display: block;"><img :src="images[0].path|transFemaleImageSrcFilter" style="width: 100%;"></div>
-            </div>
-             <div v-if="userReturned.gender === 'trans-male'">
-                  <div sstyle="width: 100%; display: block;"><img :src="images[0].path|transMaleImageSrcFilter" style="width: 100%;"></div>
-              </div>
-           </div>
-           <div v-if="userReturned.random === 'false'">
-               <div style="max-width: 127px; max-height: 127px;"><img :src="images[0].path|imageSrcFilter" alt=""></div>
-          </div>
+          <li v-for="(image, i) in images" :key="'preview-image'+i" @click="changeMainImage(image, userReturned.random, userReturned.gender)">
+           <ProfileImgPreview :random="userReturned.random" :gender="userReturned.gender" :images="images" :imageIndex="i"></ProfileImgPreview>
           </li>
-
         </ul>
       </div>
       <div>
@@ -53,6 +35,21 @@
       </div>
     </div>
     <div class="col-lg-6">
+        <div class="profile-block">
+        <div class="profile-block-header"><h4>Appearance & Personal Details</h4></div>
+        <div class="profile-block-body">
+          <ul>
+            <li>Marital Status: <strong>{{ userReturned.martialStatus }}</strong></li>
+             <li>Age: <strong>{{ userReturned.age }}</strong></li>
+             <li>Hair Color: <strong>{{ userReturned.hairColor }}</strong></li>
+             <li>Eye Color: <strong>{{ userReturned.eyeColor }}</strong></li>
+             <li>Height: <strong>{{ userReturned.height|heightInchesToFeet}}</strong></li>
+             <li>Personaility: <strong>{{ userReturned.personality}}</strong></li>
+
+          </ul>
+
+        </div>
+      </div>
        <div class="profile-block">
         <div class="profile-block-header"><h4>Gender & Background</h4></div>
         <div class="profile-block-body">
@@ -89,21 +86,7 @@
           </ul>
         </div>
       </div>
-      <div class="profile-block">
-        <div class="profile-block-header"><h4>Appearance & Personal Details</h4></div>
-        <div class="profile-block-body">
-          <ul>
-            <li>Marital Status: <strong>{{ userReturned.martialStatus }}</strong></li>
-             <li>Age: <strong>{{ userReturned.age }}</strong></li>
-             <li>Hair Color: <strong>{{ userReturned.hairColor }}</strong></li>
-             <li>Eye Color: <strong>{{ userReturned.eyeColor }}</strong></li>
-             <li>Height: <strong>{{ userReturned.height|heightInchesToFeet}}</strong></li>
-             <li>Personaility: <strong>{{ userReturned.personality}}</strong></li>
 
-          </ul>
-
-        </div>
-      </div>
     </div>
   </div>
   <div class="row">
@@ -121,17 +104,27 @@ import UserProfileService from '../../middleware/services/UserProfileService'
 import SendMessage from '../../components/profile/message/SendMessage'
 import AddUserToBlockListButton from '../../components/profile/actions/AddUserToBlockButton'
 import AddUserToFavoritesListButton from '../../components/profile/actions/AddUserToFavoriteButton'
-
+import ProfileImgPreview from './image/ProfileImgPreview'
+import ProfileMainImg from './main-profile-image/ProfileMainImg'
   export default {
-    components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton},
+    components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton, ProfileImgPreview, ProfileMainImg},
     props:['user'],
     created(){
+        console.log(`Getting user details...`);
+        this.userReturned = this.user;
+        this.images = this.user.images.imagePaths;
+        console.log(`Data loaded....`);
 
     },
     mounted(){
         //this.getUserDetails(this.userId);
-        this.userReturned = this.user;
-        this.images = this.user.images.imagePaths;
+        if(this.images.length > 0){
+          this.changeMainImage(this.images[0], this.userReturned.random, this.userReturned.gender)
+        }else {
+          this.changeMainImage('', this.userReturned.random, this.userReturned.gender)
+        }
+
+
     },
     filters: {
       booleanToResponse(value){
@@ -169,11 +162,41 @@ import AddUserToFavoritesListButton from '../../components/profile/actions/AddUs
           userReturned: {},
           messageReciever: this.user._id,
           images: [],
+          mainImg: '',
+          mainImgIndex: '',
+          randomVal: '',
+          genderVal: '',
+          renderMainImage: false,
           // raceDatingPreferences:userReturned.raceDatingPreferences.races,
           // interRacialDatingPreferences: userReturned.interRacialDatingPreferences.races,
       }
     },
+    computed:{
+      mainImgSrc(){
+        return this.mainImg;
+      },
+      mainImageIndex(){
+        return this.mainImgIndex;
+      },
+      mainGenderValue(){
+        return this.genderVal;
+      },
+      mainRandomVal(){
+        return this.randomVal;
+      }
+    },
     methods: {
+      changeMainImage(imageSrc, randomValue, genderValue){
+          console.log(`Changing Image....`);
+           console.log(`Main Image ${JSON.stringify(imageSrc)}`);
+            console.log(`Random ${randomValue}`);
+             console.log(`gender ${genderValue}`);
+          this.mainImg = imageSrc.path;
+        //  this.mainImgIndex = imageIndex;
+          this.randomVal = randomValue;
+          this.genderVal = genderValue;
+          this.renderMainImage = true;
+      },
       async getUserDetails(userId){
 
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
@@ -183,6 +206,7 @@ import AddUserToFavoritesListButton from '../../components/profile/actions/AddUs
         } else {
            this.userReturned = user.user;
            this.images = user.user.images.imagePaths;
+
         }
       },
 
@@ -192,6 +216,19 @@ import AddUserToFavoritesListButton from '../../components/profile/actions/AddUs
 </script>
 
 <style  scoped>
+.flex-container{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  padding: 1em;
+}
+.block-btn-custom{
+  margin: 0.2em;
+}
+.flex-row{
+  height:
+}
 .image-thumbs ul {
   margin: 0;
   padding: 0;

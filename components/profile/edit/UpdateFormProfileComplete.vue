@@ -32,6 +32,7 @@
             <div class="col-sm-6">
                <label for="">Marital Status</label>
                 <select class="form-control"  v-model="maritalStatus" @change="setMartialStatusInVuexStore(maritalStatus)">
+                  <option value=""></option>
                 <option v-for="(option, i) in maritalStatuses" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
               </select>
 
@@ -215,7 +216,7 @@ import { mapActions } from 'vuex'
            {name: 'widowed', value: 'widowed', key: 'widowed-2'},
            {name: 'divorced', value: 'divorced', key: 'divorced-3'},
          ],
-         maritalStatus: this.$store.state.userId.maritalStatus,
+         maritalStatus: '',
          heights: [
            {name: "4'5", value: 53, key: ""},
            {name: "4'6", value: 54, key: ""},
@@ -328,6 +329,7 @@ import { mapActions } from 'vuex'
          interacialDatingPreferences: [],
          secondLanguage: '',
          languages: [
+           {name: '', value: ''},
            {name: 'Arabic', value: 'Arabic'},
            {name: 'Dutch', value: 'Dutch'},
            {name: 'Chinese', value: 'Chinese'},

@@ -33,6 +33,7 @@
             <div class="col-sm-6">
                <label for="">Marital Status</label>
                <select class="form-control"  v-model="maritalStatus"  @change="setMartialStatusInVuexStore(maritalStatus)">
+                  <option value=""></option>
                 <option v-for="(option, i) in maritalStatuses" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
               </select>
 
@@ -243,6 +244,7 @@ import { mapActions } from 'vuex'
          ],
          religion: '',
          religions: [
+           {name: '', value: ''},
            {name: 'Chrisitan - other', value: 'chrisitan - other', key: ''},
            {name: 'New age', value: 'new age', key: ''},
            {name: 'Muslim', value: 'muslim', key: ''},
@@ -312,6 +314,7 @@ import { mapActions } from 'vuex'
          interacialDatingPreferences: [],
          secondLanguage: '',
          languages: [
+            {name: '', value: ''},
            {name: 'Arabic', value: 'Arabic'},
            {name: 'Dutch', value: 'Dutch'},
            {name: 'Chinese', value: 'Chinese'},

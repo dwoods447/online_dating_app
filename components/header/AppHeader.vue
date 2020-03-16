@@ -10,7 +10,7 @@
           <h1 class="mb-5">Find the Geek of your Dreams!</h1>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
+          <!-- <form>
             <div class="form-row">
               <h4>Sign up for our mailing list</h4>
               <div class="col-12 col-md-9 mb-2 mb-md-0">
@@ -20,7 +20,7 @@
                 <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
               </div>
             </div>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>

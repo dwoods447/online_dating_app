@@ -5,10 +5,10 @@ export const state = ()=>({
   height: '',
   hairColor: '',
   eyeColor: '',
-  maritalStatus :'',
+  maritalStatus:'',
   religion: '',
   profession: '',
-  education: '',
+  highestEducation: '',
   doesSmoke: false,
   doesDrink: false,
   doesHaveChildren: false,
@@ -31,10 +31,10 @@ export const mutations = {
     state.hairColor = hairColor;
   },
   setEyeColorMutation(state, eyeColor){
-    state.eyeColor = eyeColor
+    state.eyeColor = eyeColor;
   },
   setMaritalStatusMutation(state, maritalStatus){
-    state.maritalStatus = maritalStatus
+    state.maritalStatus = maritalStatus;
   },
   setReligionMutation(state, religion){
     state.religion = religion;
@@ -43,7 +43,7 @@ export const mutations = {
     state.profession = profession;
   },
   setEducationMutation(state, education){
-    state.education = education;
+    state.highestEducation = education;
   },
   setDoesDrinkMutation(state, doesDrink){
     if(doesDrink === 'yes'){

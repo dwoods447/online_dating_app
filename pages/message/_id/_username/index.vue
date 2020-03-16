@@ -1,7 +1,7 @@
 <template>
   <div>
-    <section>
-      <div  class="message-thread-container" style="width: 65%; margin: 15px auto; max-height: 550px; overflow: auto;">
+    <section style="max-width: 1200px; margin: 0 auto;">
+      <div  class="message-thread-container" style="width: 100%; margin: 15px auto; max-height: 550px; overflow: auto;">
           <!-- <h3>Messages thread from:  {{this.$route.params.username}}</h3> -->
 
             <div>
@@ -36,7 +36,8 @@
            </div>
 
       </div>
-      <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
+         <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
+
     </section>
 
   </div>

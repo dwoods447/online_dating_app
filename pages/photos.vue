@@ -1,7 +1,7 @@
 <template>
-  <div>
-              Your Photos
-              <ul>
+    <div>
+        <section style="max-width: 1200px; margin: 0 auto;">
+            <ul>
                  <li v-for="(image, i) in profileImages" :key="'image-'+i" style="display: inline-block; margin: 10px;">
                   <div style="width: 300px; height: 300px; border: 1px solid #000;">
                      <div v-if="profile.random === 'false'">
@@ -29,8 +29,8 @@
                   </div>
                  </li>
               </ul>
-
-  </div>
+          </section>
+    </div>
 </template>
 
 <script>
