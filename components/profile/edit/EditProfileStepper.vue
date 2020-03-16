@@ -34,8 +34,8 @@
                <div class="flex-container">
                  <div class="flex--item">
                     <button @click.prevent="prevStep" class="btn btn-primary btn-sm" v-if="step != 1">Previous Step</button>
-                    <button @click.prevent="nextStep" class="btn btn-primary btn-sm" v-if="step != totalSteps">Next Step</button>
-                    <button @click.prevent="updateUserProfile" class="btn btn-primary btn-sm"  :disabled="onReadySubmit" v-if="this.isDone">Update Your Profile</button>
+                    <button @click.prevent="nextStep" class="btn btn-primary btn-sm" v-if="step != totalSteps" :disabled="this.onReadySubmit">Next Step</button>
+                    <button @click.prevent="updateUserProfile" class="btn btn-primary btn-sm"  :disabled="this.onReadySubmit" v-if="this.isDone">Update Your Profile</button>
                  </div>
                </div>
 
@@ -61,7 +61,7 @@ import eventBus from '../../../middleware/eventBus/index'
         isStepTwoActive: false,
         isStepThreeActive: false,
         isDone: false,
-        onReadySubmit: true,
+        onReadySubmit: false,
       }
     },
     methods: {
@@ -99,9 +99,10 @@ import eventBus from '../../../middleware/eventBus/index'
             && this.$store.state.profile.state !== ''
             && this.$store.state.profile.postalCode !== ''
             ){
+              this.onReadySubmit = false;
               this.step++;
           } else {
-            console.log('Please complete all required fields...')
+            console.log('Please complete all required fields...');
           }
         }
         if(step == 2){
@@ -198,6 +199,7 @@ import eventBus from '../../../middleware/eventBus/index'
 </script>
 
 <style scoped>
+
 .flex-container{
   display: flex;
   flex-direction: row;
@@ -205,7 +207,7 @@ import eventBus from '../../../middleware/eventBus/index'
   align-content: center;
 }
 .step-header{
-  width: 50%;
+  width: 66%;
   margin: 0 auto;
 }
   .step-header-item{

@@ -476,7 +476,7 @@
               city,
               postalCode,
               miles,
-              state
+              usState,
             } = req.body;
             let findParams = {};
             if(gender) findParams.gender = gender;
@@ -488,7 +488,7 @@
             if(highestEducation) findParams.highestEducation = highestEducation;
             if(onlineStatus) findParams.onlineStatus = onlineStatus;
             if(city) findParams.city = city;
-            if(state) findParams.state = state;
+            if(usState) findParams.state = usState;
 
             // Filter User search based on parameters
             //https://www.zipcodeapi.com/rest/zuOeAFr1BUb04kxoozJUQPt2Ll1GVnnaxrWN8zI9RG5ekH47oPn6zrdCqqprh7bI/radius.json/71260/25/mile
@@ -554,7 +554,7 @@
           city,
           postalCode,
           miles,
-          state,
+          usState,
           martialStatus,
           hasChildren,
           doesSmoke,
@@ -606,7 +606,7 @@
         }
        // if(onlineStatus) findParams.onlineStatus = onlineStatus;
         if(city) findParams.city = city;
-        if(state) findParams.state = state;
+        if(usState) findParams.state = usState;
         if(martialStatus) findParams.martialStatus = { $in: martialStatus };
         if(hasChildren) findParams.hasChildren = hasChildren;
         if(doesSmoke) findParams.doesSmoke = doesSmoke;

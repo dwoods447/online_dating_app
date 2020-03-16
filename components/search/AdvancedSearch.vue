@@ -79,19 +79,20 @@
                    <div class="col-lg-12">
                       <label for="">Smokes</label>
                       <select class="form-control"  v-model="doesSmoke" @change="setDoesSmokeInVuexStore(doesSmoke)">
-                    <option v-for="(option, i) in doesSmokeChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                    <option v-for="(option, i) in doesSmokeChoices" :key="'smoke-option-'+i+'-'+option.name" :value="option.name">{{ option.name }}</option>
                   </select>
                    </div>
                    <div class="col-lg-12">
                       <label for="">Drinks</label>
                        <select class="form-control"  v-model="doesDrink" @change="setDoesDrinkInVuexStore(doesDrink)">
-                    <option v-for="(option, i) in doesDrinkChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                    <option v-for="(option, i) in doesDrinkChoices" :key="'drink-option-'+i+'-'+option.name" :value="option.name">{{ option.name }}</option>
                   </select>
                    </div>
                    <div class="col-lg-12">
                       <label for="">Does Drugs</label>
-                      <select name="" id="" class="form-control">
+                      <select name="" id="" class="form-control" v-model="doesDoDrugs" @change="setDoesDoDrugsInVuexStore(doesDoDrugs)">
                         <option value=""></option>
+                        <option v-for="(option, i) in doesDoDrugsChoices" :key="'drugs-option'+i" :value="option.name">{{option.name}}</option>
                       </select>
                    </div>
 
@@ -200,6 +201,7 @@
                         <div class="col-lg-12 col-xs-12">
                           <label for="">Has an income above: </label>
                           <input type="text" v-model="formData.income" class="form-control" @change="setIncomeInVuexStore(formData.income)">
+                          <p><small>Enter a whole dollar amount(NO decimals, commas, or dollar signs)</small></p>
                         </div>
 
                         <div class="col-lg-12 col-xs-12">
@@ -357,7 +359,7 @@ import { mapActions } from 'vuex'
          ],
         maritalStatuses: [
            {name: 'single', value: 'single', key: 'single-0'},
-           {name: 'married', value: 'married', key: 'married-1'},
+           {name: 'married', value: 'married - interested in having an affair', key: 'married-1'},
            {name: 'widowed', value: 'widowed', key: 'widowed-2'},
            {name: 'divorced', value: 'divorced', key: 'divorced-3'},
          ],
@@ -450,7 +452,7 @@ import { mapActions } from 'vuex'
             },
 
          errorMessage: '',
-         doesSmoke: false,
+         doesSmoke: '',
          doesDateInteracially: '',
          displayInterracialChoices: false,
          doesSmokeChoices: [
@@ -461,7 +463,7 @@ import { mapActions } from 'vuex'
             {name: 'yes', value: true, key: 'doesDrinkChoices-yes'},
            {name: 'no', value: false, key: 'doesDrinkChoices-no'},
          ],
-         doesDrink: false,
+         doesDrink: '',
           doesDateInteraciallyChoices: [
            {name: 'yes', value: true, key: 'doesDateInteraciallyChoices-yes'},
            {name: 'no', value: false, key: 'doesDateInteraciallyChoices-no'},
@@ -470,17 +472,17 @@ import { mapActions } from 'vuex'
            {name: 'yes', value: true, key: 'doesHaveChildrenChoices-yes'},
            {name: 'no', value: false, key: 'doesHaveChildrenChoices-no'},
          ],
-         doesHaveChildren: false,
+         doesHaveChildren: '',
          doesDoDrugsChoices: [
-          {name: 'yes', value: true, key: 'doesDoDrugsChoices-yes'},
+           {name: 'yes', value: true, key: 'doesDoDrugsChoices-yes'},
            {name: 'no', value: false, key: 'doesDoDrugsChoices-no'},
          ],
-         doesDoDrugs : false,
+         doesDoDrugs : '',
          doesHaveChildrenChoices: [
           {name: 'yes', value: true, key: 'doesHaveChildrenChoices-yes'},
            {name: 'no', value: false, key: 'doesHaveChildrenChoices-no'},
          ],
-         doesHaveChildren: false,
+         doesHaveChildren: '',
 
       }
     },
@@ -497,6 +499,11 @@ import { mapActions } from 'vuex'
       setIncomeInVuexStore: 'advancedsearch/setIncomeAction',
       setReligionInVuexStore: 'advancedsearch/setReligionAction',
       setEthnicityInVuexStore: 'advancedsearch/setEthnicityAction',
+
+      setDoesDoDrugsInVuexStore: 'advancedsearch/setDoesDoDrugsAction',
+      setDoesDrinkInVuexStore: 'advancedsearch/setDoesDrinkAction',
+      setDoesSmokeInVuexStore: 'advancedsearch/setDoesSmokeAction',
+
       setUsStateInVuexStore: 'advancedsearch/setUsStateAction',
       setBodyTypeInVuexStore: 'advancedsearch/setBodyTypeAction',
       setCityInVuexStore: 'advancedsearch/setCityAction',

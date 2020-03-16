@@ -20,6 +20,7 @@
 
 <script>
  import UserProfileService from '../../../middleware/services/UserProfileService'
+ import eventBus from '../../../middleware/eventBus/index'
   export default {
     components:{},
     data(){
@@ -80,6 +81,7 @@
               if(uploadImg.data.user){
                   this.$store.dispatch('setLoggedInUserIdAction', uploadImg.data.user);
                   this.message =  uploadImg.data.message;
+                  eventBus.$emit('image-uploaded');
                   setTimeout(()=>{
                     this.removeSelectedFile();
                    this.previewSrc = uploadImg.data.user.images.imagePaths[0];
@@ -96,6 +98,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

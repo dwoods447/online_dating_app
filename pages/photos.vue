@@ -29,16 +29,27 @@
                   </div>
                  </li>
               </ul>
+              <div style="max-width: 25%;">
+                <ImgUpload></ImgUpload>
+              </div>
           </section>
     </div>
 </template>
 
 <script>
   import UserProfileService from '../middleware/services/UserProfileService'
+  import ImgUpload from '../components/profile/image/ImgUpload'
+  import eventBus from '../middleware/eventBus/index'
   export default {
     middleware: ['check-auth', 'auth', 'check-profile'],
+    components: { ImgUpload},
     created(){
         this.getUserPhotos();
+    },
+    mounted(){
+      eventBus.$on('image-uploaded', ()=>{
+        this.getUserPhotos();
+      })
     },
     data(){
       return {

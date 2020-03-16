@@ -2,20 +2,20 @@
   <div>
         <div v-if="random === 'true'">
            <div v-if="gender === 'male'">
-             <div style="width: 100%; display: block;"><img :src="images[imageIndex].path|maleImageSrcFilter" style="width: 100%;"></div>
+             <div class="img-thumbnail-preview-container"><img :src="images[imageIndex].path|maleImageSrcFilter" class="img-thumbnail-preview"></div>
            </div>
              <div v-if="gender === 'female'">
-              <div style="width: 100%; display: block;"><img :src="images[imageIndex].path|femaleImageSrcFilter" style="width: 100%;"> </div>
+              <div class="img-thumbnail-preview-container"><img :src="images[imageIndex].path|femaleImageSrcFilter" class="img-thumbnail-preview"> </div>
              </div>
              <div v-if="gender === 'trans-female'">
-             <div style="width: 100%; display: block;"><img :src="images[imageIndex].path|transFemaleImageSrcFilter" style="width: 100%;"></div>
+             <div class="img-thumbnail-preview-container"><img :src="images[imageIndex].path|transFemaleImageSrcFilter" class="img-thumbnail-preview"></div>
             </div>
              <div v-if="gender === 'trans-male'">
-                  <div sstyle="width: 100%; display: block;"><img :src="images[imageIndex].path|transMaleImageSrcFilter" style="width: 100%;"></div>
+                  <div class="img-thumbnail-preview-container"><img :src="images[imageIndex].path|transMaleImageSrcFilter" class="img-thumbnail-preview"></div>
               </div>
            </div>
            <div v-if="random === 'false'">
-               <div style="max-width: 127px; max-height: 127px;"><img :src="images[imageIndex].path|imageSrcFilter" alt=""></div>
+               <div class="img-thumbnail-preview-container"><img :src="images[imageIndex].path|imageSrcFilter" alt="" class="img-thumbnail-preview"></div>
         </div>
   </div>
 </template>
@@ -65,5 +65,12 @@
 </script>
 
 <style scoped>
-
+.img-thumbnail-preview-container{
+  max-width: 90px;
+  max-height: 90px;
+  margin: 5px;
+}
+  .img-thumbnail-preview{
+    width: 100%;
+  }
 </style>

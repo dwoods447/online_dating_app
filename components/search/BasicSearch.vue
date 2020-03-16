@@ -214,15 +214,15 @@ import { VueSlideToggle } from 'vue-slide-toggle'
           ],
 
            ethnicities: [
-            {name: "Black/African American", value: ""},
-            {name: "White/Caucasian", value: ""},
-            {name: "Hispanic", value: ""},
-            {name: "Indian", value: ""},
-            {name: "Middle Eastern", value: ""},
-            {name: "Native American", value: ""},
-            {name: "Asain", value: ""},
-            {name: "Mixed Race", value: ""},
-            {name: "Other", value: ""},
+            {name: "Black/African American", value: "Black/African American"},
+            {name: "White/Caucasian", value: "White/Caucasian"},
+            {name: "Hispanic", value: "Hispanic"},
+            {name: "Indian", value: "Indian"},
+            {name: "Middle Eastern", value: "Middle Eastern"},
+            {name: "Native American", value: "Native American"},
+            {name: "Asian", value: "Asian"},
+            {name: "Mixed Race", value: "Mixed Race"},
+            {name: "Other", value: "Other"},
           ],
 
 

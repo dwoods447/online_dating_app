@@ -17,6 +17,9 @@ export const state = ()=>({
   miles: '',
   results: [],
   maritalStatus: [],
+  doesDrink: '',
+  doesSmoke: '',
+  doesDoDrugs: '',
   doesDateInteracially: '',
   raceDatingPreferences: [],
   interacialDatingPreferences: [],
@@ -91,6 +94,32 @@ export const mutations = {
   setRaceDatingPreferencesMutation(state, race){
     state.raceDatingPreferences = race;
   },
+
+   setDoesSmokeMutation(state, doesSmoke){
+    if(doesSmoke === 'yes'){
+      state.doesSmoke = true;
+    } else {
+      state.doesSmoke = false;
+    }
+   },
+   setDoesDoDrugsMutation(state, doesDoDrugs){
+     console.log(`Does do drugs ${doesDoDrugs}`);
+      if(doesDoDrugs === 'yes'){
+        state.doesDoDrugs = true;
+      } else {
+        state.doesDoDrugs = false;
+      }
+   },
+   setDoesDrinkMutation(state, doesDrink){
+    if(doesDrink === 'yes'){
+      state.doesDrink = true;
+    } else {
+      state.doesDrink =  false;
+    }
+   },
+
+
+
   setIncomeMutation(state, income){
     state.income = 0;
     state.income += Number.parseInt(income);
@@ -140,6 +169,20 @@ setMaxHeightAction(context, maxHeight){
  setBodyTypeAction(context,bodyType){
   context.commit('setBodyTypeMutation', bodyType);
  },
+
+ setDoesSmokeAction(context, doesSmoke){
+  context.commit('setDoesSmokeMutation', doesSmoke);
+ },
+ setDoesDoDrugsAction(context, doesDoDrugs){
+  context.commit('setDoesDoDrugsMutation', doesDoDrugs);
+ },
+ setDoesDrinkAction(context, doesDrink){
+  context.commit('setDoesDrinkMutation', doesDrink);
+ },
+
+
+
+
  setPostalCodeAction(context, postalCode){
    context.commit('setPostalCodeMutation', postalCode);
  },

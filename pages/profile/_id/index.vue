@@ -46,6 +46,7 @@
 
          let userData =  await this.$store.dispatch('getUserDetailsAction', userId);
          this.loadedUser = userData;
+         console.log(`Users Profile: ${JSON.stringify(this.loadedUser)}`)
 
       }
     },

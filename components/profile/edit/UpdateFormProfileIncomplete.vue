@@ -1,6 +1,6 @@
 <template>
   <div>
-       <h5>Please complete your profile</h5>
+       <h5 class="form-header">Please complete your profile <span class="required">(All fields are required)</span></h5>
        <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
            <div class="form-group">
           <div class="row">
@@ -34,7 +34,7 @@
                <label for="">Marital Status</label>
                <select class="form-control"  v-model="maritalStatus"  @change="setMartialStatusInVuexStore(maritalStatus)">
                   <option value=""></option>
-                <option v-for="(option, i) in maritalStatuses" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                <option v-for="(option, i) in maritalStatuses" :key="'option-'+i+'-'+option.name" :value="option.value">{{ option.name }}</option>
               </select>
 
             </div>
@@ -61,9 +61,9 @@
            <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Your highest education</label>
-                  <select class="form-control"  v-model="highestEducation">
-                  <option v-for="(option, i) in educations" :key="'option-'+i+'-'+option.name"  @change="setEducationInVuexStore(highestEducation)">{{ option.name }}</option>
+                    <label for="">Your highest education</label>
+                    <select class="form-control"  v-model="highestEducation" @change="setEducationInVuexStore(highestEducation)">
+                    <option v-for="(option, i) in educations" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
                   </select>
 
                 </div>
@@ -144,6 +144,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import states from '../../../data/states'
   export default {
     methods: {
 
@@ -196,7 +197,7 @@ import { mapActions } from 'vuex'
          selectedMaritalStatuses: [],
          maritalStatuses: [
            {name: 'single', value: 'single', key: 'single-0'},
-           {name: 'married', value: 'married', key: 'married-1'},
+           {name: 'married', value: 'married - interested in having an affair', key: 'married-1'},
            {name: 'widowed', value: 'widowed', key: 'widowed-2'},
            {name: 'divorced', value: 'divorced', key: 'divorced-3'},
          ],
@@ -245,6 +246,7 @@ import { mapActions } from 'vuex'
          religion: '',
          religions: [
            {name: '', value: ''},
+           {name: 'Non-religious', value: 'non-religious'},
            {name: 'Chrisitan - other', value: 'chrisitan - other', key: ''},
            {name: 'New age', value: 'new age', key: ''},
            {name: 'Muslim', value: 'muslim', key: ''},
@@ -315,6 +317,7 @@ import { mapActions } from 'vuex'
          secondLanguage: '',
          languages: [
             {name: '', value: ''},
+           {name: 'None', value: 'none'},
            {name: 'Arabic', value: 'Arabic'},
            {name: 'Dutch', value: 'Dutch'},
            {name: 'Chinese', value: 'Chinese'},
@@ -374,5 +377,10 @@ import { mapActions } from 'vuex'
 </script>
 
 <style scoped>
-
+.required{
+  color :red;
+}
+.form-header{
+  text-align: center;
+}
 </style>

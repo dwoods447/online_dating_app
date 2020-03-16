@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Navigation -->
-  <nav class="navbar fixed-top static-top navbar-expand-lg"  style="background-color: #ddd;">
+  <nav class="navbar fixed-top static-top navbar-expand-lg"  style="background-color: #0A1C44;">
      <nuxt-link to="/" class="navbar-brand">
-          <span class="navbar-brand">ImSeekingGeeks.com</span>
+          <span class="navbar-brand-title">ImSeekingGeeks.com</span>
      </nuxt-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,10 +21,10 @@
         <nuxt-link  to="/signup" class="nav-link" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
       </li>
       <li class="nav-item dropdown" v-if="this.$store.getters.isAutheticated">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+        <a class="nav-link dropdown-toggle nav-text" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" href="javascript:void(0);">
 
-       <div v-if="this.$store.getters.hasImages" style="display: inline-block;">
+       <div v-if="this.$store.getters.hasImages" style="display: inline-block; margin-top: 0.8em;">
         <div v-if="this.$store.state.userId.random === 'true'">
           <div v-if="this.$store.state.userId.gender === 'male'">
                  <img :src="this.$store.getters.hasImages[0].path|maleImageSrcFilter" alt="" class="login-photo">
@@ -43,11 +43,11 @@
              <img :src="this.$store.getters.hasImages[0].path|imageSrcFilter" alt="" class="login-photo">
         </div>
 
-       </div><!-- <i class="fas fa-user"></i>--> Welcome, {{ this.$store.getters.getLoggedInUsername}} </a>&nbsp;&nbsp;
-        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" >
+       </div><!-- <i class="fas fa-user"></i>--> <span class="nav-text">Welcome, {{ this.$store.getters.getLoggedInUsername}}</span> </a>&nbsp;&nbsp;
+        <div class="dropdown-menu dropdown-menu-right dropdown-info nav-text" aria-labelledby="navbarDropdownMenuLink-4" >
           <nuxt-link class="dropdown-item" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
           <a href="#" class="dropdown-item" @click="goToEditUsersProfile"  v-if="this.$store.getters.isAutheticated" >Edit Profile</a>
-          <a class="dropdown-item" v-if="this.$store.getters.isAutheticated" @click="logOut">Log Out</a>
+          <a class="dropdown-item" v-if="this.$store.getters.isAutheticated" @click="logOut" style="color: #212529;">Log Out</a>
         </div>
       </li>
     </ul>
@@ -105,9 +105,18 @@ export default {
 .login-photo{
   max-width: 30px;
 }
-.navbar-brand{
+.navbar-brand-title{
   font-weight: 900;
-  font-size: 1.46em;
-  color: #02102C;
+  font-size: 1.23em;
+  color: #fff;
+}
+.navbar-brand-title:hover{
+  color: #007bff;
+}
+.nav-text{
+   color: #fff;
+}
+.nav-text:hover{
+   color: #007bff;
 }
 </style>

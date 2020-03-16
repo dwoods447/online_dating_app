@@ -25,6 +25,12 @@
         </div>
         <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
           <ul class="list-inline mb-0">
+             <li class="list-inline-item">
+               <h4>Copyright Notice</h4>
+              <p>
+                All randomly generated photos were hand picked from the authorized section of <a href="http://uifaces.com/" target="_blank">UI Faces</a>. Please visit <a href="https://web.archive.org/web/20160811185628/http://uifaces.com/faq" target="_blank">UI Faces FAQ</a> for more information regarding how you can use these faces.
+              </p>
+            </li>
             <li class="list-inline-item mr-3">
               <a href="#">
                 <i class="fab fa-facebook fa-2x fa-fw"></i>

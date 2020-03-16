@@ -127,7 +127,7 @@ export const actions = {
             if(res.data.user.isProfileCompleted == true){
               this.$router.push({name: 'index', params: {user: res.data.user}})
             } else {
-             $emit('setActiveLink', 'isShowSearch');
+              eventBus.$emit('setActiveLink', 'isShowSearch');
              this.$router.push({name: 'edituserprofile', params: {user: res.data.user}})
             }
         return res;

@@ -31,7 +31,7 @@
       </div>
       <div>
         <h4>About</h4>
-        <p>urabitur aliquet quam id dui posuere blandit. Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+        <p>{{userReturned.description}}</p>
       </div>
     </div>
     <div class="col-lg-6">
@@ -39,7 +39,7 @@
         <div class="profile-block-header"><h4>Appearance & Personal Details</h4></div>
         <div class="profile-block-body">
           <ul>
-            <li>Marital Status: <strong>{{ userReturned.martialStatus }}</strong></li>
+             <li>Marital Status: <strong>{{ userReturned.maritalStatus }}</strong></li>
              <li>Age: <strong>{{ userReturned.age }}</strong></li>
              <li>Hair Color: <strong>{{ userReturned.hairColor }}</strong></li>
              <li>Eye Color: <strong>{{ userReturned.eyeColor }}</strong></li>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="profile-block">
-        <div class="profile-block-header"><h4>Interest & Vices</h4></div>
+        <div class="profile-block-header"><h4>Interests & Vices</h4></div>
         <div class="profile-block-body">
           <ul>
             <li>Do you do you drink?: <strong>{{ userReturned.doesDrink | booleanToResponse }}</strong></li>
@@ -205,6 +205,7 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
             this.$router.push({path: '/blocked'})
         } else {
            this.userReturned = user.user;
+
            this.images = user.user.images.imagePaths;
 
         }
@@ -226,9 +227,7 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
 .block-btn-custom{
   margin: 0.2em;
 }
-.flex-row{
-  height:
-}
+
 .image-thumbs ul {
   margin: 0;
   padding: 0;
@@ -254,9 +253,10 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
 .profile-block-header{
   width: 100%;
   height: 60px;
-  background-color: #007BFF;
+  background-color: #0A1C44;
   padding: 0.5em;
   color: #fff;
+  text-align: center;
 }
 
 .profile-block-body{
