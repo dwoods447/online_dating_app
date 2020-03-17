@@ -4,7 +4,6 @@
       <div class="col-lg-12">
         <section>
           <div style="margin: 1em; padding: 1em;">
-              <div v-if="messages.length <= 0">You have No messages</div>
               <div v-if="messages.length > 0">
                  <paginate name="messages" :list="messages" :per="2">
                   <MessageInboxPreview v-for="(message, index) in paginated('messages')" :key="'message-user'+'_'+index"
@@ -26,6 +25,9 @@
                      <paginate-links for="messages" :async="true" :classes="{'ul':'pagination', 'li':'page-item', 'a':'page-link'}"></paginate-links>
                   </div>
 
+              </div>
+              <div class="flex-container" v-if="NoMessages">
+                 <div v-if="messages.length === 0">You have No messages</div>
               </div>
 
           </div>
@@ -63,7 +65,8 @@ import moment from 'moment'
         messages: [],
         inboxData: [],
         page: 1,
-        paginate:['messages']
+        paginate:['messages'],
+        NoMessages: false,
       }
     },
     computed:{
@@ -82,12 +85,16 @@ import moment from 'moment'
         //     }
         // },
         async getUserMessages(){
+           this.NoMessages =  false;
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages(this.page);
            // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
+
                console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
+            } else {
+                this.NoMessages = true;
             }
         },
 

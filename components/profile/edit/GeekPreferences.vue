@@ -22,13 +22,16 @@
                 <div class="col-sm-6">
                   <div v-if="displayInterracialChoices">
                      <label for="">Im interested in the follwing races:</label>
-                            <multiselect
+                            <!-- <multiselect
                             v-model="interacialDatingPreferences"
                             :options="ethnicities"
                             @change="setInteracialDatingPreferencesInVuexStore(interacialDatingPreferences)"
                             :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
                             <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
-                          </multiselect>
+                          </multiselect> -->
+                           <div v-for="(ethnicity, i) in ethnicities" :key="'interRacialDating-'+i">
+                             <p-check  name="check" v-model="interacialDatingPreferences" @change="setInteracialDatingPreferencesInVuexStore(ethnicity)" :value="ethnicity.value">{{ethnicity.name}}</p-check>
+                          </div>
                   </div>
 
                 </div>
@@ -39,23 +42,31 @@
             <div class="row">
                 <div class="col-sm-6">
                    <label for="">Im prefer:</label>
-                            <multiselect
+                            <!-- <multiselect
                             v-model="selectedGenders"
                             :options="genders"
                             @change="setSelectedGendersInVuexStore(selectedGenders)"
                             :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
                             <template slot="singleLabel" slot-scope="{ gender }"><strong>{{ gender.name }}</strong></template>
-                    </multiselect>
+                    </multiselect> -->
+
+                    <div v-for="(gender, i) in genders" :key="'maritalStatus-'+i">
+                             <p-check  name="check" v-model="selectedGenders" @change="setSelectedGendersInVuexStore(selectedGenders)" :value="gender.value">{{gender.name}}</p-check>
+                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label for="">I will date someone with marital status of:</label>
-                      <multiselect
+                      <!-- <multiselect
                             v-model="selectedMaritalStatuses"
                             :options="maritalStatuses"
                             @change="setMaritalStatusesInVuexStore(selectedMaritalStatuses)"
                             :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick genders" label="name" track-by="name" :preselect-first="false">
                             <template slot="singleLabel" slot-scope="{ status }"><strong>{{ status.name }}</strong></template>
-                    </multiselect>
+                    </multiselect> -->
+
+                    <div v-for="(maritalStatus, i) in maritalStatuses" :key="'maritalStatus-'+i">
+                             <p-check  name="check" v-model="selectedMaritalStatuses" @change="setMaritalStatusesInVuexStore(maritalStatus.value)" :value="maritalStatus.value">{{maritalStatus.name}}</p-check>
+                     </div>
                 </div>
             </div>
          </div>
@@ -66,13 +77,16 @@
             <div class="row">
                 <div class="col-sm-6">
                    <label for="">I prefer the following races:</label>
-                           <multiselect
+                           <!-- <multiselect
                             v-model="raceDatingPreferences"
                             :options="ethnicities"
                             @change="setRaceDatignPreferenceInVuexStore(selectedMaritalStatuses)"
                             :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick ethnicities" label="name" track-by="name" :preselect-first="false">
                             <template slot="singleLabel" slot-scope="{ ethnicity }"><strong>{{ ethnicity.name }}</strong></template>
-                          </multiselect>
+                          </multiselect> -->
+                            <div v-for="(ethnicity, i) in ethnicities" :key="'raceDating-'+i">
+                             <p-check  name="check" v-model="raceDatingPreferences" @change="setRaceDatignPreferenceInVuexStore(ethnicity.value)" :value="ethnicity.value">{{ethnicity.name}}</p-check>
+                           </div>
                 </div>
                 <div class="col-sm-6">
 
@@ -113,7 +127,12 @@
 
         selectedGenders: [],
         selectedMaritalStatuses: [],
-        maritalStatuses: [],
+        maritalStatuses: [
+           {name: 'single', value: 'single', key: 'single-0'},
+           {name: 'married', value: 'married - interested in having an affair', key: 'married-1'},
+           {name: 'widowed', value: 'widowed', key: 'widowed-2'},
+           {name: 'divorced', value: 'divorced', key: 'divorced-3'},
+        ],
       }
     },
     methods :{
@@ -152,6 +171,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

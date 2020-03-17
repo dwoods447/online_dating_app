@@ -207,7 +207,7 @@
                         <div class="col-lg-12 col-xs-12">
                          <label for="">Has a religion of </label>
                           <div v-for="(religion, i) in religions" :key="'religion-'+i">
-                             <p-check  name="check" v-model="formData.religion" @change="setReligionInVuexStore(formData.religion)">{{religion.name}}</p-check>
+                             <p-check  name="check" v-model="formData.religion" @change="setReligionInVuexStore(religion.value)" :value="formData.religion">{{religion.name}}</p-check>
                           </div>
                         </div>
                   </div>

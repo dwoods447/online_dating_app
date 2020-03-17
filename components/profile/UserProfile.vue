@@ -58,6 +58,7 @@
              <li>Ethnicity: <strong>{{ userReturned.ethnicity }}</strong></li>
              <li>Highest Education Level: <strong>{{ userReturned.highestEducation }}</strong></li>
              <li>Profession: <strong>{{ userReturned.profession}}</strong></li>
+             <li>Religion: <strong>{{ userReturned.religion }}</strong></li>
              <li>secondLanguage: <strong>{{ userReturned.secondLanguage }}</strong></li>
              <li>Do you have children?: <strong>{{ userReturned.hasChildren | booleanToResponse }}</strong></li>
 
@@ -71,8 +72,20 @@
                <li>City: <strong>{{ userReturned.city }}</strong></li>
                 <li>State: <strong>{{ userReturned.state }}</strong></li>
                 <li>Zipcode: <strong>{{ userReturned.postalCode }}</strong></li>
-            <li>Do you date interacially?: <strong>{{ userReturned.doesDateInteracially | booleanToResponse }}</strong></li>
-           <li>Dating Intent: <strong>{{ userReturned.datingIntent }}</strong></li>
+                <li>Do you date interacially?: <strong>{{ userReturned.doesDateInteracially | booleanToResponse }}</strong></li>
+                <li>Dating Intent: <strong>{{ userReturned.datingIntent }}</strong></li>
+                 <li v-if="userReturned.raceDatingPreferences.races.length > 0">
+                  Race Dating Preferences:
+                  <span v-for="(race, i) in userReturned.raceDatingPreferences.races" :key="'raceDating-race'+i">
+                    <strong>{{ race }}</strong>
+                  </span>
+                </li>
+                <li v-if="userReturned.interacialDatingPreferences.races.length > 0">
+                  Interracial Dating Preferences:
+                  <span v-for="(race, i) in userReturned.interacialDatingPreferences.races" :key="'interracialDating-race'+i">
+                    <strong>{{ race }}</strong>
+                  </span>
+                </li>
           </ul>
         </div>
       </div>

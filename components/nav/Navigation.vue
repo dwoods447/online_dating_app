@@ -12,13 +12,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <nuxt-link  to="/login" class="nav-link" v-if="!this.$store.getters.isAutheticated">
+        <nuxt-link  to="/login" class="nav-link nav-text" v-if="!this.$store.getters.isAutheticated">
          <span class="sr-only">(current)</span>
          Login
          </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link  to="/signup" class="nav-link" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
+        <nuxt-link  to="/signup" class="nav-link nav-text" v-if="!this.$store.getters.isAutheticated">Sign Up</nuxt-link>
       </li>
       <li class="nav-item dropdown" v-if="this.$store.getters.isAutheticated">
         <a class="nav-link dropdown-toggle nav-text" id="navbarDropdownMenuLink-4" data-toggle="dropdown"

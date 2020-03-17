@@ -46,6 +46,12 @@ const UserSchema = new Schema({
     seekingGenders: {
         genders: [],
     },
+    selectedMaritalStatuses: {
+      statuses: [],
+    },
+    geekInterests: {
+      interests: []
+    },
     height: {
         type: Number
     },
