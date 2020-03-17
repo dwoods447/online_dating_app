@@ -2,12 +2,10 @@
   <div>
             <h2>Geek Preferences</h2>
             <div>
-
+              <input type="text" v-model="interest"  class="form-control">
+              <button @click="addInterest(geekInterest)" class="btn btn-primary">Add Interest</button>
               <ul>
-                <li>Strek or Star Wars?</li>
-                 <li>Geeky events i like to attend? list  of categories</li>
-                 <li>Geeky things i like?</li>
-                 <li>Geeky things i dont like?</li>
+                <span v-for="(interest, i) in geekInterest" :key="'geek-interest'+i" @click="removeGeekInterest(interest, i)"><li>{{interest}}</li>&nbsp;&nbsp;X Remove</span>
               </ul>
             </div>
           <hr/>
@@ -103,9 +101,11 @@
     components: { Multiselect,},
     data(){
       return {
-         doesDateInteracially: false,
-         doesDateInteraciallyChoices: false,
-         displayInterracialChoices: false,
+          interest: '',
+          geekInterest: [],
+          doesDateInteracially: false,
+          doesDateInteraciallyChoices: false,
+          displayInterracialChoices: false,
           raceDatingPreferences: [],
            ethnicities: [
             {name: 'White/Caucasian', value: 'White/Caucasian', key: 'White/Caucasian'},
@@ -136,6 +136,18 @@
       }
     },
     methods :{
+        removeGeekInterest(interest, i){
+            if(this.geekInterest.indexOf(interest)){
+                this.geekInterest.splice(1, i)
+            }
+        },
+        addInterest(interest){
+          if(this.geekInterest.indexOf(interest) === -1){
+             this.geekInterest.push(interest);
+             this.$store.dispatch('profile/setGeekInterestsAction', interest)
+          }
+
+        },
        showInterracialChoices(){
         this.interacialDatingPreferences = [];
         if(this.doesDateInteracially.toLowerCase() == 'yes'){

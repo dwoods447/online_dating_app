@@ -19,7 +19,9 @@ export const state = ()=>({
   doesDateInteracially: false,
   raceDatingPreferences: {races: []},
   interacialDatingPreferences: {races: []},
-  selectedGenders: {genders:[]},
+  seekingGenders: {genders: []},
+  selectedMaritalStatuses: {statuses: []},
+  geekInterests: {interests: []},
 
 })
 
@@ -92,6 +94,12 @@ export const mutations = {
   setSelectedGendersMutation(state, selectedGenders){
     state.selectedGenders.genders = selectedGenders;
   },
+  setSelectedMaritalStatusesMutation(state, maritalStatus){
+    state.selectedMaritalStatuses.statuses = maritalStatus;
+  },
+  setGeekInterestsMutation(state, interest){
+    state.geekInterests.interests = interest;
+  }
 
   // submitProfileUpdateMutation(state){
   //   let profile = {};
@@ -172,6 +180,13 @@ export const actions = {
   setSelectedGendersAction(context, selectedGenders){
     context.commit('setSelectedGendersMutation', selectedGenders);
   },
+  setSelectedMaritalStatusesAction(context, maritalStatus){
+    context.commit('setSelectedMaritalStatusesMutation', maritalStatus);
+  },
+  setGeekInterestsAction(context, interest){
+    context.commit('setGeekInterestsMutation', interest);
+  }
+
 
   // submitProfileUpdateAction(context){
   //   context.commit('submitProfileUpdateMutation');
