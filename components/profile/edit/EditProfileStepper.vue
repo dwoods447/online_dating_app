@@ -9,24 +9,29 @@
               </div>
            </div>
               <div v-if="step == 1">
+                 <section class="stepper-section">
                    <div v-if="this.$store.state.userId">
                       <div v-if="this.$store.state.userId.isProfileCompleted !== true">
                         <UpdateFormProfileIncomplete></UpdateFormProfileIncomplete>
                     </div>
-                  <div v-else>
-                        <!-- User has completed profile -->
-                        <UpdateFormProfileComplete></UpdateFormProfileComplete>
+                    <div v-else>
+                          <!-- User has completed profile -->
+                          <UpdateFormProfileComplete></UpdateFormProfileComplete>
+                    </div>
                   </div>
-              </div>
+                 </section>
               </div>
                <div v-if="step == 2">
-                 <h2>Upload a Photo</h2>
-
-                 <ImgUpload  />
+                 <section class="stepper-section">
+                   <h2 class="form-header">Upload a Photo</h2>
+                      <ImgUpload  />
+                 </section>
                </div>
                <div v-if="step == 3">
-                 <h2>Enter Geek Preferences & Interests</h2>
+                 <section class="stepper-section">
+                 <h2 class="form-header">Enter Geek Preferences & Interests</h2>
                  <GeekPreferences></GeekPreferences>
+                  </section>
                </div>
                <div v-if="step == 4">
 
@@ -233,4 +238,11 @@ import eventBus from '../../../middleware/eventBus/index'
     background-color: blue;
     color: #fff;
   }
+  .stepper-section{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.form-header{
+  text-align: center;
+}
 </style>

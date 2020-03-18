@@ -77,13 +77,13 @@
                  <li v-if="userReturned.raceDatingPreferences.races.length > 0">
                   Race Dating Preferences:
                   <span v-for="(race, i) in userReturned.raceDatingPreferences.races" :key="'raceDating-race'+i">
-                    <strong>{{ race }}</strong>
+                    <strong>{{ race }}</strong>,
                   </span>
                 </li>
                 <li v-if="userReturned.interacialDatingPreferences.races.length > 0">
                   Interracial Dating Preferences:
                   <span v-for="(race, i) in userReturned.interacialDatingPreferences.races" :key="'interracialDating-race'+i">
-                    <strong>{{ race }}</strong>
+                    <strong>{{ race }}</strong>,
                   </span>
                 </li>
           </ul>
@@ -258,7 +258,7 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
   border: 2px solid #333;
   border-radius: 6px;
   width: 500px;
-  height: 280px;
+  height: 320px;
   padding: 0;
   margin: 0.54em;
 }

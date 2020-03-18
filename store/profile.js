@@ -16,16 +16,20 @@ export const state = ()=>({
   city: '',
   usState: '',
   postalCode: '',
+  bodyType: '',
   doesDateInteracially: false,
-  raceDatingPreferences: {races: []},
-  interacialDatingPreferences: {races: []},
-  seekingGenders: {genders: []},
-  selectedMaritalStatuses: {statuses: []},
-  geekInterests: {interests: []},
+  raceDatingPreferences: [],
+  interacialDatingPreferences: [],
+  seekingGenders: [],
+  selectedMaritalStatuses: [],
+  geekInterests: [],
 
 })
 
 export const mutations = {
+  setBodyTypeMutation(state, bodyType){
+    state.bodyType = bodyType;
+  },
   setHeightMutation(state, height){
     state.height = height;
   },
@@ -86,19 +90,19 @@ export const mutations = {
     state.doesDateInteracially = doesDateInteracially;
   },
   setRaceDatingPreferencesMutation(state, raceDatingPreferences){
-      state.raceDatingPreferences.races = raceDatingPreferences;
+      state.raceDatingPreferences = raceDatingPreferences;
   },
   setInteracialDatingPreferencesMutation(state, interacialDatingPreferences){
-    state.interacialDatingPreferences.races = interacialDatingPreferences;
+    state.interacialDatingPreferences = interacialDatingPreferences;
   },
-  setSelectedGendersMutation(state, selectedGenders){
-    state.seekingGenders.genders = selectedGenders;
+  setSelectedGendersMutation(state, selectedGender){
+    state.seekingGenders = selectedGender;
   },
   setSelectedMaritalStatusesMutation(state, maritalStatus){
-    state.selectedMaritalStatuses.statuses = maritalStatus;
+    state.selectedMaritalStatuses = maritalStatus;
   },
   setGeekInterestsMutation(state, interest){
-    state.geekInterests.interests.push(interest);
+    state.geekInterests.push(interest);
   },
   removeGeekInterestsMutation(state, interest){
     let localInterest = state.geekInterests.interests.slice();
@@ -138,6 +142,9 @@ export const mutations = {
 }
 
 export const actions = {
+  setBodyTypeAction(context, bodyType){
+    context.commit('setBodyTypeMutation', bodyType);
+  },
   setHeightAction(context, height){
     context.commit('setHeightMutation', height);
   },
@@ -189,8 +196,8 @@ export const actions = {
   setInteracialDatingPreferencesAction(context, interacialDatingPreferences){
     context.commit('setInteracialDatingPreferencesMutation', interacialDatingPreferences);
   },
-  setSelectedGendersAction(context, selectedGenders){
-    context.commit('setSelectedGendersMutation', selectedGenders);
+  setSelectedGendersAction(context, selectedGender){
+    context.commit('setSelectedGendersMutation', selectedGender);
   },
   setSelectedMaritalStatusesAction(context, maritalStatus){
     context.commit('setSelectedMaritalStatusesMutation', maritalStatus);

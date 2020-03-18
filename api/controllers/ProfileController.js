@@ -39,7 +39,7 @@
         async updateExtendedUserProfile(req, res, next){
         const {
             userId,
-            seekingGender,
+            seekingGenders,
             height,
             relationshipTypeSeeking,
             hairColor,
@@ -48,7 +48,7 @@
             secondLanguage,
             bodyType,
             postalCode,
-            state,
+            usState,
             city,
             maritalStatus,
             hasChildren,
@@ -66,14 +66,16 @@
             doesDateInteracially,
             interacialDatingPreferences,
             raceDatingPreferences,
-            isProfileCompleted
+            geekInterests,
+            selectedMaritalStatuses,
+
         } = req.body;
 
         const user = await User.findById(req.userId);
         if(!user){
             return res.status(422).json({message: 'No user found'});
         }
-            if(seekingGender) user.seekingGender = seekingGender;
+
             if(height) user.height = height;
             if(relationshipTypeSeeking) user.relationshipTypeSeeking = relationshipTypeSeeking;
             if(hairColor) user.hairColor = hairColor;
@@ -82,7 +84,7 @@
             if(secondLanguage) user.secondLanguage = secondLanguage;
             if(bodyType) user.bodyType = bodyType;
             if(postalCode) user.postalCode = postalCode;
-            if(state) user.state = state;
+            if(usState) user.state = usState;
             if(city) user.city = city;
             if(maritalStatus) user.maritalStatus = maritalStatus;
             if(hasChildren !== null || hasChildren !== '') user.hasChildren = true;
@@ -107,7 +109,26 @@
               if(raceDatingPreferences.length > 0){
                 user.raceDatingPreferences.races = raceDatingPreferences;
               }
-            };
+            }
+            console.log(`Geek Interest Object: ${JSON.stringify(geekInterests)}`);
+            if(geekInterests){
+              if(geekInterests.length > 0){
+                user.geekInterests.interests = geekInterests;
+              }
+            }
+            console.log(`Selected Marital Statuses Object ${JSON.stringify(selectedMaritalStatuses)}`);
+            if(selectedMaritalStatuses){
+              if(selectedMaritalStatuses.length > 0){
+                user.selectedMaritalStatuses.statuses = selectedMaritalStatuses;
+              }
+            }
+            console.log(`Seeking Genders Object: ${JSON.stringify(seekingGenders)}`);
+            if(seekingGenders){
+              if(seekingGenders.length > 0){
+                user.seekingGenders.genders = seekingGenders;
+              }
+            }
+
             user.isProfileCompleted = true;
 
             const savedUser = await user.save();

@@ -1,5 +1,4 @@
 <template>
-<section class="stepper-section">
   <div>
 
             <div style="width:50%; margin: 0 auto;">
@@ -51,7 +50,8 @@
                     </multiselect> -->
 
                     <div v-for="(gender, i) in genders" :key="'selectedGenders-'+i">
-                             <p-check  name="check" v-model="selectedGenders" @change="setSelectedGendersInVuexStore(selectedGenders)" :value="gender.value">{{gender.name}}</p-check>
+                             <!-- <p-check  name="check" v-model="selectedGenders" @change="setSelectedGendersInVuexStore(selectedGenders)" :value="gender.value">{{gender.name}}</p-check> -->
+                               <p-check  name="check" v-model="selectedGenders" @change="setSelectedGendersInVuexStore(selectedGenders)" :value="gender.value">{{gender.name}}</p-check>
                      </div>
                 </div>
                 <div class="col-sm-6">
@@ -94,7 +94,6 @@
             </div>
          </div>
   </div>
-</section>
 </template>
 
 <script>
@@ -126,13 +125,15 @@
             {name: 'Other', value: 'Other', key: 'Other'},
           ],
             genders: [
-             { name: 'male', val: 'male', key: 'male'},
-             { name: 'female', val: 'female', key: 'female'},
-             { name: 'trans-male', val: 'trans-male', key: 'trans male'},
-             { name: 'trans-female', val: 'trans-female', key: 'trans female'},
+             { name: 'male', value: 'male', key: 'male'},
+             { name: 'female', value: 'female', key: 'female'},
+             { name: 'trans-male', value: 'trans-male', key: 'trans male'},
+             { name: 'trans-female', value: 'trans-female', key: 'trans female'},
         ],
 
-        selectedGenders: [],
+        selectedGenders: [
+
+        ],
         selectedMaritalStatuses: [],
         maritalStatuses: [
            {name: 'single', value: 'single', key: 'single-0'},
@@ -198,7 +199,7 @@
           setInteracialDatingPreferencesInVuexStore: 'profile/setInteracialDatingPreferencesAction',
           setRaceDatignPreferenceInVuexStore: 'profile/setRaceDatingPreferencesAction',
           setSelectedGendersInVuexStore: 'profile/setSelectedGendersAction',
-          setMaritalStatusesInVuexStore: 'profile/setMaritalStatusAction',
+          setMaritalStatusesInVuexStore: 'profile/setSelectedMaritalStatusesAction',
           setCityInVuexStore: 'profile/setCityAction',
        }),
     }
@@ -206,8 +207,5 @@
 </script>
 
 <style scoped>
-.stepper-section{
-  max-width: 1200px;
-  margin: 0 auto;
-}
+
 </style>

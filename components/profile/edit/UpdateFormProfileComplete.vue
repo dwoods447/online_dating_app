@@ -1,6 +1,6 @@
 <template>
   <div>
-       <h5 class="form-header">Update your completed profile <span class="required">(All fields are required)</span></h5>
+       <h2 class="form-header">Update your completed profile <span class="required">(All fields are required)</span></h2>
       <form @submit.prevent="updateExtentedUserProfile" style="width: 75%; margin: 0 auto;">
         <div class="form-group">
           <div class="row">
@@ -123,7 +123,20 @@
             </div>
          </div>
 
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-6">
+              <label for="">Body Type</label>
+               <select name="" id="" v-model="bodyType" class="form-control" @change="setBodyTypeInVuexStore(bodyType)">
+                 <option value=""></option>
+                 <option v-for="(bodyType, i) in bodyTypes" :key="'bodyType'+i">{{bodyType.name}}</option>
+               </select>
+            </div>
+             <div class="col-lg-6">
 
+            </div>
+          </div>
+        </div>
 
 
          <!-- <div class="form-group">
@@ -166,6 +179,7 @@ import { mapActions } from 'vuex'
           setEducationInVuexStore: 'profile/setEducationAction',
           setDoesSmokeInVuexStore: 'profile/setDoesSmokeAction',
           setDoesDrinkInVuexStore: 'profile/setDoesDrinkAction',
+          setBodyTypeInVuexStore: 'profile/setBodyTypeAction',
           setDoesHaveChildrenInVuexStore: 'profile/setDoesHaveChildrenAction',
           setSecondLanguageInVuexStore: 'profile/setSecondLanguageAction',
           setStateInVuexStore: 'profile/setUsStateAction',
