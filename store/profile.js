@@ -92,14 +92,26 @@ export const mutations = {
     state.interacialDatingPreferences.races = interacialDatingPreferences;
   },
   setSelectedGendersMutation(state, selectedGenders){
-    state.selectedGenders.genders = selectedGenders;
+    state.seekingGenders.genders = selectedGenders;
   },
   setSelectedMaritalStatusesMutation(state, maritalStatus){
     state.selectedMaritalStatuses.statuses = maritalStatus;
   },
   setGeekInterestsMutation(state, interest){
-    state.geekInterests.interests = interest;
-  }
+    state.geekInterests.interests.push(interest);
+  },
+  removeGeekInterestsMutation(state, interest){
+    let localInterest = state.geekInterests.interests.slice();
+    console.log(`Interest to remove: ${interest.interest}`);
+    if(localInterest.indexOf(interest.interest) >= 0){
+      console.log(`Index at which to remove: ${interest.index}`);
+      localInterest.splice(localInterest.indexOf(interest.interest), 1);
+      console.log(`Removing index in localInterest Array : ${JSON.stringify(localInterest)}`);
+      state.geekInterests.interests = localInterest;
+    }
+
+
+  },
 
   // submitProfileUpdateMutation(state){
   //   let profile = {};
@@ -185,7 +197,10 @@ export const actions = {
   },
   setGeekInterestsAction(context, interest){
     context.commit('setGeekInterestsMutation', interest);
-  }
+  },
+  removeGeekInterestsAction(context, interest){
+    context.commit('removeGeekInterestsMutation', {interest: interest.interest, index: interest.index});
+  },
 
 
   // submitProfileUpdateAction(context){

@@ -61,23 +61,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    'nuxt-socket-io'
   ],
-
-  io: {
-    sockets: [
-      {
-        name: 'home',
-        url: 'http://localhost:3000',
-        default: true,
-        // vuex: {
-        //   mutations: [],
-        //   actions: [],
-        //   emitBacks: [],
-        // }
-      }
-    ]
-  },
   router :{
 
   },

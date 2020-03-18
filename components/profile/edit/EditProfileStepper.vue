@@ -25,7 +25,7 @@
                  <ImgUpload  />
                </div>
                <div v-if="step == 3">
-                 <h2>Enter Geek Preferences</h2>
+                 <h2>Enter Geek Preferences & Interests</h2>
                  <GeekPreferences></GeekPreferences>
                </div>
                <div v-if="step == 4">
@@ -123,7 +123,7 @@ import eventBus from '../../../middleware/eventBus/index'
       },
          prevStep: function(){
            this.step--;
-          this.validateStep(this.step);
+         // this.validateStep(this.step);
             if(this.step == 1){
             console.log('On step 1');
             this.isStepOneActive = true;
@@ -156,7 +156,8 @@ import eventBus from '../../../middleware/eventBus/index'
         },
 
          nextStep: function(){
-          this.validateStep(this.step);
+        //  this.validateStep(this.step);
+          this.step++;
           if(this.step == 1){
             console.log('On step 1');
             this.isStepOneActive = true;

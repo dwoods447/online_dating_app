@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import openSocket from 'socket.io-client'
 import UserProfileService from '../../../../middleware/services/UserProfileService'
 import SendMessage from '../../../../components/profile/message/SendMessage'
 import eventBus from '../../../../middleware/eventBus/index'
@@ -62,11 +61,6 @@ import eventBus from '../../../../middleware/eventBus/index'
         this.getSendersMessages();
     },
     mounted(){
-      // this.socket = this.$nuxtSocket({
-      //   name: 'home',
-      //   channel:'',
-      //   reconnection: false,
-      // })
     },
     data(){
       return {
@@ -118,7 +112,6 @@ import eventBus from '../../../../middleware/eventBus/index'
               })
               this.messages  =  messageToFilter;
              // console.log(`Message thread returned for user ${JSON.stringify(this.messages)}`);
-             //openSocket('http://localhost:3000')
             }
         },
 
