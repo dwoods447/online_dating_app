@@ -52,6 +52,7 @@
             city,
             maritalStatus,
             hasChildren,
+            description,
             doesSmoke,
             doesDoDrugs,
             doesDrink,
@@ -86,6 +87,7 @@
             if(postalCode) user.postalCode = postalCode;
             if(usState) user.state = usState;
             if(city) user.city = city;
+            if(description) user.description = description;
             if(maritalStatus) user.maritalStatus = maritalStatus;
             if(hasChildren !== null || hasChildren !== '') user.hasChildren = true;
             if(doesSmoke !== null || doesSmoke !== '') user.doesSmoke = true;

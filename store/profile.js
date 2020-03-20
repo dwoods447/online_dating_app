@@ -23,6 +23,7 @@ export const state = ()=>({
   seekingGenders: [],
   selectedMaritalStatuses: [],
   geekInterests: [],
+  description: '',
 
 })
 
@@ -114,30 +115,12 @@ export const mutations = {
       state.geekInterests.interests = localInterest;
     }
 
-
+    
   },
 
-  // submitProfileUpdateMutation(state){
-  //   let profile = {};
-  //   if(state.height) profile.height = state.height;
-  //   if(state.eyeColor) profile.eyeColor = state.eyeColor
-  //   if(state.hairColor) profile.hairColor = state.maritalStatus
-  //   if(state.maritalStatus) profile.maritalStatus = state.maritalStatus;
-  //   if(state.religion) profile.religion = state.religion;
-  //   if(state.profession) profile.profession = state.profession;
-  //   if(state.education)  profile.education = state.education;
-  //   if(state.doesSmoke) profile.doesSmoke  = state.doesSmoke;
-  //   if(state.doesDrink) profile.doesDrink  = state.doesDrink
-  //   if(state.doesHaveChildren) profile.doesHaveChildren = state.doesHaveChildren
-  //   if(state.secondLanguage) profile.secondLanguage = state.secondLanguage;
-  //   if(state.city) profile.city = state.city;
-  //   if(state.usState) profile.state = state.usState;
-  //   if(state.postalCode) profile.postalCode = state.postalCode;
-  //   if(state.doesDateInteracially) profile.doesDateInteracially = state.doesDateInteracially;
-
-  //   if(state.selectedGenders.genders) profile.selectedGenders = state.selectedGenders.genders;
-  //   console.log(`Profile Store Edit submit ${JSON.stringify(profile, null, 2)}`);
-  // }
+  setProfileDescriptionMutation(state, description){
+      state.description = description;
+  }
 
 }
 
@@ -209,10 +192,10 @@ export const actions = {
     context.commit('removeGeekInterestsMutation', {interest: interest.interest, index: interest.index});
   },
 
+  setProfileDescriptionAction(context, description){
+    context.commit('setProfileDescriptionMutation', description);
+  }
 
-  // submitProfileUpdateAction(context){
-  //   context.commit('submitProfileUpdateMutation');
-  // }
 
 }
 

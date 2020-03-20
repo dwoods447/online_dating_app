@@ -133,7 +133,8 @@
                </select>
             </div>
              <div class="col-lg-6">
-
+                    <label>Description</label>
+                    <textarea class="form-control" v-model="description" @change="setProfileDescriptionInVuexStore(description)">Please enter a description</textarea>
             </div>
           </div>
         </div>
@@ -180,6 +181,7 @@ import { mapActions } from 'vuex'
           setDoesSmokeInVuexStore: 'profile/setDoesSmokeAction',
           setDoesDrinkInVuexStore: 'profile/setDoesDrinkAction',
           setBodyTypeInVuexStore: 'profile/setBodyTypeAction',
+          setProfileDescriptionInVuexStore: 'profile/setProfileDescriptionAction',
           setDoesHaveChildrenInVuexStore: 'profile/setDoesHaveChildrenAction',
           setSecondLanguageInVuexStore: 'profile/setSecondLanguageAction',
           setStateInVuexStore: 'profile/setUsStateAction',
@@ -206,6 +208,7 @@ import { mapActions } from 'vuex'
     },
     data(){
       return {
+         description: '',
          onReadySubmit: false,
          user: null,
          agePreferences: '',

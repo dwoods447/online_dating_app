@@ -9,8 +9,8 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="flex-container">
-            <AddUserToFavoritesListButton :userId="userReturned._id" class="block-btn-custom"></AddUserToFavoritesListButton>
-            <AddUserToBlockListButton :userId="userReturned._id" class="block-btn-custom"></AddUserToBlockListButton>
+            <AddUserToFavoritesListButton :userId="userReturned._id" class="block-btn-custom" v-if="userReturned._id !== this.$store.state.userId._id"></AddUserToFavoritesListButton>
+            <AddUserToBlockListButton :userId="userReturned._id" class="block-btn-custom" v-if="userReturned._id !== this.$store.state.userId._id"></AddUserToBlockListButton>
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="message-box">
-       <SendMessage :userId="messageReciever" >Send Message</SendMessage>
+       <SendMessage :userId="messageReciever" v-if="userReturned._id !== this.$store.state.userId._id">Send Message</SendMessage>
       </div>
     </div>
   </div>

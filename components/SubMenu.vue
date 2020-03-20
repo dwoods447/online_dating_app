@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <nav class="nav nav-tabs" style="width: 70%; margin: 0 auto;">
+  <div class="sub-menu">
+      <nav class="nav nav-tabs">
         <li class="nav-item" @click="setActiveLink('isShowHome')">
            <nuxt-link :class="[{active: isShowHome},'nav-item', 'nav-link']"  to="/" v-if="this.$store.getters.isAutheticated">Home</nuxt-link>
         </li>
@@ -207,4 +207,5 @@ import eventBus from '../middleware/eventBus/index'
    display: block;
    margin: 2px;
  }
+ 
 </style>

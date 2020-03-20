@@ -136,7 +136,8 @@
                </select>
             </div>
              <div class="col-lg-6">
-
+                l<label>Description</label>
+                <textarea class="form-control" v-model="description" @change="setProfileDescriptionInVuexStore(description)">Please enter a description</textarea>
             </div>
           </div>
         </div>
@@ -177,6 +178,7 @@ import states from '../../../data/states'
           setSecondLanguageInVuexStore: 'profile/setSecondLanguageAction',
           setStateInVuexStore: 'profile/setUsStateAction',
           setZipCodeInVuexStore: 'profile/setPostalCodeAction',
+          setProfileDescriptionInVuexStore: 'profile/setProfileDescriptionAction',
           setDoesDateInteraciallyInVuexStore: 'profile/setDoesDateInteraciallyAction',
           setInteracialDatingPreferencesInVuexStore: 'profile/setInteracialDatingPreferencesAction',
           setRaceDatignPreferenceInVuexStore: 'profile/setRaceDatingPreferencesAction',
@@ -191,6 +193,7 @@ import states from '../../../data/states'
     },
     data(){
       return {
+         description: '',
          onReadySubmit: false,
          user: null,
          agePreferences: '',
