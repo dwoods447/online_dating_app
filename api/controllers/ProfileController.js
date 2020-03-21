@@ -76,6 +76,7 @@
         if(!user){
             return res.status(422).json({message: 'No user found'});
         }
+            
 
             if(height) user.height = height;
             if(relationshipTypeSeeking) user.relationshipTypeSeeking = relationshipTypeSeeking;
@@ -89,20 +90,20 @@
             if(city) user.city = city;
             if(description) user.description = description;
             if(maritalStatus) user.maritalStatus = maritalStatus;
-            if(hasChildren !== null || hasChildren !== '') user.hasChildren = true;
-            if(doesSmoke !== null || doesSmoke !== '') user.doesSmoke = true;
-            if(doesDoDrugs !== '' || doesDoDrugs !== null) user.doesDoDrugs = true;
-            if(doesDrink !== '' || doesDrink !== null) user.doesDrink = true;
+            if(hasChildren !== '') user.hasChildren = hasChildren;
+            if(doesSmoke !== '') user.doesSmoke = doesSmoke;
+            if(doesDoDrugs !== '') user.doesDoDrugs = doesDoDrugs;
+            if(doesDrink !== '') user.doesDrink = doesDrink;
             if(religion) user.religion = religion;
             if(profession) user.profession = profession;
-            if(doesHavePets !== '' || doesHavePets !== null) user.doesHavePets = true;
+            if(doesHavePets !== '') user.doesHavePets = doesHavePets;
             if(personality) user.personality = personality;
             if(ambitiousness) user.ambitiousness = ambitiousness;
             if(datingIntent) user.datingIntent = datingIntent;
             if(longestRelationShip) user.longestRelationShip = longestRelationShip;
             if(income) user.income = income;
-            if(doesDateInteracially) user.doesDateInteracially = true;
-            if(doesDateInteracially && interacialDatingPreferences) {
+            if(doesDateInteracially !== '') user.doesDateInteracially = doesDateInteracially;
+            if(doesDateInteracially === true && interacialDatingPreferences) {
               if(interacialDatingPreferences.length > 0){
                 user.interacialDatingPreferences.races = interacialDatingPreferences;
               }
@@ -130,14 +131,18 @@
                 user.seekingGenders.genders = seekingGenders;
               }
             }
-
+            console.log(`Do you smoke? ${doesSmoke}`);
+            console.log(`Do you have pets?${doesHavePets}`);
+            console.log(`Do you do drugs? ${doesDoDrugs}`);
+            console.log(`Do you drink? ${doesDrink}`);
+            
             user.isProfileCompleted = true;
-
+            console.log(`User about to be updated: ${JSON.stringify(user)}`);
             const savedUser = await user.save();
             if(!savedUser){
-
                 return res.status(422).json({message: 'There was an error saving the profile'});
-            }
+            } 
+            console.log(`User THAT WAS updated: ${JSON.stringify(savedUser)}`);
             return res.status(200).json({message: 'User Profile updated successfully!', user: savedUser });
        },
 

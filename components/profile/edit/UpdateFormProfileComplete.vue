@@ -139,6 +139,40 @@
           </div>
         </div>
 
+         <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Do you do drugs</label>
+                  <select name="" id="" v-model="doesDoDrugs" class="form-control" @change="setDoesDoDrugsInVuexStore(doesDoDrugs)">
+                    <option value=""></option>
+                    <option :value="choice.name" v-for="(choice, i) in doesDoDrugsChoices" :key="'doesDoDrugs-'+i">{{choice.name}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Do you have pets</label>
+                  <select name="" id="" v-model="doesHavePets" class="form-control" @change="setDoesHavePetsInVuexStore(doesHavePets)">
+                    <option value=""></option>
+                    <option :value="choice.name" v-for="(choice, i) in doesHavePetsChoices" :key="'doesHavePets-'+i">{{choice.name}}</option>
+                  </select>
+                </div>
+            </div>
+         </div>
+
+         <div class="form-group">
+           <div class="row">
+             <div class="col-sm-6">
+               <label for="">Dating Intent</label>
+               <select v-model="datingIntent" class="form-control" @change="setDatingIntentInVuexStore(datingIntent)">
+                 <option value=""></option>
+                 <option :value="choice.name" v-for="(choice, i) in datingIntents" :key="'datingIntent'+i">{{ choice.name }}</option>
+               </select>
+             </div>
+             <div class="col-sm-6">
+               <label for="">Describe your personality:</label>
+               <input type="text" class="form-control" v-model="personality"  placeholder="Please describe your personality using one or two words" @change="setPersonalityInVuexStore(personality)" >
+             </div>
+           </div>
+         </div>
 
          <!-- <div class="form-group">
             <div class="row">
@@ -180,8 +214,12 @@ import { mapActions } from 'vuex'
           setEducationInVuexStore: 'profile/setEducationAction',
           setDoesSmokeInVuexStore: 'profile/setDoesSmokeAction',
           setDoesDrinkInVuexStore: 'profile/setDoesDrinkAction',
+          setPersonalityInVuexStore: 'profile/setPersonalityAction',
+          setDatingIntentInVuexStore: 'profile/setDatingIntentAction',
           setBodyTypeInVuexStore: 'profile/setBodyTypeAction',
           setProfileDescriptionInVuexStore: 'profile/setProfileDescriptionAction',
+          setDoesDoDrugsInVuexStore: 'profile/setDoesDoDrugsAction',
+          setDoesHavePetsInVuexStore: 'profile/setDoesHavePetsAction',
           setDoesHaveChildrenInVuexStore: 'profile/setDoesHaveChildrenAction',
           setSecondLanguageInVuexStore: 'profile/setSecondLanguageAction',
           setStateInVuexStore: 'profile/setUsStateAction',
@@ -220,11 +258,12 @@ import { mapActions } from 'vuex'
          randomVal: this.$store.state.userId.random,
          chosenGender: '',
          datingIntent: '',
+         personality: '',
          datingIntents: [
            {name: 'I am looking for Casual dating/No Commitment', value: 'I am looking for Casual dating/No Commitment', key: 'datingIntent-0'},
            {name: 'I want to date but nothing serious', value: 'I want to date but nothing serious', key: 'datingIntent-1'},
            {name: "I am putting in serious effort to find someone", value: "I am putting in serious effort to find someone", key: 'datingIntent-2'},
-           {name: 'I am putting in serious effort to find someone', value: 'I am putting in serious effort to find someone', key: 'datingIntent-3'},
+           {name: 'I want to find someone to marry', value: 'I want to find someone to marry', key: 'datingIntent-3'},
          ],
          selectedMaritalStatuses: [],
          maritalStatuses: [
@@ -311,7 +350,7 @@ import { mapActions } from 'vuex'
            {name: 'black', value: 'black', key: 'black-eyes-3'},
            {name: 'hazel', value: 'hazel', key: 'hazel-eyes-4'},
          ],
-         doesSmoke: false,
+         doesSmoke: '',
          doesSmokeChoices: [
            {name: 'yes', value: true, key: 'doesSmokeChoices-yes'},
            {name: 'no', value: false, key: 'doesSmokeChoices-no'},
@@ -320,7 +359,7 @@ import { mapActions } from 'vuex'
             {name: 'yes', value: true, key: 'doesDrinkChoices-yes'},
            {name: 'no', value: false, key: 'doesDrinkChoices-no'},
          ],
-         doesDrink: false,
+         doesDrink: '',
           doesDateInteraciallyChoices: [
            {name: 'yes', value: true, key: 'doesDateInteraciallyChoices-yes'},
            {name: 'no', value: false, key: 'doesDateInteraciallyChoices-no'},
@@ -329,17 +368,22 @@ import { mapActions } from 'vuex'
            {name: 'yes', value: true, key: 'doesHaveChildrenChoices-yes'},
            {name: 'no', value: false, key: 'doesHaveChildrenChoices-no'},
          ],
-         doesHaveChildren: false,
+         doesHaveChildren: '',
          doesDoDrugsChoices: [
           {name: 'yes', value: true, key: 'doesDoDrugsChoices-yes'},
            {name: 'no', value: false, key: 'doesDoDrugsChoices-no'},
          ],
-         doesDoDrugs : false,
+         doesDoDrugs : '',
          doesHaveChildrenChoices: [
           {name: 'yes', value: true, key: 'doesHaveChildrenChoices-yes'},
            {name: 'no', value: false, key: 'doesHaveChildrenChoices-no'},
          ],
-         doesHaveChildren: false,
+          doesHavePets: '',
+         doesHavePetsChoices: [
+           {name: 'yes', value: true, key: 'doesHavePetsChoices-yes'},
+           {name: 'no', value: false, key: 'doesHavePetsChoices-no'},
+         ],
+         doesHaveChildren: '',
          postalCode: '',
          profession: '',
          city: '',

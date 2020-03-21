@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import eventBus from '../../../middleware/eventBus/index'
   export default {
     props:['userId'],
+    created(){
+      
+    },
     data(){
       return {
 
@@ -15,13 +19,14 @@
      methods: {
          async addUserToFavorites(){
         const message = await this.$store.dispatch('addUserToFavoritesAction', {userProfileId: this.userId});
-        if(message ){
+        if(message.message === 'User added to favorites successfully!'){
+           eventBus.$emit('button-response-recieved', message.message);
         }
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
 </style>

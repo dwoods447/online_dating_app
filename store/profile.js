@@ -9,22 +9,25 @@ export const state = ()=>({
   religion: '',
   profession: '',
   highestEducation: '',
-  doesSmoke: false,
-  doesDrink: false,
-  doesHaveChildren: false,
+  doesSmoke: '',
+  doesDrink: '',
+  doesDoDrugs: '',
+  doesHavePets: '',
+  hasChildren: '',
   secondLanguage: '',
   city: '',
   usState: '',
   postalCode: '',
   bodyType: '',
-  doesDateInteracially: false,
+  doesDateInteracially: '',
   raceDatingPreferences: [],
   interacialDatingPreferences: [],
   seekingGenders: [],
   selectedMaritalStatuses: [],
   geekInterests: [],
   description: '',
-
+  datingIntent: '',
+  personality: '',
 })
 
 export const mutations = {
@@ -55,24 +58,39 @@ export const mutations = {
   setDoesDrinkMutation(state, doesDrink){
     if(doesDrink === 'yes'){
       state.doesDrink = true;
-    } else {
+    } else if(doesDrink === 'no'){
       state.doesDrink = false;
+    } else {
+      state.doesDrink = '';
     }
 
   },
   setDoesSmokeMutation(state, doesSmoke){
     if(doesSmoke === 'yes'){
       state.doesSmoke = true;
+    }else if(doesSmoke === 'no') {
+      state.doesSmoke = false;
     } else {
-      state.doesSmoke = true;
+      state.doesSmoke = '';
+    }
+  },
+  setDoesHavePetsMutation(state, doesHavePets){
+    if(doesHavePets === 'yes'){
+      state.doesHavePets = true;
+    } else if(doesHavePets === 'no'){
+      state.doesHavePets = false;
+    } else {
+      state.doesHavePets = '';
     }
   },
   setDoesHaveChildrenMutation(state, doesHaveChildren){
 
     if(doesHaveChildren === 'yes'){
-      state.doesHaveChildren = true;
+      state.hasChildren = true;
+    }else if(doesHaveChildren === 'no'){
+      state.hasChildren = false;
     }else {
-      state.doesHaveChildren = false;
+      state.hasChildren = '';
     }
   },
   setSecondLanguageMutation(state, secondLanguage){
@@ -88,7 +106,14 @@ export const mutations = {
     state.postalCode = postalCode;
   },
   setDoesDateInteraciallyMutation(state, doesDateInteracially){
-    state.doesDateInteracially = doesDateInteracially;
+    if(doesDateInteracially === 'yes'){
+      state.doesDateInteracially = true;
+    } else if(doesDateInteracially === 'no') {
+      state.doesDateInteracially = false;
+    } else {
+      state.doesDateInteracially = '';
+    }
+    
   },
   setRaceDatingPreferencesMutation(state, raceDatingPreferences){
       state.raceDatingPreferences = raceDatingPreferences;
@@ -120,9 +145,36 @@ export const mutations = {
 
   setProfileDescriptionMutation(state, description){
       state.description = description;
+  },
+
+  setDoesDoDrugsMutation(state, doesDoDrugs){
+    if(doesDoDrugs === 'yes'){
+      state.doesDoDrugs = true;
+    } else if(doesDoDrugs === 'no'){
+      state.doesDoDrugs = false;
+    } else {
+      state.doesDoDrugs = '';
+    }
+  },
+
+  setDatingIntentMutation(state, datingIntent){
+    state.datingIntent = datingIntent;
+  },
+  
+
+  setPersonlityMutation(state, personality){
+    state.personality = personality;
   }
 
 }
+
+
+
+
+
+
+
+
 
 export const actions = {
   setBodyTypeAction(context, bodyType){
@@ -154,6 +206,9 @@ export const actions = {
   },
   setDoesSmokeAction(context, doesSmoke){
     context.commit('setDoesSmokeMutation', doesSmoke);
+  },
+  setDoesDoDrugsAction(context, doesDoDrugs){
+    context.commit('setDoesDoDrugsMutation', doesDoDrugs);
   },
   setDoesHaveChildrenAction(context, doesHaveChildren){
     context.commit('setDoesHaveChildrenMutation', doesHaveChildren);
@@ -194,6 +249,16 @@ export const actions = {
 
   setProfileDescriptionAction(context, description){
     context.commit('setProfileDescriptionMutation', description);
+  },
+
+  setDoesHavePetsAction(context, doesHavePets){
+      context.commit('setDoesHavePetsMutation', doesHavePets);
+  },
+  setDatingIntentAction(context, datingIntent){
+    context.commit('setDatingIntentMutation', datingIntent)
+  },
+  setPersonalityAction(context, personality){
+    context.commit('setPersonlityMutation', personality)
   }
 
 

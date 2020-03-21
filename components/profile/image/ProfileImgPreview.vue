@@ -69,8 +69,10 @@
   max-width: 90px;
   max-height: 90px;
   margin: 5px;
+  cursor: pointer;
 }
   .img-thumbnail-preview{
     width: 100%;
+    border: 1px solid #eee;
   }
 </style>

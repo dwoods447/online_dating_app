@@ -27,7 +27,7 @@
 
               </div>
               <div class="flex-container" v-if="NoMessages">
-                 <div v-if="messages.length === 0">You have No messages</div>
+                 <div v-if="messages.length === 0">You have no messages</div>
               </div>
 
           </div>
@@ -91,7 +91,6 @@ import moment from 'moment'
            // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-
                console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             } else {
                 this.NoMessages = true;

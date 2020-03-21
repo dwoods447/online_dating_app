@@ -1,6 +1,11 @@
 <template>
   <div>
       <h2 style="text-align:center;">Please Sign In</h2>
+      <div style="width:200px; margin: 0 auto;">
+        <h4>Login as guest</h4>
+        <div>username: guest01</div>
+        <div>password: password</div> 
+      </div>
       <div v-if="signInResponse" style="width: 10%; margin: 0 auto; color: green; font-weight: 600;">{{ signInResponse }}</div>
       <form @submit.prevent="signIn" style="max-width: 20%; margin: 2% auto;">
         <div class="form-group">
@@ -13,7 +18,9 @@
         <br/>
         <div v-if="this.$store.state.error"> {{ this.$store.state.error }}</div>
       </form>
-
+      
+       
+        
   </div>
 </template>
 

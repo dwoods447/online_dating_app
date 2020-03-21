@@ -70,7 +70,7 @@
                 <div class="col-sm-6">
                    <label for="">Do you smoke?</label>
                       <select class="form-control"  v-model="doesSmoke" @change="setDoesSmokeInVuexStore(doesSmoke)">
-                      <option v-for="(option, i) in doesSmokeChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                      <option v-for="(option, i) in doesSmokeChoices" :key="'option-'+i+'-'+option.name" :value="option.name">{{ option.name }}</option>
                       </select>
 
                 </div>
@@ -82,13 +82,13 @@
                 <div class="col-sm-6">
                     <label for="">Do you drink?</label>
                    <select class="form-control"  v-model="doesDrink" @change="setDoesDrinkInVuexStore(doesDrink)">
-                      <option v-for="(option, i) in doesDrinkChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                      <option v-for="(option, i) in doesDrinkChoices" :key="'option-'+i+'-'+option.name" :value="option.name">{{ option.name }}</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
                   <label for="">Do you have children? </label>
                    <select class="form-control"  v-model="doesHaveChildren" @change="setDoesHaveChildrenInVuexStore(doesHaveChildren)">
-                      <option v-for="(option, i) in doesHaveChildrenChoices" :key="'option-'+i+'-'+option.name">{{ option.name }}</option>
+                      <option v-for="(option, i) in doesHaveChildrenChoices" :key="'option-'+i+'-'+option.name" :value="option.name">{{ option.name }}</option>
                     </select>
                 </div>
             </div>
@@ -142,6 +142,39 @@
           </div>
         </div>
 
+         <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Do you do drugs</label>
+                  <select name="" id="" v-model="doesDoDrugs" class="form-control" @change="setDoesDoDrugsInVuexStore(doesDoDrugs)">
+                    <option value=""></option>
+                    <option :value="choice.name" v-for="(choice, i) in doesDoDrugsChoices" :key="'doesDoDrugs-'+i">{{choice.name}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Do you have pets</label>
+                  <select name="" id="" v-model="doesHavePets" class="form-control" @change="setDoesHavePetsInVuexStore(doesHavePets)">
+                    <option value=""></option>
+                    <option :value="choice.name" v-for="(choice, i) in doesHavePetsChoices" :key="'doesHavePets-'+i">{{choice.name}}</option>
+                  </select>
+                </div>
+            </div>
+         </div>
+
+           <div class="form-group">
+           <div class="row">
+             <div class="col-sm-6">
+               <label for="">Dating Intent</label>
+               <select v-model="datingIntent" class="form-control" @change="setDatingIntentInVuexStore(datingIntent)">
+                 <option value=""></option>
+                 <option :value="choice.name" v-for="(choice, i) in datingIntents" :key="'datingIntent'+i">{{ choice.name }}</option>
+               </select>
+             </div>
+             <div class="col-sm-6">
+                <input type="text" class="form-control" v-model="personality"  placeholder="Please describe your personality using one or two words" @change="setPersonalityInVuexStore(personality)" >
+             </div>
+           </div>
+         </div>
            <!-- <div class="form-group">
             <div class="row">
                 <div class="col-sm-6"></div>
@@ -173,7 +206,10 @@ import states from '../../../data/states'
           setEducationInVuexStore: 'profile/setEducationAction',
           setDoesSmokeInVuexStore: 'profile/setDoesSmokeAction',
           setDoesDrinkInVuexStore: 'profile/setDoesDrinkAction',
-           setBodyTypeInVuexStore: 'profile/setBodyTypeAction',
+           setPersonalityInVuexStore: 'profile/setPersonalityAction',
+          setDatingIntentInVuexStore: 'profile/setDatingIntentAction',
+          setBodyTypeInVuexStore: 'profile/setBodyTypeAction',
+          setDoesDoDrugsInVuexStore: 'profile/setDoesDoDrugsAction',
           setDoesHaveChildrenInVuexStore: 'profile/setDoesHaveChildrenAction',
           setSecondLanguageInVuexStore: 'profile/setSecondLanguageAction',
           setStateInVuexStore: 'profile/setUsStateAction',
@@ -205,11 +241,12 @@ import states from '../../../data/states'
          randomVal: this.$store.state.userId.random,
          chosenGender: '',
          datingIntent: '',
+         personality: '',
          datingIntents: [
            {name: 'I am looking for Casual dating/No Commitment', value: 'I am looking for Casual dating/No Commitment', key: 'datingIntent-0'},
            {name: 'I want to date but nothing serious', value: 'I want to date but nothing serious', key: 'datingIntent-1'},
            {name: "I am putting in serious effort to find someone", value: "I am putting in serious effort to find someone", key: 'datingIntent-2'},
-           {name: 'I am putting in serious effort to find someone', value: 'I am putting in serious effort to find someone', key: 'datingIntent-3'},
+           {name: 'I want to find someone to marry', value: 'I want to find someone to marry', key: 'datingIntent-3'},
          ],
          selectedMaritalStatuses: [],
          maritalStatuses: [
@@ -324,6 +361,11 @@ import states from '../../../data/states'
          doesHaveChildrenChoices: [
           {name: 'yes', value: true, key: 'doesHaveChildrenChoices-yes'},
            {name: 'no', value: false, key: 'doesHaveChildrenChoices-no'},
+         ],
+          doesHavePets: '',
+         doesHavePetsChoices: [
+           {name: 'yes', value: true, key: 'doesHavePetsChoices-yes'},
+           {name: 'no', value: false, key: 'doesHavePetsChoices-no'},
          ],
          doesHaveChildren: '',
          postalCode: '',

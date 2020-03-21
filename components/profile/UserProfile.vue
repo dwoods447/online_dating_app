@@ -12,6 +12,9 @@
             <AddUserToFavoritesListButton :userId="userReturned._id" class="block-btn-custom" v-if="userReturned._id !== this.$store.state.userId._id"></AddUserToFavoritesListButton>
             <AddUserToBlockListButton :userId="userReturned._id" class="block-btn-custom" v-if="userReturned._id !== this.$store.state.userId._id"></AddUserToBlockListButton>
           </div>
+           <div class="flex-container" v-if="responseMessage">
+             <p>{{ responseMessage }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -20,7 +23,7 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="main-image-container" v-if="renderMainImage">
-        <ProfileMainImg :imageSrc="mainImgSrc" :imageIndex="mainImageIndex" :genderType="mainGenderValue" :randomType="mainRandomVal"></ProfileMainImg>
+        <ProfileMainImg :imageSrc="mainImgSrc" :imageIndex="mainImageIndex" :genderType="mainGenderValue" :randomType="mainRandomVal" class="main-profile-image"></ProfileMainImg>
       </div>
       <div class="thumbnail-container">
         <ul class="image-thumbs" v-if="images.length > 0">
@@ -119,6 +122,7 @@ import AddUserToBlockListButton from '../../components/profile/actions/AddUserTo
 import AddUserToFavoritesListButton from '../../components/profile/actions/AddUserToFavoriteButton'
 import ProfileImgPreview from './image/ProfileImgPreview'
 import ProfileMainImg from './main-profile-image/ProfileMainImg'
+import eventBus from '../../middleware/eventBus/index'
   export default {
     components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton, ProfileImgPreview, ProfileMainImg},
     props:['user'],
@@ -137,7 +141,12 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
           this.changeMainImage('', this.userReturned.random, this.userReturned.gender)
         }
 
-
+        eventBus.$on('button-response-recieved', (message)=>{
+          this.responseRecieved = message;
+          setTimeout(()=>{
+            this.responseRecieved  = '';
+          }, 4000)
+        })
     },
     filters: {
       booleanToResponse(value){
@@ -180,11 +189,15 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
           randomVal: '',
           genderVal: '',
           renderMainImage: false,
+          responseRecieved: '',
           // raceDatingPreferences:userReturned.raceDatingPreferences.races,
           // interRacialDatingPreferences: userReturned.interRacialDatingPreferences.races,
       }
     },
     computed:{
+      responseMessage(){
+        return this.responseRecieved;
+      },
       mainImgSrc(){
         return this.mainImg;
       },
@@ -279,4 +292,8 @@ import ProfileMainImg from './main-profile-image/ProfileMainImg'
   width: 95%;
   margin: 0 auto;
 }
+.main-profile-image{
+  border: 1px solid #eee;
+}
+
 </style>

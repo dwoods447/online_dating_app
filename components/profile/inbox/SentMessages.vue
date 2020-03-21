@@ -18,10 +18,14 @@
             :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread}]"
             >
             </SentMessagesInboxPreview>
-             </paginate>
-                  <div class="flex-container">
+            </paginate>
+             <div class="flex-container" v-if="NoMessages">
+                 <div v-if="messages.length === 0">You have no sent messages</div>
+              </div>
+
+             <div class="flex-container">
                      <paginate-links for="messages" :async="true" :classes="{'ul':'pagination', 'li':'page-item', 'a':'page-link'}"></paginate-links>
-                  </div>
+             </div>
       </div>
     </section>
 
@@ -41,7 +45,8 @@
     data(){
       return {
           messages: [],
-          paginate:['messages']
+          paginate:['messages'],
+          NoMessages: false,
       }
     },
     filters: {
@@ -59,6 +64,8 @@
          console.log(`Sent Messages ${JSON.stringify(sentMessages)}`);
          if(sentMessages.messages.length > 0){
            this.messages = sentMessages.messages;
+         } else {
+            this.NoMessages = true;
          }
       }
     }
