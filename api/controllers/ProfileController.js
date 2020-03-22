@@ -71,8 +71,8 @@
             selectedMaritalStatuses,
 
         } = req.body;
-
-        const user = await User.findById(req.userId);
+        let projection = {password: 0, email: 0, "favorites.users": 0}
+        const user = await User.findOne({_id: req.userId}, projection);
         if(!user){
             return res.status(422).json({message: 'No user found'});
         }
@@ -642,7 +642,7 @@
         if(doesDrink) findParams.doesDrink = doesDrink;
         if(religion.length > 0) findParams.religion = { $in: religion };
         // if(profession) findParams.profession = profession;
-        // if(doesHavePets) findParams.doesHavePets = doesHavePets;
+        if(doesHavePets) findParams.doesHavePets = doesHavePets;
         // if(personality) findParams.personality = personality;
         // if(ambitiousness) findParams.ambitiousness =ambitiousness ;
         // if(longestRelationShip) findParams.longestRelationShip = longestRelationShip;

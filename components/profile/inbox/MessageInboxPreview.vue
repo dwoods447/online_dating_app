@@ -1,6 +1,7 @@
 <template>
   <div>
-        <a @click="viewMessageThread()" href="javascript:void(0);"><div class="row">
+        <a @click="viewMessageThread()" href="javascript:void(0);">
+          <div class="row">
                   <div class="col-lg-2">
                       <div>
                           <div v-if="this.random === 'true' && this.gender === 'male'">
@@ -37,7 +38,9 @@
                         </div>
                       </div>
                   </div>
-          </div></a>
+          </div>
+          </a>
+          <slot></slot>
   </div>
 </template>
 

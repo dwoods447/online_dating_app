@@ -18,6 +18,7 @@
                   :random="message.messageContent[0].random"
                   :class="['thread', {unread: message.messageContent[message.messageContent.length - 1].unread}]"
                   >
+                  <div class="corner-ribbon top-right blue" v-if="message.messageContent[message.messageContent.length - 1].unread">New</div>
                   </MessageInboxPreview>
 
                   </paginate>
@@ -129,12 +130,14 @@ import moment from 'moment'
   border-radius: 6px;
   background-color: #eee;
   padding: 1.2em;
+  position: relative;
+  overflow: hidden;
 }
 .thread > a{
   color: #fff;
 }
  .unread{
-   background-color: #14ABE0;
+   background-color: rgb(20, 224, 37);
    color: #fff;
  }
 
@@ -144,4 +147,29 @@ import moment from 'moment'
    align-content: center;
    justify-content: center;
  }
+
+ 
+.corner-ribbon{
+  width: 200px;
+  background: #e43;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.corner-ribbon.top-right{
+  top: 25px;
+  right: -50px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.blue{background: #39d;}
 </style>
