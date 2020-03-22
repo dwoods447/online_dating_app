@@ -105,6 +105,12 @@
             <li>Do you do you drink?: <strong>{{ userReturned.doesDrink | booleanToResponse }}</strong></li>
             <li>Do you do you do drugs?: <strong>{{ userReturned.doesDoDrugs | booleanToResponse }}</strong></li>
              <li>Do you smoke?: <strong>{{ userReturned.doesSmoke | booleanToResponse }}</strong></li>
+               <li v-if="userReturned.geekInterests.interests.length > 0">
+                  Gender Interests
+                    <span v-for="(interest, i) in userReturned.geekInterests.interests" :key="'geekInterests-interest'+i">
+                    <strong>{{ interest }}</strong>,
+                    </span>
+                </li>
           </ul>
         </div>
       </div>
