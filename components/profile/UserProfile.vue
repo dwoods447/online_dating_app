@@ -89,6 +89,12 @@
                     <strong>{{ race }}</strong>,
                   </span>
                 </li>
+                <li v-if="userReturned.seekingGenders.genders.length > 0">
+                  Gender Dating Preferences
+                    <span v-for="(gender, i) in userReturned.seekingGenders.genders" :key="'seekingGenders-gender'+i">
+                    <strong>{{ gender }}</strong>,
+                    </span>
+                </li>
           </ul>
         </div>
       </div>

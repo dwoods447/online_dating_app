@@ -76,7 +76,7 @@
         if(!user){
             return res.status(422).json({message: 'No user found'});
         }
-            
+
 
             if(height) user.height = height;
             if(relationshipTypeSeeking) user.relationshipTypeSeeking = relationshipTypeSeeking;
@@ -135,13 +135,13 @@
             console.log(`Do you have pets?${doesHavePets}`);
             console.log(`Do you do drugs? ${doesDoDrugs}`);
             console.log(`Do you drink? ${doesDrink}`);
-            
+
             user.isProfileCompleted = true;
             console.log(`User about to be updated: ${JSON.stringify(user)}`);
             const savedUser = await user.save();
             if(!savedUser){
                 return res.status(422).json({message: 'There was an error saving the profile'});
-            } 
+            }
             console.log(`User THAT WAS updated: ${JSON.stringify(savedUser)}`);
             return res.status(200).json({message: 'User Profile updated successfully!', user: savedUser });
        },
@@ -334,7 +334,7 @@
              }
           },
           {
-            $sort : { "messageContent.date": 1 }
+            $sort : { "messageContent.date": -1 }
           }
         ])
         return res.status(200).json({messages: mySentMesages});
