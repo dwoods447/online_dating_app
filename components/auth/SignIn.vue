@@ -2,8 +2,13 @@
   <div>
       <h2 style="text-align:center;">Please Sign In</h2>
       <div style="width:200px; margin: 0 auto;">
-        <h4>Login as guest</h4>
+        <h4>Login as guest01</h4>
         <div>username: guest01</div>
+        <div>password: password</div> 
+      </div>
+     <div style="width:200px; margin: 0 auto;">
+        <h4>Login as guest02</h4>
+        <div>username: guest02</div>
         <div>password: password</div> 
       </div>
       <div v-if="signInResponse" style="width: 10%; margin: 0 auto; color: green; font-weight: 600;">{{ signInResponse }}</div>

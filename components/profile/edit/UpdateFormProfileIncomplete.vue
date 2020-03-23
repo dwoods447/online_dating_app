@@ -206,6 +206,7 @@ import states from '../../../data/states'
           setEducationInVuexStore: 'profile/setEducationAction',
           setDoesSmokeInVuexStore: 'profile/setDoesSmokeAction',
           setDoesDrinkInVuexStore: 'profile/setDoesDrinkAction',
+          setDoesHavePetsInVuexStore: 'profile/setDoesHavePetsAction',
            setPersonalityInVuexStore: 'profile/setPersonalityAction',
           setDatingIntentInVuexStore: 'profile/setDatingIntentAction',
           setBodyTypeInVuexStore: 'profile/setBodyTypeAction',

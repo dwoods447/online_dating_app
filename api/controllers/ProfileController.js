@@ -232,7 +232,7 @@
           }
 
         ])
-        //const messages = await Message.find({'recipient.id': user._id});
+        
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
@@ -262,9 +262,7 @@
 
         ])
 
-        // if(!messages){
-        //   return res.status(500).json({message: 'Error retrieving messages'});
-        // }
+    
         console.log(`Totalitems: ${JSON.stringify(totalItems)}`);
         if(totalItems.length > 0){
           if(totalItems[0].hasOwnProperty("total_messages")){
@@ -282,13 +280,10 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-        // console.log('Running getMessagesFromSender');
-        // console.log('Sender Id: '+ msgSender._id)
-        // console.log('Reciver Id: '+ user._id)
+       
         let messagesThread;
         const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
         const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "recipient.imageSrc","sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
-        //console.log(`messagesThreadTwo: ${JSON.stringify(messagesThreadTwo)}`);
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
           let aDate = new Date(a.date);
@@ -307,8 +302,6 @@
 
        async getSentMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});
-        //let sentMessages = await Message.find({'sender.id': user._id}).select(["content", "date", "unread", "sender.username", "recipient.username"]);
-
         const mySentMesages = await Message.aggregate([
           {
             $match: { "sender.id": mongoose.Types.ObjectId(req.userId) }
@@ -361,14 +354,13 @@
           return res.status(200).json({message: 'You are prohibited from sending a message to this user!', statusCode: statusCode, blocked: true});
          }
 
-       //  console.log(`Reciever: ${JSON.stringify(receiverOfMessage)}`);
+       
          if(!receiverOfMessage){
              statusCode = 404;
             return res.status(404).json({message: 'Unable to locate user profile', statusCode: statusCode, blocked: false});
          }
 
          let imgSrc;
-       //  console.log(`Sender: ${JSON.stringify(sender)}`);
          if(sender.images.imagePaths.length > 0){
           imgSrc = sender.images.imagePaths[0].path;
          } else {
@@ -407,8 +399,7 @@
              statusCode = 500;
              return res.status(500).json({message: `There was an error sending the message `, statusCode: statusCode, blocked: false});
          }
-        // const messageSent = await receiverOfMessage.sendMessageToUserInbox(sender, message);
-         //const messageCopied = await sender.sendMessageToUserInbox(receiverOfMessage, message);
+      
          if(!createdMessage){
             statusCode = 422;
             return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
@@ -430,51 +421,7 @@
         return res.status(200).json({message: 'Message deleted succesfully!'});
        },
 
-      //  async getUserMessages(req, res, next){
-      //   let messages;
-      //   let inboxArry = [];
-      //    let user = await User.findOne({_id: req.userId}).populate({
-      //      path: "inbox.messages.from",
-      //      select: ['username', 'images.imagePaths']
-      //    })
-      //   let myUser = await User.aggregate([
-      //     {
-      //       $match: { "_id": mongoose.Types.ObjectId(req.userId) }
-      //     },
-      //     {
-      //       $unwind: "$inbox.messages"
-      //     },
-      //     {
-      //       $group: {
-      //         _id: { from: "$inbox.messages.from" },
-      //         messages: {
-      //           $push: {
-      //             messageId: "$inbox.messages.messageId",
-      //             content: "$inbox.messages.content",
-      //             date: "$inbox.messages.date"
-      //             // Add more info of the message here as needed
-      //           }
-      //         }
-      //       },
-      //     },
-
-      //     {
-      //       $project: {
-      //         _id: 0,
-      //         from: "$_id.from",
-      //         inbox: { messages: "$messages" },
-
-      //       }
-      //     }
-      //   ]);
-
-      //  let userMessages =  myUser;
-      //    messages = userMessages;
-      //    if(!user){
-      //       return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-      //    }
-      //    return res.status(200).json({messageInbox: messages, messageInfoAddtional: inboxArry});
-      //  },
+    
 
        async getUserProfileViews(req, res, next){
         const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']}).select(["-password"]);
@@ -779,26 +726,9 @@
 
               try {
                 const user = await User.findById(req.userId);
-                // const zipCodesObjs = await fetch(`${config.ZIPCODE_API.URL}/${config.ZIPCODE_API.API_KEY}/radius.json/${user.postalCode}/${miles}/mile`);
-                // const zipcodes = await zipCodesObjs.json();
-                // const zipCodes = zipcodes.zip_codes.map(obj =>{
-                //     return obj.zip_code;
-                // })
                    const users = await User.aggregate([
                       {$sample: {size: 10}},
                     ]);
-                /*
-                  totalUsers = await User.find().countDocuments();
-                  let users = await User.find()
-                  .skip((page - 1) * profilesPerPage)
-                  .limit(profilesPerPage);
-                  hasNextPage = profilesPerPage * page < totalUsers;
-                  hasPreviousPage = page > 1;
-                  nextPage = page + 1;
-                  prvPage = page - 1;
-                  lastPage = Math.ceil(totalUsers/profilesPerPage);
-                  */
-
                  let userToReturn = users.filter(user => {
                     return user._id.toString() !== req.userId;
                   })
