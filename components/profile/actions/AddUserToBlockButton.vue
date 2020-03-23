@@ -22,7 +22,7 @@ import eventBus from '../../../middleware/eventBus/index'
            eventBus.$emit('setActiveLink', 'isShowSearch');
             eventBus.$emit('button-response-recieved', message.message);
             this.$router.push({name: 'basicsearch'});
-          }, 8000);
+          }, 200);
 
         }
       }

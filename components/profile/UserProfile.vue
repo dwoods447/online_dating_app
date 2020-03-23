@@ -106,7 +106,7 @@
             <li>Do you do you do drugs?: <strong>{{ userReturned.doesDoDrugs | booleanToResponse }}</strong></li>
              <li>Do you smoke?: <strong>{{ userReturned.doesSmoke | booleanToResponse }}</strong></li>
                <li v-if="userReturned.geekInterests.interests.length > 0">
-                  Geek Interests
+                  Geek Interests:
                     <span v-for="(interest, i) in userReturned.geekInterests.interests" :key="'geekInterests-interest'+i">
                     <strong>{{ interest }}</strong>,
                     </span>
