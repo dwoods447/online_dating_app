@@ -612,4 +612,10 @@ import { mapActions } from 'vuex'
 .filter-btn{
   display: inline-block;
 }
+
+@media all and (min-width: 1024px) and (max-width: 1366px) { 
+  .filter-section-title{
+    font-size: 1.1em;
+  }
+}
 </style>
