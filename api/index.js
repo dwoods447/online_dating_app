@@ -88,7 +88,6 @@ router.post('/remove/favorites', isAuthenticated, ProfileController.removeUserFr
 router.post('/user/block/add', isAuthenticated, ProfileController.addUserToBlockList);  // tested
 router.post('/user/block/remove', isAuthenticated, ProfileController.removeUserFromBlockList);
 router.post('/send/message', isAuthenticated, ProfileController.sendMessageToInbox); // tested
-router.post('/remove/message', isAuthenticated, ProfileController.deleteMessageFromInbox);
 router.post('/mark/message/read', isAuthenticated, ProfileController.markMessageAsRead);
 router.post('/general/search', isAuthenticated, ProfileController.generalUsersSearch); // tested
 router.post('/advanced/search', isAuthenticated,ProfileController.advancedUsersSearch);

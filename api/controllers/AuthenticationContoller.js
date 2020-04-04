@@ -165,9 +165,6 @@ module.exports = {
  },
 
 
- async userPasswordReset(req, res, next){
-
- },
 
 
 

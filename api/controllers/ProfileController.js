@@ -232,7 +232,7 @@
           }
 
         ])
-        
+
         const myMesages = await Message.aggregate([
           {
             $match: { "recipient.id": mongoose.Types.ObjectId(req.userId) }
@@ -262,7 +262,7 @@
 
         ])
 
-    
+
         console.log(`Totalitems: ${JSON.stringify(totalItems)}`);
         if(totalItems.length > 0){
           if(totalItems[0].hasOwnProperty("total_messages")){
@@ -280,7 +280,7 @@
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-       
+
         let messagesThread;
         const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
         const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "recipient.imageSrc","sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
@@ -354,7 +354,7 @@
           return res.status(200).json({message: 'You are prohibited from sending a message to this user!', statusCode: statusCode, blocked: true});
          }
 
-       
+
          if(!receiverOfMessage){
              statusCode = 404;
             return res.status(404).json({message: 'Unable to locate user profile', statusCode: statusCode, blocked: false});
@@ -399,7 +399,7 @@
              statusCode = 500;
              return res.status(500).json({message: `There was an error sending the message `, statusCode: statusCode, blocked: false});
          }
-      
+
          if(!createdMessage){
             statusCode = 422;
             return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
@@ -407,21 +407,21 @@
          statusCode = 200;
          return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
-       async deleteMessageFromInbox(req, res, next){
-        const userWhoisRequestingDeletion = req.userId;
-        const { messageId } = req.body;
-        const user = await User.findById(userWhoisRequestingDeletion);
-        if(!user){
-            return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-         }
-        const messages = await user.removeMessageFromUserInbox(messageId);
-        if(!messages){
-        return res.status(422).json({message: 'There was an error while trying to remove the message.'});
-        }
-        return res.status(200).json({message: 'Message deleted succesfully!'});
-       },
+      //  async deleteMessageFromInbox(req, res, next){
+      //   const userWhoisRequestingDeletion = req.userId;
+      //   const { messageId } = req.body;
+      //   const user = await User.findById(userWhoisRequestingDeletion);
+      //   if(!user){
+      //       return res.status(401).json({message: 'Unauthorized you are not logged in!'});
+      //    }
+      //   const messages = await user.removeMessageFromUserInbox(messageId);
+      //   if(!messages){
+      //   return res.status(422).json({message: 'There was an error while trying to remove the message.'});
+      //   }
+      //   return res.status(200).json({message: 'Message deleted succesfully!'});
+      //  },
 
-    
+
 
        async getUserProfileViews(req, res, next){
         const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']}).select(["-password"]);
