@@ -337,17 +337,23 @@
        async sendMessageToInbox(req, res, next){
         let statusCode;
         const {userProfileId, message } = req.body;
-         const sender = await User.findById(req.userId);
+         const sender = await User.findOne({_id: req.userId});
 
          if(!sender){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
 
+         let messageSender = sender._id.toString();
+         const receiverOfMessage = await User.findOne({_id: userProfileId});
+         let messageReciever = receiverOfMessage._id.toString();
+         console.log(`Message sender id: ${JSON.stringify(sender, null, 2)}`);
+         console.log(`Message reciever id: ${JSON.stringify(receiverOfMessage, null, 2)}`);
+         const userBlockedYou = await receiverOfMessage.checkIfUserIsBlocked(messageSender);
+         const youblockedUser = await sender.checkIfUserIsBlocked(messageReciever);
 
+         console.log(`Did you block user ?: ${JSON.stringify(youblockedUser)}`);
+         console.log(`Did user block you ?: ${JSON.stringify(userBlockedYou)}`);
 
-         const receiverOfMessage = await User.findById(userProfileId);
-         const userBlockedYou = await receiverOfMessage.checkIfUserIsBlocked(sender._id);
-         const youblockedUser = await sender.checkIfUserIsBlocked(receiverOfMessage._id);
 
          if(userBlockedYou || youblockedUser){
           statusCode = 200;

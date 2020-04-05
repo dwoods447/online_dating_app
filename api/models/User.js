@@ -312,9 +312,12 @@ UserSchema.methods.addUserToBlockList = function(userId){
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
 
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-        return userId ===  searchedUser.userId.toString();
+      console.log(`User to check: ${JSON.stringify(userId, null, 2)} compared to  User in list: ${JSON.stringify(searchedUser.userId.toString(), null, 2)}`)
+        return userId === searchedUser.userId.toString();
+
     });
 
+    console.log(`Index returned from checking user is blocked: ${userBlockedIndex}`);
     if(userBlockedIndex !== -1){
         // User is already in blocked user list
         return true;
