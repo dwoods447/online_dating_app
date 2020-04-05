@@ -23,7 +23,7 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="main-image-container" v-if="renderMainImage">
-        <ProfileMainImg :imageSrc="mainImgSrc" :imageIndex="mainImageIndex" :genderType="mainGenderValue" :randomType="mainRandomVal" class="main-profile-image"></ProfileMainImg>
+        <ProfileMainImg :imageSrc="mainImgSrc" :imageIndex="mainImageIndex" :genderType="mainGenderValue" :randomType="mainRandomVal" ></ProfileMainImg>
       </div>
       <div class="thumbnail-container">
         <ul class="image-thumbs" v-if="images.length > 0">
@@ -303,9 +303,6 @@ import eventBus from '../../middleware/eventBus/index'
 .message-box{
   width: 95%;
   margin: 0 auto;
-}
-.main-profile-image{
-  border: 1px solid #eee;
 }
 
 </style>

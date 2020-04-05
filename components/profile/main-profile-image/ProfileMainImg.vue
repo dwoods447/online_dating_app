@@ -1,22 +1,22 @@
 <template>
   <div>
     <div>
-        <div v-if="randomType === 'true'" style="width: 500px; height: 500px;">
-              <div v-if="genderType === 'male'">
-                <img :src="myImagePath|maleImageSrcFilter" alt="" style="width: 100%; display: block;">
+        <div v-if="randomType === 'true'" >
+              <div v-if="genderType === 'male'" style="" class="main-profile-container">
+                <img :src="myImagePath|maleImageSrcFilter" alt="" style="" class="main-profile-image">
               </div>
-              <div v-if="genderType === 'female'">
-                <img :src="myImagePath|femaleImageSrcFilter" alt="" style="width: 100%; display: block;">
+              <div v-if="genderType === 'female'" class="main-profile-container">
+                <img :src="myImagePath|femaleImageSrcFilter" alt="" style="width: 100%; display: block;" class="main-profile-image">
               </div>
-              <div v-if="genderType === 'trans-male'">
-                <img :src="myImagePath|transMaleImageSrcFilter" alt="" style="width: 100%; display: block;">
+              <div v-if="genderType === 'trans-male'" class="main-profile-container">
+                <img :src="myImagePath|transMaleImageSrcFilter" alt="" style="width: 100%; display: block;" class="main-profile-image">
               </div>
-              <div v-if="genderType === 'trans-female'">
-                <img :src="myImagePath|transFemaleImageSrcFilter" alt="" style="width: 100%; display: block;">
+              <div v-if="genderType === 'trans-female'" class="main-profile-container">
+                <img :src="myImagePath|transFemaleImageSrcFilter" alt="" style="width: 100%; display: block;" class="main-profile-image">
               </div>
           </div>
-          <div v-if="randomType === 'false'" style="width: 500px; height: 500px;">
-            <img :src="myImagePath|imageSrcFilter" alt="" style="width: 100%; display: block;">
+          <div v-if="randomType === 'false'"  class="main-profile-container">
+            <img :src="myImagePath|imageSrcFilter" alt="" style="width: 100%; display: block;" class="main-profile-image">
         </div>
     </div>
 
@@ -101,6 +101,17 @@
   }
 </script>
 
-<style  scoped>
+<style>
+.main-profile-image{
+  border: 1px solid #eee;
+  width: 100%;
+  display: block;
+}
+
+.main-profile-container{
+width: 500px;
+height: 500px;
+}
+
 
 </style>
