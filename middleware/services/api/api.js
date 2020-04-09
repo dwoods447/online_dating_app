@@ -10,7 +10,7 @@ if(process.env.NODE_ENV !== 'production'){
   })
 } */else {
   api = axios.create({
-    baseURL: 'http://www.imseekinggeeks.com/api'
+    baseURL: 'https://www.imseekinggeeks.com/api'
   })
 }
 
