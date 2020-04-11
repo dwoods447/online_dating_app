@@ -2,7 +2,7 @@
 
 ## Overview
 
-ImSeekingGeeks was the result of my graduate Software Engineering Project Management class. I developed the concept and the appplication from start to finish. The application used Nuxt.js on the front-end and Express.js on the back-end with a MongoDB database.
+ImSeekingGeeks was the result of my graduate Software Engineering Project Management class. I developed the concept and the appplication from start to finish. The application uses Nuxt.js on the front-end and Express.js on the back-end with a MongoDB database.
 
 
 
