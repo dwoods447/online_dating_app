@@ -4,7 +4,7 @@
 
 ImSeekingGeeks is an online dating platform only available in the US that lets you the meet the most amazing singles. ImSeekingGeeks was the result of my graduate Software Engineering Project Management class. I developed the concept and the application from start to finish. It uses Nuxt.js/Vue.js on the front-end and Node.js/Express.js on the back-end with a MongoDB database.
 
-
+To view the application on Heroku, go to: [https://www.imseekinggeeks.com/](https://www.imseekinggeeks.com/)
 
 ## Build Setup
 
