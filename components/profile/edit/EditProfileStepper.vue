@@ -1,14 +1,14 @@
 <template>
         <section>
           <div class="flex-container">
-              <div class="step-header">
+              <div class="flex-container step-header">
                 <div :class="['step-header-item']"><span :class="[{'highlight': isStepOneActive }, 'stepp-number',]">1</span>&nbsp;Enter profile Details</div>
                 <div :class="['step-header-item']"><span :class="[{'highlight': isStepTwoActive }, 'stepp-number']">2</span>&nbsp;Upload Photo</div>
                 <div :class="['step-header-item']"><span  :class="[{'highlight': isStepThreeActive },'stepp-number']">3</span>&nbsp;Enter Geek Preferences</div>
                 <div :class="['step-header-item']"><span  :class="[{'highlight': isDone }, 'stepp-number']">4</span>&nbsp;Update Profile</div>
               </div>
            </div>
-              <div v-if="step == 1">
+              <div v-if="step == 1" class="step">
                  <section class="stepper-section">
                    <div v-if="this.$store.state.userId">
                       <div v-if="this.$store.state.userId.isProfileCompleted !== true">
@@ -21,26 +21,30 @@
                   </div>
                  </section>
               </div>
-               <div v-if="step == 2">
+               <div v-if="step == 2" class="step">
                  <section class="stepper-section">
                    <h2 class="form-header">Upload a Photo</h2>
                       <ImgUpload  />
                  </section>
                </div>
-               <div v-if="step == 3">
+               <div v-if="step == 3" class="step">
                  <section class="stepper-section">
                  <h2 class="form-header">Enter Geek Preferences & Interests</h2>
                  <GeekPreferences></GeekPreferences>
                   </section>
                </div>
-               <div v-if="step == 4">
-
+               <div v-if="step == 4" class="step">
+                 <div class="flex-container">
+                   <div class="flex-container" style="height: 50vh;">
+                     <button @click.prevent="updateUserProfile" class="btn btn-primary btn-sm btn-custom"  :disabled="this.onReadySubmit" v-if="this.isDone">Update Your Profile&nbsp;&nbsp;&nbsp; <span class="arrow-left">&gt;</span></button>
+                   </div>
+                 </div>
                </div>
                <div class="flex-container">
                  <div class="flex--item">
-                    <button @click.prevent="prevStep" class="btn btn-primary btn-sm" v-if="step != 1">Previous Step</button>
-                    <button @click.prevent="nextStep" class="btn btn-primary btn-sm" v-if="step != totalSteps" :disabled="this.onReadySubmit">Next Step</button>
-                    <button @click.prevent="updateUserProfile" class="btn btn-primary btn-sm"  :disabled="this.onReadySubmit" v-if="this.isDone">Update Your Profile</button>
+                    <button @click.prevent="prevStep" class="btn btn-primary btn-sm" v-if="step != 1"><span class="arrow-right">&lt;</span>&nbsp;&nbsp;&nbsp; Previous Step</button>
+                    <button @click.prevent="nextStep" class="btn btn-primary btn-sm" v-if="step != totalSteps" :disabled="this.onReadySubmit">Next Step &nbsp;&nbsp;&nbsp;<span class="arrow-left">&gt;</span></button>
+
                  </div>
                </div>
 
@@ -244,5 +248,19 @@ import eventBus from '../../../middleware/eventBus/index'
 }
 .form-header{
   text-align: center;
+}
+
+.step{
+  min-height: 35vh;
+}
+.btn-custom{
+  width: 250px;
+  height: 40px;
+  vertical-align: middle;
+  margin: 50% auto;
+}
+
+.arrow-left, .arrow-right{
+  font-size: 1.1em;
 }
 </style>

@@ -3,7 +3,7 @@
      <h2 style="width: 250px; margin: 0 auto;">Edit Your Profile</h2>
 
      <div style="width: 415px; margin: 0 auto; color :red;"><p v-if="!$store.getters.isProfileCompleted">Please update your profile before proceeding!</p></div>
-         <div style="width: 50%; margin: 0 auto;" v-if="fullImageSrc">
+         <div  class="flex-container" style="width: 50%; margin: 25px auto;" v-if="fullImageSrc">
                         Your main picture:
                         <div v-if="randomVal === 'true'">
                           <div v-if="chosenGender==='male'" style="max-width: 127px; max-height: 127px;">
@@ -23,7 +23,7 @@
                             <img :src="fullImageSrc|imageSrcFilter " alt="" style="width: 100%;">
                         </div>
                     </div>
-                    <EditProfileStepper></EditProfileStepper>
+                    <EditProfileStepper style="padding: 1em;"></EditProfileStepper>
 
  </div>
 
@@ -106,6 +106,11 @@ import EditProfileStepper from '../edit/EditProfileStepper'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.flex-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
 </style>

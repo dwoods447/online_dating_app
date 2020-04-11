@@ -7,7 +7,8 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Find the Geek of your Dreams!</h1>
+          <h1>Find the Geek of your Dreams!</h1>
+          <p style="position:relative; top: 5px; left:75px; width: 222px; font-size: 1.5em;">For geeks by geeks</p>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <!-- <form>

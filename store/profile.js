@@ -113,7 +113,7 @@ export const mutations = {
     } else {
       state.doesDateInteracially = '';
     }
-    
+
   },
   setRaceDatingPreferencesMutation(state, raceDatingPreferences){
       state.raceDatingPreferences = raceDatingPreferences;
@@ -131,7 +131,7 @@ export const mutations = {
     state.geekInterests.push(interest);
   },
   removeGeekInterestsMutation(state, interest){
-    let localInterest = state.geekInterests.interests.slice();
+    let localInterest = state.geekInterests;
     console.log(`Interest to remove: ${interest.interest}`);
     if(localInterest.indexOf(interest.interest) >= 0){
       console.log(`Index at which to remove: ${interest.index}`);
@@ -140,7 +140,7 @@ export const mutations = {
       state.geekInterests.interests = localInterest;
     }
 
-    
+
   },
 
   setProfileDescriptionMutation(state, description){
@@ -160,7 +160,7 @@ export const mutations = {
   setDatingIntentMutation(state, datingIntent){
     state.datingIntent = datingIntent;
   },
-  
+
 
   setPersonlityMutation(state, personality){
     state.personality = personality;
