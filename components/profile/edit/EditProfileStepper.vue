@@ -91,7 +91,6 @@ import eventBus from '../../../middleware/eventBus/index'
       },
       validateStep(step){
         if(step == 1){
-          console.log(`Validating step ${step}`);
           if(
             this.$store.state.profile.height !== ''
             && this.$store.state.profile.hairColor !== ''
@@ -115,18 +114,14 @@ import eventBus from '../../../middleware/eventBus/index'
           }
         }
         if(step == 2){
-           console.log(`Validating step ${step}`)
-
            if(this.$store.getters.hasImages.length > 0 ){
                this.step++;
            }
         }
         if(step == 3){
-           console.log(`Validating step ${step}`)
             this.step++;
         }
         if(step == 4){
-           console.log(`Validating step ${step}`)
            this.onReadySubmit = false;
         }
       },
@@ -134,21 +129,19 @@ import eventBus from '../../../middleware/eventBus/index'
            this.step--;
          // this.validateStep(this.step);
             if(this.step == 1){
-            console.log('On step 1');
+
             this.isStepOneActive = true;
             this.isStepTwoActive = false;
             this.isStepThreeActive = false;
             this.isDone = false;
           }
           if(this.step == 2){
-            console.log('On step 2');
             this.isStepOneActive = false;
             this.isStepTwoActive = true;
             this.isStepThreeActive = false;
             this.isDone = false;
           }
           if(this.step == 3){
-            console.log('On step 3');
             this.isStepOneActive = false;
             this.isStepTwoActive = false;
             this.isStepThreeActive = true;
@@ -156,7 +149,6 @@ import eventBus from '../../../middleware/eventBus/index'
           }
           if(this.step >= this.totalSteps){
            //show submit button
-           console.log('On step 4');
             this.isStepOneActive = false;
             this.isStepTwoActive = false;
             this.isStepThreeActive = false;
@@ -168,21 +160,18 @@ import eventBus from '../../../middleware/eventBus/index'
         //  this.validateStep(this.step);
           this.step++;
           if(this.step == 1){
-            console.log('On step 1');
             this.isStepOneActive = true;
             this.isStepTwoActive = false;
             this.isStepThreeActive = false;
             this.isDone = false;
           }
           if(this.step == 2){
-            console.log('On step 2');
             this.isStepOneActive = false;
             this.isStepTwoActive = true;
             this.isStepThreeActive = false;
             this.isDone = false;
           }
           if(this.step == 3){
-            console.log('On step 3');
             this.isStepOneActive = false;
             this.isStepTwoActive = false;
             this.isStepThreeActive = true;
@@ -190,7 +179,6 @@ import eventBus from '../../../middleware/eventBus/index'
           }
           if(this.step >= this.totalSteps){
            //show submit button
-           console.log('On step 4');
             this.isStepOneActive = false;
             this.isStepTwoActive = false;
             this.isStepThreeActive = false;

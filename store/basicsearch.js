@@ -57,13 +57,11 @@ export const mutations = {
   setSearchResultsMutation(state, results){
     let storedResults = {};
     if(typeof results === 'string'){
-      console.log('Results are a srting PARSING...')
       let searchResutls;
        searchResutls = JSON.parse(results);
        storedResults = {...searchResutls}
        state.results = storedResults;
     }
-    console.log(`Setting Results in Store Mutation`)
     storedResults = {...results};
     state.userId = storedResults;
 
@@ -81,7 +79,7 @@ export const getters = {
 
 export const actions = {
   nuxtServerInit (context, { req }) {
-    console.log(`Nuxt Sever init runnig in basicsearch.js`)
+
     let results = null;
     if(req){
       if (req.headers.cookie) {
@@ -96,7 +94,6 @@ export const actions = {
         }
       }
     }
-    console.log(`Setting search results...}`);
     context.commit('setSearchResultsMutation', results);
   },
   setMinAgeAction(context, minAge){
@@ -137,14 +134,10 @@ setMaxHeightAction(context, maxHeight){
  },
  setSearchResultsAction(context){
    if(process.client){
-     console.log(`Running on client`)
     let resultData = localStorage.getItem("results");
     let results = JSON.parse(resultData)
-    console.log(`Results from local storage ${JSON.stringify(results)}`);
     context.commit('setSearchResultsMutation', results);
    }
-
-
  },
  clearSearchResultsAction(context){
    context.commit('clearSearchResultsMutation');

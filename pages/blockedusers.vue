@@ -29,18 +29,14 @@
         async getBlockedUsersInList(){
              const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const blockedList = (await UserProfileService.getUserInBlockList()).data;
-             console.log(`Blocked users retrieved ${JSON.stringify(blockedList)}`);
             if(blockedList){
                 this.blockedUserList = blockedList.blockList;
             }
         },
 
          async removeFromBlockedUsersList(userId){
-          console.log(`Removing user from blocked users....`);
           let userToRemove = {userProfileId: userId};
           const updatedBlockedUsers = await this.$store.dispatch('removeFromBlockedUsersAction', userToRemove);
-
-          console.log(`Updated blocked users ${JSON.stringify(updatedBlockedUsers)}`);
           if(updatedBlockedUsers){
               this.getBlockedUsersInList();
              // updatedFavorites.favorites = this.favoritesList;

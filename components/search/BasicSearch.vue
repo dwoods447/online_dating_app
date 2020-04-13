@@ -354,13 +354,11 @@ import { VueSlideToggle } from 'vue-slide-toggle'
         // if(this.formData.milesFrom) formSubmitData.miles =  this.formData.milesFrom;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
-          console.log(`Sending data: ${JSON.stringify(formSubmitData, null, 2)}`);
           const searchResults = (await UserProfileService.basicUserSearch(this.$store.state.basicsearch)).data;
-         // console.log(`Search Results ${JSON.stringify(searchResults)}`);
+
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
                    let resultsData = JSON.stringify(searchResults.users);
-                   console.log(`Setting Cookies... ${resultsData}`);
                    localStorage.setItem('results', resultsData);
                    //Cookie.set('results', JSON.stringify(searchResults.users));
                   // Cookie.set('resultsData', 'result');
@@ -416,7 +414,7 @@ import { VueSlideToggle } from 'vue-slide-toggle'
   display: inline-block;
 }
 
-@media all and (min-width: 1024px) and (max-width: 1366px) { 
+@media all and (min-width: 1024px) and (max-width: 1366px) {
   .filter-section-title{
     font-size: 1.1em;
   }

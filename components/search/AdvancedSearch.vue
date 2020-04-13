@@ -553,9 +553,7 @@ import { mapActions } from 'vuex'
         this.errorMessage = "";
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
-          console.log(`Sending data: ${JSON.stringify(this.$store.state.advancedsearch, null, 2)}`);
           const searchResults = (await UserProfileService.advancedUserSearch(this.$store.state.advancedsearch)).data;
-          console.log(`Search Results ${JSON.stringify(searchResults)}`);
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
             } else {
@@ -613,7 +611,7 @@ import { mapActions } from 'vuex'
   display: inline-block;
 }
 
-@media all and (min-width: 1024px) and (max-width: 1366px) { 
+@media all and (min-width: 1024px) and (max-width: 1366px) {
   .filter-section-title{
     font-size: 1.1em;
   }

@@ -156,7 +156,6 @@
             index: i,
           }
             if(this.geekInterest.indexOf(interest) !== -1){
-                //console.log(`Removing ${interest} at index ${i}`)
                 this.geekInterest.splice(i, 1)
                 this.$store.dispatch('profile/removeGeekInterestsAction', interestObj);
             }

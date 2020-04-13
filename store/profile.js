@@ -132,11 +132,9 @@ export const mutations = {
   },
   removeGeekInterestsMutation(state, interest){
     let localInterest = state.geekInterests;
-    console.log(`Interest to remove: ${interest.interest}`);
+
     if(localInterest.indexOf(interest.interest) >= 0){
-      console.log(`Index at which to remove: ${interest.index}`);
       localInterest.splice(localInterest.indexOf(interest.interest), 1);
-      console.log(`Removing index in localInterest Array : ${JSON.stringify(localInterest)}`);
       state.geekInterests.interests = localInterest;
     }
 

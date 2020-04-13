@@ -123,7 +123,6 @@ export const actions = {
         context.commit('setLoggedInUserIdMutation', res.data.user);
         context.dispatch('setLogOutTimerAction', tokenExpr);
             //  test if  this.user.isProfileCompleted = true
-            // console.log(JSON.stringify(res.data));
             if(res.data.user.isProfileCompleted == true){
               this.$router.push({name: 'index', params: {user: res.data.user}})
             } else {
@@ -234,17 +233,13 @@ export const actions = {
 
   async removeUserFromFavoritesAction(context, userId){
     const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
-    console.log(`Removing user ${JSON.stringify(userId)}`);
     const userRemovedFromFavoritesList = (await UserServiceProfile.removeUserFromFavoriteList(userId)).data;
-    console.log(`updated favs in store ${JSON.stringify(userRemovedFromFavoritesList)}`);
      return userRemovedFromFavoritesList;
   },
 
   async removeFromBlockedUsersAction(context, userId){
     const token = await UserServiceProfile.setAuthHeaderToken(context.state.token);
-    console.log(`Removing user ${JSON.stringify(userId)}`);
     const userRemovedFromBlockedList = (await UserServiceProfile.removeUserFromBlockList(userId)).data;
-    console.log(`updated favs in store ${JSON.stringify(userRemovedFromBlockedList)}`);
      return userRemovedFromBlockedList;
   },
 

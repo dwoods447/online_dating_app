@@ -44,9 +44,13 @@
     methods: {
       async getUser(userId){
 
-         let userData =  await this.$store.dispatch('getUserDetailsAction', userId);
-         this.loadedUser = userData;
-         console.log(`Users Profile: ${JSON.stringify(this.loadedUser)}`)
+          try {
+              let userData =  await this.$store.dispatch('getUserDetailsAction', userId);
+              this.loadedUser = userData;
+          } catch (error){
+            console.log(error)
+          }
+
 
       }
     },

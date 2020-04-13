@@ -86,7 +86,6 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
 
         async changeUnreadStatus(){
             let messageId = this.thread.messageContent[this.thread.messageContent.length - 1].messageId;
-            console.log('Reading message with id ' + messageId);
             await UserProfileService.markMessageAsRead({messageId: messageId});
         }
     }

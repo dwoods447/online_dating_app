@@ -66,13 +66,13 @@ export const mutations = {
   setSearchResultsMutation(state, results){
     let storedResults = {};
     if(typeof results === 'string'){
-      console.log('Results are a srting PARSING...')
+
       let searchResutls;
        searchResutls = JSON.parse(results);
        storedResults = {...searchResutls}
        state.results = storedResults;
     }
-    console.log(`Setting Results in Store Mutation`)
+
     storedResults = {...results};
     state.userId = storedResults;
   },
@@ -103,7 +103,7 @@ export const mutations = {
     }
    },
    setDoesDoDrugsMutation(state, doesDoDrugs){
-     console.log(`Does do drugs ${doesDoDrugs}`);
+
       if(doesDoDrugs === 'yes'){
         state.doesDoDrugs = true;
       } else {

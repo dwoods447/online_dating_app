@@ -139,10 +139,9 @@ import eventBus from '../../middleware/eventBus/index'
     components: {SendMessage, AddUserToBlockListButton, AddUserToFavoritesListButton, ProfileImgPreview, ProfileMainImg},
     props:['user'],
     created(){
-        console.log(`Getting user details...`);
+
         this.userReturned = this.user;
         this.images = this.user.images.imagePaths;
-        console.log(`Data loaded....`);
 
     },
     mounted(){
@@ -225,10 +224,6 @@ import eventBus from '../../middleware/eventBus/index'
     },
     methods: {
       changeMainImage(imageSrc, randomValue, genderValue){
-          console.log(`Changing Image....`);
-           console.log(`Main Image ${JSON.stringify(imageSrc)}`);
-            console.log(`Random ${randomValue}`);
-             console.log(`gender ${genderValue}`);
           this.mainImg = imageSrc.path;
         //  this.mainImgIndex = imageIndex;
           this.randomVal = randomValue;

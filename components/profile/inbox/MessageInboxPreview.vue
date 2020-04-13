@@ -84,12 +84,10 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
           }
               this.changeUnreadStatus();
               this.$router.push({path: `/message/${this.senderId}/${this.sender}`, params: {routeParams}});
-              // this.$router.push({path: '/profile/'+ id, params: {id: id, userProfile: profile}});
         },
 
         async changeUnreadStatus(){
             let messageId = this.thread.messageContent[this.thread.messageContent.length - 1].messageId;
-            console.log('Reading message with id ' + messageId);
             await UserProfileService.markMessageAsRead({messageId: messageId});
         }
     }

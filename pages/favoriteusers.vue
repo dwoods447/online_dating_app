@@ -29,18 +29,15 @@
         async getFavoriteUsersInList(){
              const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const favoriteList = (await UserProfileService.getUsersInFavoriteList()).data;
-             console.log(`Favs retrieved ${JSON.stringify(favoriteList)}`);
+
             if(favoriteList){
                 this.favoritesList = favoriteList.favoriteList;
             }
         },
 
         async removeFromFavorites(userId){
-          console.log(`Removing user from favorites....`);
           let userToRemove = {userProfileId: userId};
           const updatedFavorites = await this.$store.dispatch('removeUserFromFavoritesAction', userToRemove);
-
-          console.log(`Updated favs ${JSON.stringify(updatedFavorites)}`);
           if(updatedFavorites){
               this.getFavoriteUsersInList();
              // updatedFavorites.favorites = this.favoritesList;

@@ -58,10 +58,8 @@
     },
     methods: {
       async getUserMessages(){
-        console.log('Getting messages...');
-           const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
+        const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
          let sentMessages =  (await UserProfileService.getSentMessagesForUser()).data;
-         console.log(`Sent Messages ${JSON.stringify(sentMessages)}`);
          if(sentMessages.messages.length > 0){
            this.messages = sentMessages.messages;
          } else {

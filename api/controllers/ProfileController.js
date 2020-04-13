@@ -113,36 +113,26 @@
                 user.raceDatingPreferences.races = raceDatingPreferences;
               }
             }
-            console.log(`Geek Interest Object: ${JSON.stringify(geekInterests)}`);
             if(geekInterests){
               if(geekInterests.length > 0){
                 user.geekInterests.interests = geekInterests;
               }
             }
-            console.log(`Selected Marital Statuses Object ${JSON.stringify(selectedMaritalStatuses)}`);
             if(selectedMaritalStatuses){
               if(selectedMaritalStatuses.length > 0){
                 user.selectedMaritalStatuses.statuses = selectedMaritalStatuses;
               }
             }
-            console.log(`Seeking Genders Object: ${JSON.stringify(seekingGenders)}`);
             if(seekingGenders){
               if(seekingGenders.length > 0){
                 user.seekingGenders.genders = seekingGenders;
               }
             }
-            console.log(`Do you smoke? ${doesSmoke}`);
-            console.log(`Do you have pets?${doesHavePets}`);
-            console.log(`Do you do drugs? ${doesDoDrugs}`);
-            console.log(`Do you drink? ${doesDrink}`);
-
             user.isProfileCompleted = true;
-            console.log(`User about to be updated: ${JSON.stringify(user)}`);
             const savedUser = await user.save();
             if(!savedUser){
                 return res.status(422).json({message: 'There was an error saving the profile'});
             }
-            console.log(`User THAT WAS updated: ${JSON.stringify(savedUser)}`);
             return res.status(200).json({message: 'User Profile updated successfully!', user: savedUser });
        },
 
@@ -156,25 +146,20 @@
 
 
        async removeUserFromFavorites(req, res, next){
-          console.log(`Removing user from favorites....`);
           const { userProfileId } = req.body;
-          console.log(`Profile Id of Person: ${JSON.stringify(userProfileId)}`);
           const currentUser = await User.findOne({_id: req.userId});
           if(!currentUser){
              return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
          const personToRemove = await User.findOne({_id: userProfileId});
-         //console.log(`personToRemove ${JSON.stringify(personToRemove)}`);
          if(!personToRemove){
            return res.status(404).json({message: 'This user was not found'});
         }
-        console.log(`Id of person to remove ${JSON.stringify(personToRemove._id)}`);
         const personRemoved = await currentUser.removeUserFromFavorites(personToRemove);
         if(!personRemoved){
            return res.status(422).json({message: 'User not removed!'});
         }
         const userFavs = await User.findOne({_id: req.userId}).populate({path: "favorites.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
-        console.log(`Favs returned on server ${JSON.stringify(userFavs.favorites.users)}`);
         return res.status(200).json({message: 'User successfully removed from favorites', favorites: userFavs.favorites.users});
        },
 
@@ -185,13 +170,11 @@
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
         const personToUnBlock = await User.findOne({_id: userProfileId});
-        console.log(`Id of person to remove ${JSON.stringify(personToUnBlock._id)}`);
          const userUnBlocked = await blocker.removeUserFromBlockList(personToUnBlock);
          if(!userUnBlocked){
             return res.status(422).json({message: 'There was an error trying to remove the user from block list!'});
          }
          const blockedUsers = await User.findOne({_id: req.userId}).populate({path: "blockedUsers.users.userId",  select: ['random', 'gender', 'username', 'images.imagePaths']});
-         console.log(`Favs returned on server ${JSON.stringify(blockedUsers.blockedUsers.users)}`);
          return res.status(200).json({message: 'User removed from your block list', blockList: blockedUsers});
        },
 
@@ -261,9 +244,6 @@
           // { $limit:  perPage},
 
         ])
-
-
-        console.log(`Totalitems: ${JSON.stringify(totalItems)}`);
         if(totalItems.length > 0){
           if(totalItems[0].hasOwnProperty("total_messages")){
             return res.status(200).json({messages: myMesages, totalItems: totalItems[0].total_messages});
@@ -346,14 +326,8 @@
          let messageSender = sender._id.toString();
          const receiverOfMessage = await User.findOne({_id: userProfileId});
          let messageReciever = receiverOfMessage._id.toString();
-         console.log(`Message sender id: ${JSON.stringify(sender, null, 2)}`);
-         console.log(`Message reciever id: ${JSON.stringify(receiverOfMessage, null, 2)}`);
          const userBlockedYou = await receiverOfMessage.checkIfUserIsBlocked(messageSender);
          const youblockedUser = await sender.checkIfUserIsBlocked(messageReciever);
-
-         console.log(`Did you block user ?: ${JSON.stringify(youblockedUser)}`);
-         console.log(`Did user block you ?: ${JSON.stringify(userBlockedYou)}`);
-
 
          if(userBlockedYou || youblockedUser){
           statusCode = 200;
@@ -413,25 +387,10 @@
          statusCode = 200;
          return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
-      //  async deleteMessageFromInbox(req, res, next){
-      //   const userWhoisRequestingDeletion = req.userId;
-      //   const { messageId } = req.body;
-      //   const user = await User.findById(userWhoisRequestingDeletion);
-      //   if(!user){
-      //       return res.status(401).json({message: 'Unauthorized you are not logged in!'});
-      //    }
-      //   const messages = await user.removeMessageFromUserInbox(messageId);
-      //   if(!messages){
-      //   return res.status(422).json({message: 'There was an error while trying to remove the message.'});
-      //   }
-      //   return res.status(200).json({message: 'Message deleted succesfully!'});
-      //  },
-
 
 
        async getUserProfileViews(req, res, next){
         const userViews = await User.findOne({_id: req.userId}).populate({path: "profileViews.views.userId",  select: ['random', 'gender', 'username', 'onlineStatus', 'images.imagePaths']}).select(["-password"]);
-       // console.log(`User Views resp ${JSON.stringify(userViews, null, 2)}`);
         if(!userViews){
             return res.status(401).json({message: 'Unauthorized you are not logged in!'});
          }
@@ -489,7 +448,6 @@
             //let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}; test if user is in block list
             let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
             findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
-            console.log(`Search params re'vd on server: ${JSON.stringify(findParams)}`);
             const searchedUsers = await User.find(findParams)
             // Return searched for users
             // check is the searching user in on any of ther searched users block list
@@ -518,7 +476,6 @@
        },
 
        async advancedUsersSearch(req, res, next){
-         console.log('Advanced search....')
         const userWhoIsSearching = req.userId;
         // Get user search parameters
         const {
@@ -601,16 +558,11 @@
         // if(longestRelationShip) findParams.longestRelationShip = longestRelationShip;
         if(income) findParams.income = { $gte: Number.parseInt(income) };
         if(doesDateInteracially) findParams.doesDateInteracially = doesDateInteracially;
-        console.log(`Advanced Search - Interacial Dating Preference: ${JSON.stringify(interacialDatingPreferences)}`);
          if(doesDateInteracially && interacialDatingPreferences.length > 0){
-              console.log(`Advanced Search - Interacial Dating Preference: ${JSON.stringify(interacialDatingPreferences)}`);
                 let datingPreference = {'interacialDatingPreferences.races': {$in: interacialDatingPreferences}}
                 findParams = {...findParams, ...datingPreference};
          }
-        console.log(`Advanced Search - Race Dating Preference: ${JSON.stringify(raceDatingPreferences)}`);
-
           if(raceDatingPreferences.length > 0){
-            console.log(`Advanced Search - Race Dating Preference: ${JSON.stringify(raceDatingPreferences)}`);
             let datingPreference = {'raceDatingPreferences.races': {$in: raceDatingPreferences}}
             findParams = {...findParams, ...datingPreference};
           }
@@ -629,23 +581,7 @@
       let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
-      console.log(`Search params re'vd on server: ${JSON.stringify(findParams)}`);
         const searchedUsers = await User.find(findParams)
-        // Return searched for users
-        // check is the searching user in on any of ther searched users block list
-        // if(!searchedUsers){
-        //     return res.status(500).json({message: 'An error occured.'});
-        // }
-        // const filteredUsersWhoAreNotBlocked = searchedUsers.filter( user => {
-        //    return  user.blockedUsers.users.map(a =>{
-        //     return a.userId;
-        //    }).indexOf(mongoose.Types.ObjectId(userWhoIsSearching)) == -1;
-        // })
-        //   // and filter them out of users search
-        //   // and filter the user who is searching
-        // const filteredForUserWhoIsSearching = filteredUsersWhoAreNotBlocked.filter(user  =>{
-        //     return user._id.toString() != userWhoIsSearching;
-        // })
         if(!searchedUsers){
           return res.status(500).json({message: 'An error occured'});
         }

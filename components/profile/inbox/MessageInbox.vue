@@ -49,7 +49,6 @@ import moment from 'moment'
     },
      filters: {
       imageSrcFilter(src){
-        console.log('Filter src: '+ src);
         if(src){
           return 'uploads/'+ src
         }
@@ -76,46 +75,19 @@ import moment from 'moment'
       }
     },
     methods: {
-        // async getUserMessages(){
-        //     const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-        //     const messageData = await UserProfileService.getUserMessages()
-        //     if(messageData.data.messageInbox.length > 0 ){
-        //         this.messages = messageData.data.messageInbox;
-        //     } else {
-        //       return this.messages = [];
-        //     }
-        // },
+
         async getUserMessages(){
            this.NoMessages =  false;
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages(this.page);
-           // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
             if(messageData.data.messages.length > 0 ){
                 this.messages = messageData.data.messages;
-               console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
             } else {
                 this.NoMessages = true;
             }
         },
 
-        // async nextPage(page){
-        //       const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-        //     const messageData = await UserProfileService.getUserMessages(page);
-        //    // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
-        //     if(messageData.data.messages.length > 0 ){
-        //         this.messages = messageData.data.messages;
-        //        console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
-        //     }
-        // },
-        // async prevPage(page){
-        //     const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
-        //     const messageData = await UserProfileService.getUserMessages(page);
-        //    // console.log(`Inbox response: ${JSON.stringify(messageData)}`);
-        //     if(messageData.data.messages.length > 0 ){
-        //         this.messages = messageData.data.messages;
-        //        console.log(`Inbox messages: ${JSON.stringify(this.messages)}`);
-        //     }
-        // }
+
 
 
     },
@@ -148,7 +120,7 @@ import moment from 'moment'
    justify-content: center;
  }
 
- 
+
 .corner-ribbon{
   width: 200px;
   background: #e43;

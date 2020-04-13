@@ -34,18 +34,15 @@ import eventBus from '../../../middleware/eventBus/index'
     methods: {
        async sendUserMessage(recieverId){
           const sent  = (await UserProfileService.sendUserMessage({userProfileId: recieverId, message: this.message})).data;
-          console.log(`Sent Response Rec'vd: ${JSON.stringify(sent, null, 2)}`)
             this.message = '';
             this.status = '';
           if(sent.blocked == false){
               this.status = 'Message sent succesfully';
               eventBus.$emit('message-sent');
-              console.log(`Emitting message-sent`)
           } else {
             this.status = sent.message;
             this.isBlocked = sent.blocked;
             setTimeout(()=>{
-              console.log('You are prevented from sending this user a message');
               this.$router.push({name: 'basicsearch'});
             }, 3000)
           }

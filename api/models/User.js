@@ -312,12 +312,9 @@ UserSchema.methods.addUserToBlockList = function(userId){
 UserSchema.methods.checkIfUserIsBlocked = function(userId){
 
     const userBlockedIndex = this.blockedUsers.users.findIndex(searchedUser => {
-      console.log(`User to check: ${JSON.stringify(userId, null, 2)} compared to  User in list: ${JSON.stringify(searchedUser.userId.toString(), null, 2)}`)
         return userId === searchedUser.userId.toString();
 
     });
-
-    console.log(`Index returned from checking user is blocked: ${userBlockedIndex}`);
     if(userBlockedIndex !== -1){
         // User is already in blocked user list
         return true;
@@ -326,12 +323,9 @@ UserSchema.methods.checkIfUserIsBlocked = function(userId){
 }
 
 UserSchema.methods.addUserToFavorites = function(userId){
-    console.log(`User Id to add to favorites: ${JSON.stringify(userId)}`);
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
-      console.log(`Comparing ${userId._id.toString()} to ${searchedUser.userId.toString()}`);
         return userId._id.toString() === searchedUser.userId.toString();
     });
-console.log(`User index in array: ${JSON.stringify(userFavoriteIndex) }`)
     const updatedFavorites = [...this.favorites.users];
 
     if(userFavoriteIndex === -1){
@@ -348,22 +342,16 @@ console.log(`User index in array: ${JSON.stringify(userFavoriteIndex) }`)
 }
 
 UserSchema.methods.removeUserFromFavorites = function(user){
-    console.log(`In removeUserFromFavorites and Removing user ${JSON.stringify(user)}`);
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
-                console.log(`Searched user: ${JSON.stringify(searchedUser)}`);
-                console.log(`Testing user: ${user._id.toString()} equal to ${searchedUser.userId.toString()}`);
                 return user._id.toString() === searchedUser.userId.toString();
         });
 
         const updatedFavorites = [...this.favorites.users];
-        console.log(`Array index of favorite ${userFavoriteIndex }`);
         if(userFavoriteIndex === -1){
             // User was not found the list of favorites
-            console.log(`User was WAS NOT found the list of favorites returning false`);
             return false;
         }
         if(userFavoriteIndex >= 0){
-          console.log(`User WAS found the list of favorites removing`);
             updatedFavorites.splice(userFavoriteIndex, 1);
         }
 

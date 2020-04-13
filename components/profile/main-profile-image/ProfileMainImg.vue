@@ -39,10 +39,6 @@
         }
     },
     mounted(){
-      console.log(`Main Image Rendered....`);
-      console.log(`imageSrc: ${this.imageSrc}`);
-      console.log(`Gender: ${this.genderType}`);
-      console.log(`Random: ${this.randomType}`);
     },
     data(){
       return {
@@ -56,7 +52,6 @@
     },
     filters: {
       imageSrcFilter(src){
-         console.log(`imageFilter src ${src}`);
          if(src){
             return '../../uploads/'+src;
          } else {
@@ -65,7 +60,6 @@
 
       },
       maleImageSrcFilter(src){
-         console.log(`maleImageSrcFilter src ${src}`);
            if(src){
              return '../../random-users/men/'+ src;
            }else {
@@ -74,7 +68,6 @@
 
       },
       femaleImageSrcFilter(src){
-         console.log(`femaleImageSrcFilter src ${src}`);
           if(src){
            return '../../random-users/women/'+ src;
           }else {
@@ -82,7 +75,6 @@
           }
       },
       transMaleImageSrcFilter(src){
-         console.log(`transMaleImageSrcFilter src ${src}`);
           if(src){
             return '../../random-users/men/'+ src;
           } else {
@@ -90,7 +82,6 @@
           }
       },
       transFemaleImageSrcFilter(src){
-         console.log(`transFemaleImageSrcFiltersrc ${src}`);
           if(src){
              return '../../random-users/women/'+ src;
          } else {
