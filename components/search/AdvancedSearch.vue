@@ -192,7 +192,7 @@
                            <label for="">Has a Martial Status of: </label>
                              <div style="margin-left: 30px;">
                               <div v-for="(maritalStatus, i) in maritalStatuses" :key="'ethnicity-'+i">
-                                    <p-check  name="check" v-model="formData.maritalStatus" @change="setMaritalStatusInVuexStore(formData.maritalStatus)">{{maritalStatus.name}}</p-check>
+                                    <p-check  name="check" v-model="formData.maritalStatus" @change="setMaritalStatusInVuexStore(formData.maritalStatus)" :value="maritalStatus.value">{{maritalStatus.name}}</p-check>
                               </div>
                              </div>
                         </div>
@@ -256,7 +256,7 @@
               </div>
 
               <div class="row">
-                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-primary" :disabled="isDisabled">Search</button>
               </div>
 
             </form>
@@ -276,6 +276,7 @@ import { mapActions } from 'vuex'
 
     data(){
       return {
+          isDisabled: false,
           isPersonalApprearanceOpen: false,
           isPersonalApprearanceVisible: false,
           isGenderEthnicOpen: false,
@@ -551,8 +552,10 @@ import { mapActions } from 'vuex'
       async search(){
         let formSubmitData = {};
         this.errorMessage = "";
+        this.isDisabled = true;
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         if(this.formData.milesFrom !== '' && this.formData.postalCode !== ''){
+          this.isDisabled = false;
           const searchResults = (await UserProfileService.advancedUserSearch(this.$store.state.advancedsearch)).data;
             if(searchResults.users.length > 0){
               eventBus.$emit('search-results', {results: searchResults.users});
@@ -561,6 +564,7 @@ import { mapActions } from 'vuex'
             }
          } else {
             this.errorMessage = "Please enter the zipcode and distance from zipcode in (miles).";
+            this.isDisabled = false;
          }
       },
 

@@ -497,6 +497,7 @@
           hasChildren,
           doesSmoke,
           doesDoDrugs,
+          doesHavePets,
           doesDrink,
           religion,
          // personality,

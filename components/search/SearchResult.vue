@@ -1,8 +1,8 @@
 <template>
   <div>
       <div v-if="users.length > 0">
-       <paginate name="users" :list="users" :per="6">
-        <ProfilePreview v-for="user in paginated('users')" :profile="user" :key="user._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
+       <paginate name="userResults" :list="userResults" :per="6">
+        <ProfilePreview v-for="user in paginated('userResults')" :profile="user" :key="user._id" style="margin: 10px; display: inline-block;"></ProfilePreview>
        </paginate>
        </div>
          <div class="flex-container">
@@ -18,15 +18,21 @@ import ProfilePreview from '../../components/profile/preview/ProfilePreview'
     components: { ProfilePreview },
     created(){
        eventBus.$on('search-results', (data) => {
+            this.users = [];
             this.users = data.results;
        })
     },
     data(){
       return {
             users: [],
-            paginate:['users']
+            paginate:['userResults']
       }
     },
+    computed: {
+      userResults(){
+        return this.users;
+      }
+    }
   }
 </script>
 
