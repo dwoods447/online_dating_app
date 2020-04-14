@@ -31,7 +31,7 @@
               <input type="text" v-model="formData.birthdate" class="form-control">
 
         </div>
-        <button class="btn btn-primary" style="width: 100%;">Sign Up</button>
+        <button class="btn btn-primary btn-custom" :disabled="isDisabled">Sign Up</button>
       </form>
   </div>
 </template>
@@ -41,6 +41,7 @@ import AuthService from '../../middleware/services/AuthService'
   export default {
     data(){
       return {
+        isDisabled: false,
         message: '',
         errorMessage: '',
           formData: {
@@ -51,6 +52,7 @@ import AuthService from '../../middleware/services/AuthService'
             birthdate: '',
             ethnicity: '',
             onlineDatingStatus: false,
+
           },
           genders: [
              { val: 'male', key: 'male'},
@@ -93,6 +95,7 @@ import AuthService from '../../middleware/services/AuthService'
         }
       },
       async signUp(){
+         this.isDisabled = true;
           if(this.formData.password !== this.formData.passwordConfirm){
              this.errorMessage = "Passwords do not match!";
             return;
@@ -100,8 +103,10 @@ import AuthService from '../../middleware/services/AuthService'
           const signedUp = (await AuthService.signUp(this.formData)).data;
           if(signedUp.statusCode !== 200){
              this.errorMessage = signedUp.message;
+              this.isDisabled = false;
           }
           if(signedUp.statusCode === 200){
+               this.isDisabled = false;
                this.message = signedUp.message;
                let $this = this;
                $this.$router.push({name:'login', params: {user: signedUp.user, message: this.message}});
@@ -111,6 +116,8 @@ import AuthService from '../../middleware/services/AuthService'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.btn-custom{
+  width: 100%;
+}
 </style>

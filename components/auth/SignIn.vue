@@ -11,7 +11,7 @@
          <div class="form-group">
           <input type="password" name="password" v-model="password" placeholder="Enter your password" class="form-control">
         </div>
-        <button class="btn btn-primary" style="display: block; width: 100%;"> Sign In</button>
+        <button class="btn btn-primary btn-custom" :disabled="isDisabled"> Sign In</button>
         <br/>
         <div v-if="this.$store.state.error"> {{ this.$store.state.error }}</div>
       </form>
@@ -45,16 +45,21 @@ import Cookie from 'js-cookie'
         username: '',
         password: '',
         user: {},
-        signUpMessage: this.$route.params.message
+        signUpMessage: this.$route.params.message,
+        isDisabled: false,
       }
     },
     methods: {
       async signIn(){
+        this.isDisabled = true;
         const data = {
           username: this.username,
           password: this.password
         }
        let resData = await this.$store.dispatch('authenticateUserAction', data);
+       if(resData){
+         this.isDisabled = false;
+       }
       },
     },
     computed: {
@@ -78,5 +83,10 @@ import Cookie from 'js-cookie'
   width: 195px;
   height: 190px;
   margin-left: 10px;
+}
+
+.btn-custom{
+  display: block;
+  width: 100%;
 }
 </style>
