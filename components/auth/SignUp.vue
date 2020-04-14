@@ -1,7 +1,7 @@
 <template>
   <div>
        <div v-if="message !== null">{{ message }}</div>
-       <div v-if="errorMessage !== null" style='width: 25%; color:red; text-align: center; margin" 0 auto;'>{{ errorMessage }}</div>
+       <div v-if="errorMessage !== null" style='font-weight: 900; width: 50%; color:red; text-align: center; margin: 0 auto; font-size: 2em;'>{{ errorMessage }}</div>
       <form @submit.prevent="signUp" class="form" style="width: 60%; margin: 3% auto;">
         <div class="form-group">
              <label for="">Username:</label>
@@ -98,6 +98,7 @@ import AuthService from '../../middleware/services/AuthService'
          this.isDisabled = true;
           if(this.formData.password !== this.formData.passwordConfirm){
              this.errorMessage = "Passwords do not match!";
+              this.isDisabled = false;
             return;
           }
           const signedUp = (await AuthService.signUp(this.formData)).data;

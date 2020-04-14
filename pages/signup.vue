@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="center">Please register for a new account!</h2>
     <SignUp></SignUp>
   </div>
 </template>
@@ -18,6 +19,8 @@ import SignUp from '../components/auth/SignUp'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.center{
+  text-align: center;
+}
 </style>
