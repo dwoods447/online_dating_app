@@ -98,10 +98,10 @@ module.exports = {
 
      // transporter.sendMail({
      //     to: email,
-     //     from: 'mail@ShootUrShot.net',
-     //     subject: 'Welcome to ShootUrShot',
+     //     from: 'mail@imseekinggeeks.com',
+     //     subject: 'Welcome to ImSeekingGeeks',
      //     html: `
-     //     <h1>Welcome, ${newUser.username} to ShootUrShot.net</h1>
+     //     <h1>Welcome, ${newUser.username} to ImSeekingGeeks</h1>
      //     <div>
      //         <ol>
      //            <li>Search for matches</li>
@@ -109,7 +109,7 @@ module.exports = {
      //            <li>Be yourself have fun</li>
      //         </ol>
 
-     //         <h2>The App:</h2>
+     //         <h2>Mobile App:</h2>
      //         <p>Coming Soon</p>
      //     </div>
 

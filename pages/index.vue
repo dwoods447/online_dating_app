@@ -24,7 +24,7 @@
   </section>
    <hr/>
    <section class="container">
-       <h2>Find your Perfect Techie</h2>
+       <h2>Find your Perfect Geek</h2>
        <div class="row">
          <div class="col-lg-6">
              <div>

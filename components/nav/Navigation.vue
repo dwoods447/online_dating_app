@@ -114,6 +114,7 @@ export default {
   font-weight: 900;
   font-size: 1.79em;
   color: #fff;
+  font-family: 'Rock Salt', cursive;
 }
 .navbar-brand-title:hover{
   color: #007bff;
