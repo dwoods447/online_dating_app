@@ -87,7 +87,10 @@ export default {
 
   getUserInBlockList(){
     return api.get('/user-list/blocked');
-  }
+  },
 
+  deleteUserProfile(){
+    return api.post('/remove/user');
+  }
 
 }

@@ -4,8 +4,8 @@
    const fetch = require('node-fetch');
    const config = require('../config/config')
    const mongoose = require('mongoose');
-
-
+   const path = require('path');
+   const fs = require('fs');
 
    module.exports = {
        async getUserDetails(req, res, next){
@@ -653,7 +653,27 @@
        },
 
        async deleteUserProfile(req, res, next){
-        const { username } = req.body;
+       // const { username, userId } = req.body;
+          let user = await User.findOne({_id: req.userId});
+          console.log(`Image array: ${JSON.stringify(user.images.imagePaths)}`);
+          user.images.imagePaths.forEach(image =>{
+                    const imgPth = path.join(__dirname + '/./../../static/uploads/', image.path);
+                    try{
+                      fs.unlinkSync(imgPth);
+                    } catch(err){
+                      console.error(`Error deleting file: ${err}`);
+                    }
+           })
+           let emptyImages = [...user.images.imagePaths];
+           emptyImages = [];
+           user.images.imagePaths = emptyImages;
+           const userSaved = await user.save();
+           if(userSaved){
+              const userDeleted = await User.deleteOne({_id: req.userId});
+              if(userDeleted){
+                return res.json({message: 'Account succesfully deleted'});
+              }
+            }
        },
 
 
