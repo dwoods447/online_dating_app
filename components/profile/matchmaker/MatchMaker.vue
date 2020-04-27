@@ -24,12 +24,17 @@
                     </div>
                     <div v-if="user.random === 'false'" class="matchmaker-image-container">
                         <img :src="user.images.imagePaths[0].path | imageSrcFilter" class="matchmaker-image">
+                        
                     </div>
                    
 
-                    
+                    <div>
+                        <h3><nuxt-link :to="'/profile/'+user._id">{{user.username}}</nuxt-link></h3> 
+                        <h4>{{user.city}}, {{user.state}}</h4>
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </template>

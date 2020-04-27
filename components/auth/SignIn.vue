@@ -13,6 +13,9 @@
         </div>
         <button class="btn btn-primary btn-custom" :disabled="isDisabled"> Sign In</button>
         <br/>
+        <p><nuxt-link to="/forgot-password">Forgot password?</nuxt-link></p>
+
+        <br/>
         <div v-if="this.$store.state.error"> {{ this.$store.state.error }}</div>
       </form>
 

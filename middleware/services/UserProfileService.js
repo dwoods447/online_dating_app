@@ -27,7 +27,6 @@ export default {
     return api.post('/advanced/search', userSearchCriteria);
   },
 
-
   addUserToBlockList(userToAdd){
     return api.post('/user/block/add', userToAdd);
   },
@@ -99,6 +98,10 @@ export default {
 
   addUserToUserMatches(userProfileId){
     return api.post('/add/user/matchlist', userProfileId);
+  },
+
+  resetPassword(email){
+    return api.post('/user/password/reset', email);
   }
 
 }
