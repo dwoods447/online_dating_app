@@ -26,7 +26,7 @@ export default {
         }
     },
     methods: {
-        resetPassword(){
+        async resetPassword(){
              const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
              const passwordReset = await UserProfileService.resetPassword({email: this.email});
 
