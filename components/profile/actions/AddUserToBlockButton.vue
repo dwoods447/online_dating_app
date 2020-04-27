@@ -19,7 +19,7 @@ import eventBus from '../../../middleware/eventBus/index'
         const message = await this.$store.dispatch('addUserUToBlockListAction', {userToBlockId: this.userId});
         if(message.message === 'User added to your block list'){
           setTimeout(()=>{
-           eventBus.$emit('setActiveLink', 'isShowSearch');
+           eventBus.$emit('setActiveLink', 'isShowBasicSearch');
             eventBus.$emit('button-response-recieved', message.message);
             this.$router.push({name: 'basicsearch'});
           }, 200);

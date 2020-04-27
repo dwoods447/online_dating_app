@@ -91,6 +91,14 @@ export default {
 
   deleteUserProfile(){
     return api.post('/remove/user');
+  },
+  
+  getUserForMatchMaker(){
+    return api.get('/user/matchmaker');
+  },
+
+  addUserToUserMatches(userProfileId){
+    return api.post('/add/user/matchlist', userProfileId);
   }
 
 }

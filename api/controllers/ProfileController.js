@@ -677,23 +677,22 @@
        },
 
 
-       async getRandomUsersInAuthUsersPostalCode(req, res, next){
-         let miles = 15;
-         let page  =  1;
-         let profilesPerPage = 10;
-         let totalUsers;
-         let hasNextPage;
-         let hasPreviousPage;
-         let nextPage;
-         let prvPage;
-
+       async getRandomUserForMatchMaker(req, res, next){
+              console.log(`Getting Matchmaker....`);
+              let selectedGenders = [];
               try {
-                const user = await User.findById(req.userId);
+                const currentUser = await User.findById(req.userId);
+                selectedGenders  = currentUser.seekingGenders.genders;
+                console.log(`Selected Genders: ${JSON.stringify(selectedGenders)}`);
                    const users = await User.aggregate([
-                      {$sample: {size: 10}},
+                    {
+                      $match: {gender: {$in: selectedGenders}}
+                    },  
+                    {$sample: {size: 1}},
                     ]);
+                 console.log(`Random user returned: ${JSON.stringify(users)}`);   
                  let userToReturn = users.filter(user => {
-                    return user._id.toString() !== req.userId;
+                    return user._id.toString() !== req.userId
                   })
                   return  res.json({users: userToReturn});
               } catch(err){
@@ -701,6 +700,33 @@
               }
 
        },
+
+
+       
+       async getRandomUsersInAuthUsersPostalCode(req, res, next){
+        let miles = 15;
+        let page  =  1;
+        let profilesPerPage = 10;
+        let totalUsers;
+        let hasNextPage;
+        let hasPreviousPage;
+        let nextPage;
+        let prvPage;
+
+             try {
+               const currentUser = await User.findById(req.userId);
+                  const users = await User.aggregate([
+                     {$sample: {size: 10}},
+                   ]);
+                let userToReturn = users.filter(user => {
+                   return user._id.toString() !== req.userId
+                 })
+                 return  res.json({users: userToReturn});
+             } catch(err){
+               next(err);
+             }
+
+      },
 
        async markMessageAsRead(req, res, next){
         const { messageId } = req.body;
@@ -737,6 +763,21 @@
         } catch(err){
           next(err)
         }
+       },
+
+       async addUserToMatchList(req, res, next){
+         let isMutualMatch = false;
+        const {userProfileId} = req.body;
+        const currentUser = await User.findById(req.userId);
+       // const userToAdd = await User.findOne({_id: userProfileId});
+         const userToAdd = await User.findById(userProfileId);
+        const userAdded = await currentUser.addUserToMatchList(userToAdd);
+        const mutualMatch = await userToAdd.checkIfUserIsMutualMatch(currentUser);
+        if(mutualMatch){
+          isMutualMatch = true
+          return res.status(200).json({message: 'User added to matches successfully! And is a Mutual Match', isMutualMatch: isMutualMatch});
+        }
+        return res.status(200).json({message: 'User added to matches successfully!', isMutualMatch: isMutualMatch});
        }
    }
 

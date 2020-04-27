@@ -10,13 +10,16 @@
         <li class="nav-item" @click="setActiveLink('isShowPhotos')">
            <nuxt-link :class="[{active: isShowPhotos},'nav-item', 'nav-link']"  to="/photos" v-if="this.$store.getters.isAutheticated">My Photos</nuxt-link>
         </li>
-        <li class="nav-item" @click="setActiveLink('isShowSearch')">
+        <li class="nav-item" @click="setActiveLink('isShowBasicSearch')">
           <!-- <a href="" class="nav-link">Search</a> -->
-           <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Basic Search</nuxt-link>
+           <nuxt-link :class="[{active: isShowBasicSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Basic Search</nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" @click="setActiveLink('isShowAdvancedSearch')">
           <!-- <a href="javascript:void(0)" class="nav-item nav-link">Advanced Search</a> -->
-          <nuxt-link :class="[{active: isShowSearch},'nav-item', 'nav-link']" to="/advancedsearch" v-if="this.$store.getters.isAutheticated">Advanced Search</nuxt-link>
+          <nuxt-link :class="[{active: isShowAdvancedSearch},'nav-item', 'nav-link']" to="/advancedsearch" v-if="this.$store.getters.isAutheticated">Advanced Search</nuxt-link>
+        </li>
+         <li class="nav-item" @click="setActiveLink('isShowMatchMaker')" >
+          <nuxt-link  :class="[{active: isShowMatchMaker},'nav-item', 'nav-link']" to="/matchmaker"  v-if="this.$store.getters.isAutheticated">Try MatchMaker</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowProfileViews')">
         <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Who's viewed your profile</nuxt-link>
@@ -24,6 +27,7 @@
         <li class="nav-item" @click="setActiveLink('isShowFavorites')" >
           <nuxt-link  :class="[{active: isShowFavorites},'nav-item', 'nav-link']" to="/favoriteusers"  v-if="this.$store.getters.isAutheticated">Favorite Users</nuxt-link>
         </li>
+        
         <li class="nav-item" @click="setActiveLink('isShowBlockedUsers')" >
          <nuxt-link  :class="[{active: isShowBlockedUsers},'nav-item', 'nav-link']" to="/blockedusers"  v-if="this.$store.getters.isAutheticated">Blocked Users</nuxt-link>
         </li>
@@ -43,75 +47,116 @@ import eventBus from '../middleware/eventBus/index'
               this.isShowHome = true;
               this.isShowInbox = false;
               this.isShowPhotos  = false;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowInbox'){
               this.isShowInbox = true;
               this.isShowHome  = false;
               this.isShowPhotos  = false;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowPhotos'){
               this.isShowPhotos = true;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
-           if(activeChoice === 'isShowSearch'){
-             this.isShowSearch = true;
+           if(activeChoice === 'isShowBasicSearch'){
+              this.isShowBasicSearch  = true;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
+          }
+           if(activeChoice === 'isShowAdvancedSearch'){
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = true;
+              this.isShowPhotos = false;
+              this.isShowProfileViews  = false;
+              this.isShowBlockedUser  = false;
+              this.isShowFavorites  = false;
+              this.isShowInbox = false;
+              this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowProfileViews'){
               this.isShowProfileViews = true;
-              this.isShowSearch = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowBlockedUsers'){
               this.isShowBlockedUsers = true;
               this.isShowProfileViews = false;
-              this.isShowSearch = false;
+               this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowFavorites'){
               this.isShowFavorites = true;
               this.isShowBlockedUsers = false;
               this.isShowProfileViews = false;
-              this.isShowSearch = false;
+               this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
 
           if(activeChoice === 'isAvancedSearch'){
               this.isShowFavorites = false;
               this.isShowBlockedUsers = false;
               this.isShowProfileViews = false;
-              this.isShowSearch = false;
+               this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
               this.isAvancedSearch = true;
+              this.isShowMatchMaker = false;
+          }
+
+          
+          if(activeChoice === 'isShowMatchMaker'){
+              this.isShowFavorites = false;
+              this.isShowBlockedUsers = false;
+              this.isShowProfileViews = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
+              this.isShowPhotos = false;
+              this.isShowInbox = false;
+              this.isShowHome  = false;
+              this.isAvancedSearch = false;
+              this.isShowMatchMaker = true;
           }
 
 
@@ -122,12 +167,14 @@ import eventBus from '../middleware/eventBus/index'
         isShowHome: true,
         isShowInbox: false,
         isShowPhotos: false,
-        isShowSearch: false,
+        isShowBasicSearch: false,
+        isShowAdvancedSearch: false,
         isShowProfileViews: false,
         isShowFavorites: false,
         isShowFavorites: false,
         isShowBlockedUsers: false,
         isAvancedSearch: false,
+        isShowMatchMaker: false,
 
       }
     },
@@ -137,7 +184,8 @@ import eventBus from '../middleware/eventBus/index'
               this.isShowHome = true;
               this.isShowInbox = false;
               this.isShowPhotos  = false;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
@@ -146,32 +194,48 @@ import eventBus from '../middleware/eventBus/index'
               this.isShowInbox = true;
               this.isShowHome  = false;
               this.isShowPhotos  = false;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
           }
            if(activeChoice === 'isShowPhotos'){
               this.isShowPhotos = true;
-              this.isShowSearch  = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
           }
-           if(activeChoice === 'isShowSearch'){
-             this.isShowSearch = true;
+            if(activeChoice === 'isShowBasicSearch'){
+              this.isShowBasicSearch  = true;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowProfileViews  = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+              this.isShowMatchMaker = false;
+          }
+           if(activeChoice === 'isShowAdvancedSearch'){
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = true;
+              this.isShowPhotos = false;
+              this.isShowProfileViews  = false;
+              this.isShowBlockedUser  = false;
+              this.isShowFavorites  = false;
+              this.isShowInbox = false;
+              this.isShowHome  = false;
+              this.isShowMatchMaker = false;
           }
            if(activeChoice === 'isShowProfileViews'){
               this.isShowProfileViews = true;
-              this.isShowSearch = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowBlockedUser  = false;
               this.isShowFavorites  = false;
@@ -181,7 +245,8 @@ import eventBus from '../middleware/eventBus/index'
            if(activeChoice === 'isShowBlockedUsers'){
               this.isShowBlockedUsers = true;
               this.isShowProfileViews = false;
-              this.isShowSearch = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowFavorites  = false;
               this.isShowInbox = false;
@@ -191,10 +256,24 @@ import eventBus from '../middleware/eventBus/index'
               this.isShowFavorites = true;
               this.isShowBlockedUsers = false;
               this.isShowProfileViews = false;
-              this.isShowSearch = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
               this.isShowPhotos = false;
               this.isShowInbox = false;
               this.isShowHome  = false;
+          }
+
+          if(activeChoice === 'isShowMatchMaker'){
+              this.isShowFavorites = false;
+              this.isShowBlockedUsers = false;
+              this.isShowProfileViews = false;
+              this.isShowBasicSearch  = false;
+              this.isShowAdvancedSearch  = false;
+              this.isShowPhotos = false;
+              this.isShowInbox = false;
+              this.isShowHome  = false;
+              this.isAvancedSearch = false;
+              this.isShowMatchMaker = true;
           }
 
       }

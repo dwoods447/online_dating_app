@@ -84,7 +84,7 @@ import eventBus from '../../../middleware/eventBus/index'
               localStorage.setItem('user', JSON.stringify(updatedUser));
               Cookie.set('user', JSON.stringify(updatedUser));
               await this.$store.dispatch('setLoggedInUserIdAction', updatedUser);
-              eventBus.$emit('setActiveLink', 'isShowSearch');
+              eventBus.$emit('setActiveLink', 'isShowBasicSearch');
               this.onReadySubmit = false;
               this.$router.push({name: 'basicsearch'});
            }

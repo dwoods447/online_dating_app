@@ -81,7 +81,9 @@ router.get('/sent/messages', isAuthenticated, ProfileController.getSentMessagesF
 router.get('/profile/views', isAuthenticated, ProfileController.getUserProfileViews);
 router.get('/user-list/blocked', isAuthenticated, ProfileController.getUsersInBlockList);
 router.get('/user-list/favorites', isAuthenticated, ProfileController.getUsersInFavoriteList);
+router.get('/user/matchmaker', isAuthenticated, ProfileController.getRandomUserForMatchMaker);
 router.get('/view/random/users', ProfileController.getRandomUsersInAuthUsersPostalCode);  // tested || works but need to adjust
+router.post('/add/user/matchlist', isAuthenticated, ProfileController.addUserToMatchList);
 router.post('/user/update/userprofile', isAuthenticated, ProfileController.updateExtendedUserProfile);  // tested
 router.post('/add/favorites', isAuthenticated, ProfileController.addUserToFavorites);
 router.post('/remove/favorites', isAuthenticated, ProfileController.removeUserFromFavorites);

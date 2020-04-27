@@ -96,25 +96,25 @@ module.exports = {
          return res.status(500).json({message: `There was an error saving a new user please try again `, statusCode: statusCode});
      }
 
-     // transporter.sendMail({
-     //     to: email,
-     //     from: 'mail@imseekinggeeks.com',
-     //     subject: 'Welcome to ImSeekingGeeks',
-     //     html: `
-     //     <h1>Welcome, ${newUser.username} to ImSeekingGeeks</h1>
-     //     <div>
-     //         <ol>
-     //            <li>Search for matches</li>
-     //            <li>Tell us About yourself</li>
-     //            <li>Be yourself have fun</li>
-     //         </ol>
+     transporter.sendMail({
+         to: email,
+         from: 'mail@imseekinggeeks.com',
+         subject: 'Welcome to ImSeekingGeeks',
+         html: `
+         <h1>Welcome, ${newUser.username} to ImSeekingGeeks</h1>
+         <div>
+             <ol>
+                <li>Search for matches</li>
+                <li>Tell us About yourself</li>
+                <li>Be yourself have fun</li>
+             </ol>
 
-     //         <h2>Mobile App:</h2>
-     //         <p>Coming Soon</p>
-     //     </div>
+             <h2>Mobile App:</h2>
+             <p>Coming Soon</p>
+         </div>
 
-     //     `
-     // })
+         `
+     })
      statusCode = 200;
      return res.status(200).json({message: 'User succesfully signed up! Please login.', user: savedUser, statusCode: statusCode})
  },

@@ -134,6 +134,16 @@ const UserSchema = new Schema({
     isProfileCompleted: {
         type: Boolean
     },
+   isPremiumUser: {
+       type: Boolean
+   },
+   userMatches: {
+    matches: [
+        {
+            userId: {type: Schema.Types.ObjectId, ref: 'User', required: true },
+        }
+    ]
+   },
     blockedUsers: {
         users: [
             {
@@ -322,6 +332,21 @@ UserSchema.methods.checkIfUserIsBlocked = function(userId){
     return false;
 }
 
+
+
+UserSchema.methods.checkIfUserIsMutualMatch = function(userId){
+
+    const userMatchIndex = this.userMatches.matches.findIndex(searchedUser => {
+        return userId._id.toString() === searchedUser.userId.toString();
+
+    });
+    if(userMatchIndex !== -1){
+        // User is already in match list
+        return true;
+    }
+    return false;
+}
+
 UserSchema.methods.addUserToFavorites = function(userId){
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
         return userId._id.toString() === searchedUser.userId.toString();
@@ -340,6 +365,30 @@ UserSchema.methods.addUserToFavorites = function(userId){
     this.favorites.users = updatedFavorites;
     return this.save();
 }
+
+
+
+UserSchema.methods.addUserToMatchList = function(userId){
+    const userMatchListIndex = this.userMatches.matches.findIndex(searchedUser => {
+        return userId._id.toString() === searchedUser.userId.toString();
+    });
+    const updatedMatchList = [...this.userMatches.matches];
+
+    if(userMatchListIndex === -1){
+          // User is not in matches add them
+          updatedMatchList.push({
+            userId: userId,
+        })
+    } else {
+      // User is in favorites list DONT add them
+      return;
+  }
+    this.userMatches.matches = updatedMatchList;
+    return this.save();
+}
+
+
+
 
 UserSchema.methods.removeUserFromFavorites = function(user){
     const userFavoriteIndex = this.favorites.users.findIndex(searchedUser => {
