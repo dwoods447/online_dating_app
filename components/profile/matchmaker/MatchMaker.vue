@@ -1,6 +1,9 @@
 <template>
     <div>
         <div style="padding: 1em; margin: 1em;">
+         <div class="flex-container">
+                <div><h2>Think this geek is a match for you?</h2></div>
+            </div>
             <div class="flex-container">
                 <div><button @click="addToMatches()" class="btn btn-yes">Yes</button></div>
                 <div><button @click="addToMatches()" class="btn btn-maybe">Maybe</button></div>
