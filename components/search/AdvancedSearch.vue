@@ -8,10 +8,10 @@
 
         <h5>Filters:</h5>
                 <div v-if="!togglePersonalAppearanceVisibility">
-                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp;  <h3 class="filter-section-title">Personal Appearance</h3>
+                     <button @click.stop.prevent="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp;  <h3 class="filter-section-title">Personal Appearance</h3>
                 </div>
                 <div v-else>
-                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                 <div class="toggle-section">
                    <VueSlideToggle :open="isPersonalApprearanceOpen">
@@ -56,22 +56,11 @@
                  </div>
                   </VueSlideToggle>
               </div>
-            <!-- <div>
-              <button @click="" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
-            </div>
-            <div>
-               <button @click="" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
-            </div>
-            <div class="toggle-section">
-               <VueSlideToggle :open="isVicesOpen" class="toggle-section">
-               </VueSlideToggle>
-            </div> -->
-
             <div v-if="!toggleVicesVisibility">
-              <button @click="toggleVices" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Vices</h3>
+              <button @click.stop.prevent="toggleVices" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Vices</h3>
             </div>
             <div v-else>
-               <button @click="toggleVices" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
+               <button @click.stop.prevent="toggleVices" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
             </div>
             <div class="toggle-section">
                <VueSlideToggle :open="isVicesOpen" class="toggle-section">
@@ -104,10 +93,10 @@
 
 
                <div v-if="!toggleGenderEthnicVisibility">
-                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Gender & Ethnic Background</h3>
+                     <button @click.stop.prevent="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Gender & Ethnic Background</h3>
                 </div>
                 <div v-else>
-                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                  <div class="toggle-section">
                <VueSlideToggle :open="isGenderEthnicOpen" class="toggle-section">
@@ -159,10 +148,10 @@
 
 
             <div v-if="!toggleEducationDatingPreferencesVisibility">
-              <button @click="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Education & Dating Preferences</h3>
+              <button @click.stop.prevent="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Education & Dating Preferences</h3>
             </div>
             <div v-else>
-               <button @click="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
+               <button @click.stop.prevent="toggleEducationPreferences" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title"></h3>
             </div>
             <div class="toggle-section">
                <VueSlideToggle :open="isEducationDatingPreferencesOpen" class="toggle-section">
@@ -218,10 +207,10 @@
 
 
            <div v-if="!toggleLocationVisibility">
-                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Location</h3>
+                     <button @click.stop.prevent="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Location</h3>
                 </div>
                 <div v-else>
-                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                <div class="toggle-section">
                 <VueSlideToggle :open="isLocationOpen">
@@ -550,6 +539,7 @@ import { mapActions } from 'vuex'
 
       },
       async search(){
+        console.log(`Running a search......`)
         let formSubmitData = {};
         this.errorMessage = "";
         this.isDisabled = true;

@@ -22,7 +22,13 @@
                   <img :src="profile | imageSrcFilter" alt="" style="display: block; width: 100%;">
                 </div>
               </div>
-             <div style="padding: 0; text-align: center;">{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus === false }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus === true}]"></span></div>
+              <div v-if="this.$store.getters.isAutheticated">
+                 <div style="padding: 0; text-align: center;"><nuxt-link :to="'/profile/'+profile._id">{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus === false }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus === true}]"></span></nuxt-link></div>
+              </div>
+              <div v-else>
+                <div style="padding: 0; text-align: center;">{{ profile.username }}<span v-if="profile.age">, &nbsp;{{profile.age}}</span>&nbsp;&nbsp;<span :class="[{'is-offline': profile.onlineStatus === 'false' || profile.onlineStatus === false }, {'is-online': profile.onlineStatus === 'true' || profile.onlineStatus === true}]"></span></div>
+              </div>
+              
             </a>
             <div style="padding: 0; text-align: center;">
               <span v-if="profile.city && profile.state">{{ profile.city }}, {{ profile.state }}</span>

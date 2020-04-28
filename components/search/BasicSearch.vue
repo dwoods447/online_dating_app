@@ -7,10 +7,10 @@
 
                 <h5>Filters:</h5>
                 <div v-if="!togglePersonalAppearanceVisibility">
-                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp;  <h3 class="filter-section-title">Personal Appearance</h3>
+                     <button @click.stop.prevent="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp;  <h3 class="filter-section-title">Personal Appearance</h3>
                 </div>
                 <div v-else>
-                     <button @click="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="togglePersonalAppearance" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                 <div class="toggle-section">
                       <VueSlideToggle :open="isPersonalApprearanceOpen">
@@ -62,20 +62,16 @@
 
 
                <div v-if="!toggleGenderEthnicVisibility">
-                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Gender & Ethnic Background</h3>
+                     <button @click.stop.prevent="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Gender & Ethnic Background</h3>
                 </div>
                 <div v-else>
-                     <button @click="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="toggleGenderEthnicBackground" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                  <div class="toggle-section">
                <VueSlideToggle :open="isGenderEthnicOpen" class="toggle-section">
               <div class="form-group row">
                  <div class="row">
                   <div class="col-xs-12">
-                       <!-- <label for="">Gender</label>
-                  <select name="seekingGender" id="" class="form-control" v-model="formData.gender" @change="setGenderInVuexStore(formData.gender)">
-                      <option v-for="gender in seekingGenders" :key="gender.key" :value="gender.value">{{gender.name}}</option>
-                  </select> -->
                   <div style="margin-left: 30px;">
                     <p-input  v-for="gender in seekingGenders" :key="gender.key" type="radio" name="radio" color="info" v-model="formData.gender" :value="gender.value" @change="setGenderInVuexStore(gender.value)">{{ gender.name }}</p-input>
                   </div>
@@ -92,38 +88,13 @@
                         </div>
                       </div>
                     </div>
-<!--
-                  <label for="">Highest Education</label>
-                  <select name="educations" id="" class="form-control" v-model="formData.education" @change="setHighestEducationInVuexStore(formData.education)">
-                      <option v-for="(education, i) in educations" :key="'education-'+i" >{{education.name}}</option>
-                  </select> -->
-
-<!--
-                    <label for="">Ethnicity</label>
-                    <select name="ethnicities" id="" class="form-control" v-model="formData.ethnicity" @change="setEthnicityInVuexStore(formData.ethnicity)">
-                      <option v-for="(ethnicity, i) in ethnicities" :key="'ethnicity-'+i">{{ethnicity.name}}</option>
-                   </select> -->
                  </VueSlideToggle>
                  </div>
-
-
-
-
-                <!-- <div class="form-group">
-                  <div class="row">
-                    <div class="col-lg-12  col-md-12 col-xs-12">
-                    <label for="">Dating Intent</label>
-                    <select name="datingIntent" id="" class="form-control" v-model="formData.datingIntent" @change="setDatingIntentInVuexStore(formData.datingIntent)">
-                    <option v-for="(intent, i) in datingIntents" :key="'intent-'+i">{{intent.name}}</option>
-                    </select>
-                  </div>
-              </div>
-            </div> -->
                 <div v-if="!toggleLocationVisibility">
-                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Location</h3>
+                     <button @click.stop.prevent="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-plus"></i></button>&nbsp; <h3 class="filter-section-title">Location</h3>
                 </div>
                 <div v-else>
-                     <button @click="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
+                     <button @click.stop.prevent="toggleLocation" class="btn btn-light filter-btn"><i class="fas fa-minus"></i></button>
                 </div>
                 <div class="toggle-section">
                       <VueSlideToggle :open="isLocationOpen">
@@ -340,6 +311,7 @@ import { VueSlideToggle } from 'vue-slide-toggle'
         clearSearchResultsInVuexStore: 'basicsearch/clearSearchResultsAction'
       }),
       async search(){
+        console.log(`Runnning a search through the Matrix...`)
         let formSubmitData = {};
         this.errorMessage = "";
         // if(this.formData.minAge) formSubmitData.minAge = this.formData.minAge;
