@@ -392,18 +392,34 @@
             return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
          }
 
-        // transporter.sendMail({
-        //         to: receiverOfMessage.email,
-        //         bcc: 'dwoods447@gmail.com',
-        //         from: 'mail@imseekinggeeks.com',
-        //         subject: 'New message recieved on ImSeekingGeeks',
-        //         html: `
-        //         <h1>You have a new message from, ${sender.username}</h1>
-        //         <div>
-        //             <p>Please <a href="https://www.imseekinggeeks.com/login">login</a> to view your message</p>
-        //         </div>
-        //         `
-        //   })
+         if(receiverOfMessage.random === 'true'){
+          transporter.sendMail({
+                to: 'dwoods447@gmail.com',
+                bcc: 'dwoods447@gmail.com',
+                from: 'mail@imseekinggeeks.com',
+                subject: 'New message recieved on ImSeekingGeeks',
+                html: `
+                <h1>Hello ${receiverOfMessage.username}, you have a new message from, ${sender.username}</h1>
+                <div>
+                    <p>Please <a href="https://www.imseekinggeeks.com/login">login</a> to view your message</p>
+                </div>
+                `
+          })
+         } else {
+              transporter.sendMail({
+                  to: receiverOfMessage.email,
+                  bcc: 'dwoods447@gmail.com',
+                  from: 'mail@imseekinggeeks.com',
+                  subject: 'New message recieved on ImSeekingGeeks',
+                  html: `
+                  <h1>Hello ${receiverOfMessage.username}, you have a new message from, ${sender.username}</h1>
+                  <div>
+                      <p>Please <a href="https://www.imseekinggeeks.com/login">login</a> to view your message</p>
+                  </div>
+                  `
+            })
+         }
+        
          statusCode = 200;
          return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
