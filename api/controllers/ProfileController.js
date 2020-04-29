@@ -6,7 +6,14 @@
    const mongoose = require('mongoose');
    const path = require('path');
    const fs = require('fs');
-
+   const nodemailer = require('nodemailer');
+   const sendGridTransport = require('nodemailer-sendgrid-transport');
+   const transporter = nodemailer.createTransport(sendGridTransport({
+    auth: {
+        api_key: config.node_mailer_key
+    }
+    }));
+    
    module.exports = {
        async getUserDetails(req, res, next){
             /*  User projection to limit fields
@@ -384,6 +391,19 @@
             statusCode = 422;
             return res.status(422).json({message :'There was an error sending the  message!', statusCode: statusCode, blocked: false});
          }
+
+        // transporter.sendMail({
+        //         to: receiverOfMessage.email,
+        //         bcc: 'dwoods447@gmail.com',
+        //         from: 'mail@imseekinggeeks.com',
+        //         subject: 'New message recieved on ImSeekingGeeks',
+        //         html: `
+        //         <h1>You have a new message from, ${sender.username}</h1>
+        //         <div>
+        //             <p>Please <a href="https://www.imseekinggeeks.com/login">login</a> to view your message</p>
+        //         </div>
+        //         `
+        //   })
          statusCode = 200;
          return res.status(200).json({message: 'Message sent sucessfully!', statusCode: statusCode,  blocked: false});
        },
@@ -488,7 +508,6 @@
           raceDatingPreferences,
           bodyType,
           highestEducation,
-         // onlineStatus,
           city,
           postalCode,
           miles,
@@ -500,8 +519,6 @@
           doesHavePets,
           doesDrink,
           religion,
-         // personality,
-         // ambitiousness,
           datingIntent,
           longestRelationShip,
           income,
@@ -543,7 +560,6 @@
           }
           findParams.highestEducation = { $in: educationalBackground };
         }
-       // if(onlineStatus) findParams.onlineStatus = onlineStatus;
         if(city) findParams.city = city;
         if(usState) findParams.state = usState;
         if(martialStatus) findParams.martialStatus = { $in: martialStatus };
@@ -552,11 +568,7 @@
         if(doesDoDrugs) findParams.doesDoDrugs = doesDoDrugs;
         if(doesDrink) findParams.doesDrink = doesDrink;
         if(religion.length > 0) findParams.religion = { $in: religion };
-        // if(profession) findParams.profession = profession;
         if(doesHavePets) findParams.doesHavePets = doesHavePets;
-        // if(personality) findParams.personality = personality;
-        // if(ambitiousness) findParams.ambitiousness =ambitiousness ;
-        // if(longestRelationShip) findParams.longestRelationShip = longestRelationShip;
         if(income) findParams.income = { $gte: Number.parseInt(income) };
         if(doesDateInteracially) findParams.doesDateInteracially = doesDateInteracially;
          if(doesDateInteracially && interacialDatingPreferences.length > 0){
@@ -578,7 +590,6 @@
         if(!zipCodes){
           return res.status(500).json({message: 'There was an error retrieving zipcodes'});
         }
-      // let checkIfYouAreBlocked =  {"blockedUsers.users": { $elemMatch: { $ne: mongoose.Types.ObjectId(userWhoIsSearching) } }};
       let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
@@ -689,6 +700,7 @@
                       $match: {gender: {$in: selectedGenders}}
                     },  
                     {$sample: {size: 1}},
+                    { $project: { password: 0 } }
                     ]);
                  console.log(`Random user returned: ${JSON.stringify(users)}`);   
                  let userToReturn = users.filter(user => {
