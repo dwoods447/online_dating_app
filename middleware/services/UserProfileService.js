@@ -100,8 +100,5 @@ export default {
     return api.post('/add/user/matchlist', userProfileId);
   },
 
-  resetPassword(email){
-    return api.post('/user/password/reset', email);
-  }
 
 }

@@ -4,7 +4,7 @@ module.exports = {
   host: process.env.HOST || 'localhost',
   node_mailer_key: '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',
   authentication :{
-      jwtSecret: 'Q43rf4r234rf23r5gffg345tr234r53245r25rfwERT4'
+      jwtSecret: 'Q43rf4r2ZDCFAFC34rf23r5gffg345DNtr234r53245r25DFVNBMSArfwERT4435GFB5fgdf44353DFAS'
   },
   facebook :{
       FACEBOOK_APP_ID: '',

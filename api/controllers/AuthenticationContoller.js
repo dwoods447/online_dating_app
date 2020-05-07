@@ -6,6 +6,9 @@ const sendGridTransport = require('nodemailer-sendgrid-transport');
 const config = require('../config/config');
 const jwt = require('jsonwebtoken');
 const secret = config.authentication.jwtSecret;
+const crypto = require('crypto');
+const url = require('url')
+
 
 const transporter = nodemailer.createTransport(sendGridTransport({
 auth: {
@@ -112,7 +115,6 @@ module.exports = {
              <h2>Mobile App:</h2>
              <p>Coming Soon</p>
          </div>
-
          `
      })
      statusCode = 200;
@@ -139,10 +141,10 @@ module.exports = {
 
 
      await user.updateUserAge();
-     const returnedUser = await User.findOne({username: username}).select(["-password", "-blockedUsers.users", "-profileViews.views", "-favorites.users"])
+     const returnedUser = await User.findOne({username: username}).select(["-password", "-blockedUsers.users", "-profileViews.views", "-favorites.users", "-relationshipTypeSeeking", "-profession", "-longestRelationShip", "-ambitiousness", "-datingIntent"])
      const token = jwt.sign({
-         email: user.email,
-         userId: user._id.toString()
+          email: user.email,
+          userId: user._id.toString()
          }, secret, {expiresIn: '1h'});
      user.onlineStatus = true;
      user.save();
@@ -165,7 +167,63 @@ module.exports = {
  },
 
 
+   async resetPassword(req, res, next){
+       const { email } = req.body;
+       console.log(`Searching for user.....`);
+       try {
+             const user = await User.findOne({email: email}, {password: 0});
+                if(!user){
+                    console.log(`User doesnt exists.`);
+                    return res.status(200).json({message: "No user account with that email exists."});
+                }
 
+                const token = jwt.sign({
+                    email: user.email,
+                    userId: user._id.toString(),
+                    password: user.password,
+                    }, secret, {expiresIn: '1h'});
+
+                user.resetToken = token;
+                user.resetTokenExpiration = Date.now() + 3600000;
+                const updatedUser = await user.save();
+                let hostname = req.headers.host;
+                if(updatedUser){
+                    
+                    transporter.sendMail({
+                        to: user.email,
+                        from: 'mail@imseekinggeeks.com',
+                        subject: 'Password Reset for ImSeekingGeeks',
+                        html: `
+                        <h1></h1>
+                        <div>
+                           If you requested a password reset click the link below to reset your password.
+                           Click this <a href="http://${hostname}/updatepassword/user/${user._id.toString()}/token/${token}/">link</a> to set a new password.
+                        </div>
+                        `
+                    })
+
+                    return res.status(200).json({message: "If a user with that account exists you will recieve an email within the hour with password reset instructions."});
+                }
+             } catch(err){
+                console.log(err);
+             }
+         
+   },
+
+
+    async updatePassword(req, res, next){
+        const { userId, token , password } = req.body;
+        const  user = User.findOne({_id: userId}, {password: 0});
+        if(!user){
+            return res.status(422).json({message: "We could not find the user in the system."});
+        }
+
+        const hashedPassword = bcrypt.hashSync(password, 12);
+
+        user.password = hashedPassword;
+        const savedPassword = await user.save();
+        return res.status(200).json({message: "Password updated successfully!"});
+    }   
 
 
 }

@@ -484,7 +484,7 @@
             //let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $eq: mongoose.Types.ObjectId(userWhoIsSearching)  }}; test if user is in block list
             let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
             findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
-            const searchedUsers = await User.find(findParams)
+            const searchedUsers = await User.find(findParams, {password: 0})
             // Return searched for users
             // check is the searching user in on any of ther searched users block list
             if(!searchedUsers){
@@ -609,7 +609,7 @@
       let checkIfYouAreBlocked =  {"blockedUsers.users.userId": { $not: { $eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       let checkUserSame = {"_id": {$not: {$eq: mongoose.Types.ObjectId(userWhoIsSearching)}}};
       findParams = {...findParams, $and: [{...checkIfYouAreBlocked, ...checkUserSame}]};
-        const searchedUsers = await User.find(findParams)
+        const searchedUsers = await User.find(findParams, {password: 0})
         if(!searchedUsers){
           return res.status(500).json({message: 'An error occured'});
         }

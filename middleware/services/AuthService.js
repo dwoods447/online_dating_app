@@ -15,5 +15,11 @@ export default {
   },
   checkUserNameUnique(username){
     return api.post('/check/username/unique', username)
+  },
+  resetPassword(email){
+    return api.post('/user/password/reset', email);
+  },
+  updatePassword(data){
+    return api.post(`/user/update/password`, data);
   }
 }

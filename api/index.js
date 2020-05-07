@@ -64,7 +64,7 @@ router.use('/images', express.static(path.join(__dirname, 'images')));
 const AuthenticationController = require('./controllers/AuthenticationContoller');
 const ProfileController = require('./controllers/ProfileController');
 const isAuthenticated = require('./server_middleware/isAuthenticated');
-
+const isPasswordRestValid = require('./server_middleware/isPasswordRestTokenValid');
 router.get('/test', (req, res, next) =>{
   res.json({message: 'test router working'});
 });
@@ -73,8 +73,8 @@ router.post('/register', AuthenticationController.userRegistration);
 router.post('/logout', AuthenticationController.userLogout)
 router.post('/check/username/unique', AuthenticationController.checkUserNameUnique);
 router.post('/check/email/unique', AuthenticationController.checkUserNameUnique);
-
-
+router.post('/user/password/reset', AuthenticationController.resetPassword)
+router.post('/user/update/password', isPasswordRestValid,  AuthenticationController.updatePassword)
 router.get('/inbox/messages', isAuthenticated, ProfileController.getInboxMessagesForUser); // tested || works but need to adjust
 router.get('/sender/:senderId/messages', isAuthenticated, ProfileController.getMessagesFromSender);
 router.get('/sent/messages', isAuthenticated, ProfileController.getSentMessagesForUser);

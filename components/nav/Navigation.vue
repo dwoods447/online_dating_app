@@ -3,7 +3,7 @@
     <!-- Navigation -->
   <nav class="navbar fixed-top static-top navbar-expand-lg"  style="background-color: #0A1C44;">
      <nuxt-link to="/" class="navbar-brand" style="display: block; width: 500px;">
-          <div class="logo-container"><img src="~assets/img/logo-edited.png" >&nbsp;&nbsp;<span class="navbar-brand-title">ImSeekingGeeks</span></div>
+          <div class="logo-container"><img src="~assets/img/logo-edited.png" >&nbsp;&nbsp;<span class="navbar-brand-title">I'mSeekingGeeks</span></div>
      </nuxt-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
