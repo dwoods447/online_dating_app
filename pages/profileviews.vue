@@ -27,7 +27,14 @@
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
         const userViews = (await UserProfileService.getUserProfileViews()).data
         if(userViews.views){
-          this.views = userViews.views.profileViews.views;
+          // this.views = userViews.views.profileViews.views;
+          userViews.views.profileViews.views.forEach((view)=>{
+            console.log(`View in loop: ${JSON.stringify(view)}`)
+             if(view !== null){
+               this.views.push(view);
+             }
+          })
+          console.log(`The views: ${JSON.stringify(this.views)}`);
         }
       }
     }

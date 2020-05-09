@@ -32,7 +32,8 @@
                    
 
                     <div>
-                        <h3><nuxt-link :to="'/profile/'+user._id">{{user.username}}</nuxt-link></h3> 
+                        <!-- <h3><nuxt-link :to="'/profile/'+user._id">{{user.username}}</nuxt-link></h3>  -->
+                          <h3><a :href="'./profile/'+user._id" target="_blank">{{user.username}}</a></h3> 
                         <h4>{{user.city}}, {{user.state}}</h4>
                     </div>
                 </div>

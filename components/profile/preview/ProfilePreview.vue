@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block; width: 250px; margin-right: 0.4em; margin-top: 10px;">
         <div>
-          <div>
+          <div  v-if="profile">
             <a @click="goToProfileDetail(profile._id, profile)" href="#">
               <div>
                 <div v-if="profile.random === 'true'">
@@ -35,6 +35,13 @@
               <span v-else>&nbsp;</span>
             </div>
           </div>
+          <div v-else>
+            <div>
+              <img src="https://via.placeholder.com/250x250" alt="User's no longer exists" style="display: block; width: 100%;">
+            </div>
+            <div><span style="display: block; color: red; font-weight: 700; text-align: center;">User's account no longer exists.</span></div>
+            <div>&nbsp;</div>
+          </div>
         </div>
   </div>
 </template>
@@ -44,6 +51,7 @@ import eventBus from '../../../middleware/eventBus/index'
   export default {
     props: ['profile'],
     created(){
+      console.log(`User profile: ${JSON.stringify(this.profile)}`);
     },
     data(){
       return {

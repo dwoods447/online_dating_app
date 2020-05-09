@@ -261,13 +261,17 @@
 
 
        async getMessagesFromSender(req, res, next){
+        // Logged in user
         let user = await User.findOne({_id: req.userId});
         const { senderId } = req.params;
         let msgSender = await User.findOne({_id: senderId});
         if(!user){
           return res.status(401).json({message: 'Unauthorized you are not logged in!'});
         }
-
+        // user's account no longer exists
+        if(!msgSender){
+          return res.status(200).json({message: "User's account has been removed.", deletedAccount: true})
+        }
         let messagesThread;
         const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
         const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "recipient.imageSrc","sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
@@ -282,14 +286,13 @@
             return 1;
           }
           return 0;
-        })
-;
-        return res.status(200).json({messages: messagesThread});
+        });
+        return res.status(200).json({messages: messagesThread, deletedAccount: false});
        },
 
        async getSentMessagesForUser(req, res, next){
         let user = await User.findOne({_id: req.userId});
-        const mySentMesages = await Message.aggregate([
+        const mySentMesages = await Message.aggregate([ 
           {
             $match: { "sender.id": mongoose.Types.ObjectId(req.userId) }
           },

@@ -51,6 +51,8 @@ import moment from 'moment'
       imageSrcFilter(src){
         if(src){
           return 'uploads/'+ src
+        } else {
+          return 'https://via.placeholder.com/150x150';
         }
 
       },

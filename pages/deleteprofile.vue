@@ -25,7 +25,7 @@ import UserProfileService from '../middleware/services/UserProfileService'
                   const userProfileDeleted = (await UserProfileService.deleteUserProfile()).data;
                   if(userProfileDeleted){
                       await this.$store.dispatch('setLogOutAction');
-                      this.router.push({name: 'signup'});
+                      this.$router.push({name: 'signup'});
                   }
              }
          },

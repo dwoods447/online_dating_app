@@ -136,7 +136,7 @@
                </select>
             </div>
              <div class="col-lg-6">
-                l<label>Description</label>
+                <label>Description</label>
                 <textarea class="form-control" v-model="description" @change="setProfileDescriptionInVuexStore(description)">Please enter a description</textarea>
             </div>
           </div>

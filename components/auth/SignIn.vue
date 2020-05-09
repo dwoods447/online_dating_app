@@ -62,6 +62,9 @@ import Cookie from 'js-cookie'
        let resData = await this.$store.dispatch('authenticateUserAction', data);
        if(resData){
          this.isDisabled = false;
+       } else{
+         this.isDisabled = false;
+         this.signUpMessage = '';
        }
       },
     },

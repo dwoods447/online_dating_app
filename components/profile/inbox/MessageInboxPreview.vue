@@ -56,19 +56,43 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
         return message.substring(0, length/1.2) + '...';
       },
       imageSrcFilter(src){
-         return '../uploads/'+src;
+          if(src){
+            return '../uploads/'+src;
+          } else {
+            return 'https://via.placeholder.com/150x150';
+          }
+          
       },
       maleImageSrcFilter(src){
-        return '../random-users/men/'+src;
+        if(src){
+          return '../random-users/men/'+src;
+        }else {
+            return 'https://via.placeholder.com/150x150';
+        }
+        
       },
       femaleImageSrcFilter(src){
-         return '../random-users/women/'+src;
+         if(src){
+           return '../random-users/women/'+src;
+          } else {
+           return 'https://via.placeholder.com/150x150';
+         }
       },
       transMaleImageSrcFilter(src){
-         return '../random-users/men/'+src;
+        if(src){
+            return '../random-users/men/'+src;
+        }else {
+           return 'https://via.placeholder.com/150x150';
+        }
+       
       },
       transFemaleImageSrcFilter(src){
-        return '../random-users/women/'+src;
+        if(src){
+          return '../random-users/women/'+src;
+        } else {
+           return 'https://via.placeholder.com/150x150';
+        }
+        
       }
     },
     data(){

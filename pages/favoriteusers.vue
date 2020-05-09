@@ -5,7 +5,8 @@
        <h2>Favorite Users</h2>
         <div v-for="favorite in allFavorites" :key="favorite._id" style="margin: 10px; display: inline-block;">
           <ProfilePreview   :profile="favorite.userId"  ></ProfilePreview>
-          <div><a href="javascript:void(0);" @click="removeFromFavorites(favorite.userId._id)"><span style="color: red;">Remove From Favorites</span></a></div>
+          <div v-if="favorite.userId"><a href="javascript:void(0);" @click="removeFromFavorites(favorite.userId._id)"><span style="color: red;">Remove From Favorites</span></a></div>
+          <div v-else>&nbsp;</div>
         </div>
       </section>
   </div>
