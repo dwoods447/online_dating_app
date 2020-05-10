@@ -621,7 +621,7 @@
 
        async usernameLookUp(req, res, next){
             const { username } = req.body;
-            const user = await User.findOne({uername: username});
+            const user = await User.findOne({uername: username, password: 0});
             if(!user){
                 return res.status(422).json({message: 'No user with that username found!'});
             }

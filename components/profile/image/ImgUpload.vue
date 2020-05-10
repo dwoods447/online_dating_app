@@ -14,6 +14,7 @@
               <button class="btn btn-primary">Upload</button>
             </div>
         </form>
+        <div><small><em>Maxium file size is 4MB</em></small></div>
     </div>
   </div>
 </template>

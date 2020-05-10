@@ -10,7 +10,7 @@ const host = config.host;
 
 const app = express();
 
-
+const maxFileSize = (4 *(1000 * 1000));
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) =>{
       let imagePath = './static/uploads/';
@@ -50,7 +50,7 @@ router.use((req, res, next) => {
   next();
 })
 
-router.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
+router.use(multer({storage: fileStorage, fileFilter: fileFilter, limits: {fileSize: maxFileSize}}).single('image'));
 
 
 
