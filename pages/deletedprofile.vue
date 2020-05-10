@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="width: 100vw; height: 100vh;" class="flex-container">
+        <div style="width: 100vw; height: 45vh;" class="flex-container">
             <div style="margin: 10%; text-align: center;">
                 <h1 style="text-align:center; color: red;">This user's profile no longer exists!</h1>
             </div>
