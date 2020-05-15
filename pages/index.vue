@@ -38,7 +38,7 @@
        <div class="row">
          <div class="col-lg-6">
              <div>
-              <p>Looking for that geek of your dreams that's into Fantasy, Sci-Fi, Anime, Video Games, Conventions & Cos-Play? This dating site is designed to help geeks find other geeks. Here you will find no stereotypes, no gimmicks, just pure, authentic online dating for the geek in all of us.</p>
+              <p>Looking for that geek of your dreams that's into Fantasy, Sci-Fi, Anime, Video Games, Conventions & Cos-Play? This dating site is designed to help geeks find other geeks that live within U.S. Here you will find no stereotypes, no gimmicks, just pure, authentic online dating for that little bit of geek in all of us.</p>
             </div>
          </div>
           <div class="col-lg-6">

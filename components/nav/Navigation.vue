@@ -48,7 +48,9 @@
           <nuxt-link class="dropdown-item" to="/inbox" v-if="this.$store.getters.isAutheticated">Inbox</nuxt-link>
           <a href="#" class="dropdown-item" @click="goToEditUsersProfile"  v-if="this.$store.getters.isAutheticated" >Edit Profile</a>
            <a href="#" class="dropdown-item" @click="goToUsersProfile"  v-if="this.$store.getters.isAutheticated && this.$store.getters.isProfileCompleted" >View My Profile</a>
-           <a class="dropdown-item" v-if="this.$store.getters.isAutheticated" @click="deleteProfile" style="color: #212529;">Delete Profile</a>
+           <a class="dropdown-item" v-if="this.$store.getters.isAutheticated" @click="goToAccountSettings" style="color: #212529;">Settings</a>
+           <a href="#" class="dropdown-item" @click="goToUgradeAccount"  v-if="this.$store.getters.isAutheticated && this.$store.getters.isProfileCompleted" >Upgrade Account</a>
+           
           <a class="dropdown-item" v-if="this.$store.getters.isAutheticated" @click="logOut" style="color: #212529;">Log Out</a>
         </div>
       </li>
@@ -87,9 +89,13 @@ export default {
        this.$router.push({path: `/profile/${this.$store.state.userId._id}`, params: {user: this.$store.state.userId}});
     },
 
-    deleteProfile(){
-      this.$router.push({name: 'deleteprofile'})
-    }
+    goToAccountSettings(){
+      this.$router.push({name: 'accountsettings'})
+    },
+
+    goToUgradeAccount(){
+      this.$router.push({name: 'upgradeaccount'})
+    },
   },
   filters:{
       imageSrcFilter(src){

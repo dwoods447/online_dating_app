@@ -22,7 +22,7 @@
 import AdvancedSearch from '../components/search/AdvancedSearch'
 import SearchResult from '../components/search/SearchResult'
   export default {
-    middleware: ['check-auth', 'auth', 'check-profile'],
+    middleware: ['check-auth', 'auth', 'check-profile', 'checkPremium'],
     components: {
       AdvancedSearch,
       SearchResult

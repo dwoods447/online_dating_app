@@ -56,7 +56,7 @@ module.exports = {
          random: 'false',
          username: username,
          email: email,
-         password: password,
+         password: hashedPassword,
          gender: gender,
          birthdate: birthdate,
          age: moment(new Date(), 'MM/DD/YYYY').diff(moment(birthdate, 'MM/DD/YYYY'), 'years'),
@@ -89,6 +89,7 @@ module.exports = {
          interacialDatingPreferences: [],
          raceDatingPreferences: [],
          isProfileCompleted: false,
+         isPremiumUser: false,
          blockedUsers: { users: []},
          favorites: { users: []},
          profileViews: {views: []},
@@ -101,7 +102,7 @@ module.exports = {
 
      transporter.sendMail({
          to: email,
-         from: 'mail@imseekinggeeks.com',
+         from: 'ImSeekingGeeks',
          subject: 'Welcome to ImSeekingGeeks',
          html: `
          <h1>Welcome, ${newUser.username} to ImSeekingGeeks</h1>
@@ -131,9 +132,9 @@ module.exports = {
          return res.status(403).json({message: 'Invalid username/password. Please try again.',  statusCode: statusCode});
      }
      // Unecrypted password
-     const passwordMatch = (password === user.password) ? true : false;
+    // const passwordMatch = (password === user.password) ? true : false;
       // Ecrypted password
-  //   const passwordMatch = bcrypt.compareSync(password, user.password);
+     const passwordMatch = bcrypt.compareSync(password, user.password);
      if(!passwordMatch){
          statusCode = 403;
          return res.status(403).json({message: 'Invalid username/password. Please try again.'});
@@ -191,7 +192,7 @@ module.exports = {
                     
                     transporter.sendMail({
                         to: user.email,
-                        from: 'mail@imseekinggeeks.com',
+                        from: 'ImSeekingGeeks',
                         subject: 'Password Reset for ImSeekingGeeks',
                         html: `
                         <h1></h1>

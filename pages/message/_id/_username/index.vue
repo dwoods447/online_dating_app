@@ -10,24 +10,24 @@
                 <div  v-if="message.sender.random === 'true'">
                   <div v-if="message.sender.gender === 'male'">
                      <img :src="message.sender.imageSrc|maleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
-                     <p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p>
+                     <a :href="'./../../profile/'+message.sender.id" target="_blank"><p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p></a>
                   </div>
                   <div v-if="message.sender.gender === 'female'">
                      <img :src="message.sender.imageSrc|femaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
-                      <p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p>
+                      <a :href="'./../../profile/'+message.sender.id" target="_blank"><p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p></a>
                   </div>
                   <div v-if="message.sender.gender === 'trans-male'">
                      <img :src="message.sender.imageSrc|transMaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
-                      <p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p>
+                      <a :href="'./../../profile/'+message.sender.id" target="_blank"><p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p></a>
                   </div>
                    <div v-if="message.sender.gender === 'trans-female'">
                       <img :src="message.sender.imageSrc|transFemaleImageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
-                       <p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p>
+                       <a :href="'./../../profile/'+message.sender.id" target="_blank"><p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p></a>
                   </div>
                 </div>
                 <div  v-if="message.sender.random === 'false'">
                    <img :src="message.sender.imageSrc|imageSrcFilter" alt="" :class="[{ 'right': i % 2 !== 0}]"/>
-                    <p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p>
+                    <a :href="'./../../profile/'+message.sender.id" target="_blank"><p :class="[{ 'align-right': i % 2 !== 0}]"><strong>{{ message.sender.username }}</strong></p></a>
                 </div>
                 <p></p>
                 </div>
@@ -36,7 +36,7 @@
            </div>
 
       </div>
-         <SendMessage :userId="this.$route.params.id" >Send Message</SendMessage>
+         <SendMessage :userId="this.$route.params.id">Send Message</SendMessage>
 
     </section>
 
@@ -117,13 +117,14 @@ import eventBus from '../../../../middleware/eventBus/index'
         async getSendersMessages(){
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
            const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
-           console.log(`Message data returned: ${JSON.stringify(messageData, null, 2)}`);
+           //console.log(`Message data returned: ${JSON.stringify(messageData, null, 2)}`);
            if(messageData.data.deletedAccount === true){
              this.$router.push({name: `deletedprofile`});
              return;
            }
            if(messageData.data.deletedAccount === false && messageData.data.messages.length > 0){
               this.senderMessages = messageData.data.messages;
+
            }
 
         }

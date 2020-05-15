@@ -14,14 +14,14 @@
           <!-- <a href="" class="nav-link">Search</a> -->
            <nuxt-link :class="[{active: isShowBasicSearch},'nav-item', 'nav-link']"   to="/basicsearch" v-if="this.$store.getters.isAutheticated">Basic Search</nuxt-link>
         </li>
-        <li class="nav-item" @click="setActiveLink('isShowAdvancedSearch')">
+        <li class="nav-item" @click="setActiveLink('isShowAdvancedSearch')" v-if="this.$store.getters.isPremiumUser">
           <!-- <a href="javascript:void(0)" class="nav-item nav-link">Advanced Search</a> -->
           <nuxt-link :class="[{active: isShowAdvancedSearch},'nav-item', 'nav-link']" to="/advancedsearch" v-if="this.$store.getters.isAutheticated">Advanced Search</nuxt-link>
         </li>
-         <li class="nav-item" @click="setActiveLink('isShowMatchMaker')" >
+         <li class="nav-item" @click="setActiveLink('isShowMatchMaker')" v-if="this.$store.getters.isPremiumUser">
           <nuxt-link  :class="[{active: isShowMatchMaker},'nav-item', 'nav-link']" to="/matchmaker"  v-if="this.$store.getters.isAutheticated">Try MatchMaker</nuxt-link>
         </li>
-        <li class="nav-item" @click="setActiveLink('isShowProfileViews')">
+        <li class="nav-item" @click="setActiveLink('isShowProfileViews')" v-if="this.$store.getters.isPremiumUser">
         <nuxt-link :class="[{active: isShowProfileViews},'nav-item', 'nav-link']"  to="/profileviews"  v-if="this.$store.getters.isAutheticated">Who's viewed your profile</nuxt-link>
         </li>
         <li class="nav-item" @click="setActiveLink('isShowFavorites')" >

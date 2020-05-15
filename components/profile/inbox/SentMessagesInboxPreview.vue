@@ -4,19 +4,19 @@
                   <div class="col-lg-2">
                       <div>
                           <div v-if="this.random === 'true' && this.gender === 'male'">
-                             <img :src="this.imageSrc|maleImageSrcFilter" alt="" style="width: 100%;" class="message-thread-photo">
+                             <img :src="this.imageSrc|maleImageSrcFilter" alt="" style="width: 100%; width: 122px; height: 122px;" class="message-thread-photo">
                           </div>
                           <div v-if="this.random === 'true' && this.gender === 'female'">
-                               <img :src="this.imageSrc|femaleImageSrcFilter" alt="" style="width: 100%;" class="message-thread-photo">
+                               <img :src="this.imageSrc|femaleImageSrcFilter" alt="" style="width: 100%; width: 122px; height: 122px;" class="message-thread-photo">
                             </div>
                              <div v-if="this.random === 'true' && this.gender === 'trans-male'">
-                               <img :src="this.imageSrc|transMaleImageSrcFilter" alt="" style="width: 100%;" class="message-thread-photo">
+                               <img :src="this.imageSrc|transMaleImageSrcFilter" alt="" style="width: 100%; width: 122px; height: 122px;" class="message-thread-photo">
                             </div>
                              <div v-if="this.random === 'true' && this.gender === 'trans-female'">
-                               <img :src="this.imageSrc|transFemaleImageSrcFilter" alt="" style="width: 100%;" class="message-thread-photo">
+                               <img :src="this.imageSrc|transFemaleImageSrcFilter" alt="" style="width: 100%; width: 122px; height: 122px;" class="message-thread-photo">
                             </div>
                           <div v-if="this.random === 'false'">
-                            <img :src="this.imageSrc|imageSrcFilter" alt="" style="width: 100%;" class="message-thread-photo">
+                            <img :src="this.imageSrc|imageSrcFilter" alt="" style="width: 100%; width: 122px; height: 122px;" class="message-thread-photo">
                           </div>
 
 
@@ -53,19 +53,43 @@ import UserProfileService from '../../../middleware/services/UserProfileService'
         return message.substring(0, length/1.2) + '...';
       },
       imageSrcFilter(src){
-         return '../uploads/'+src;
+          if(src){
+            return '../uploads/'+src;
+          } else {
+            return 'https://via.placeholder.com/122x122';
+          }
+          
       },
       maleImageSrcFilter(src){
-        return '../random-users/men/'+src;
+        if(src){
+          return '../random-users/men/'+src;
+        }else {
+            return 'https://via.placeholder.com/122x122';
+        }
+        
       },
       femaleImageSrcFilter(src){
-         return '../random-users/women/'+src;
+         if(src){
+           return '../random-users/women/'+src;
+          } else {
+           return 'https://via.placeholder.com/122x122';
+         }
       },
       transMaleImageSrcFilter(src){
-         return '../random-users/men/'+src;
+        if(src){
+            return '../random-users/men/'+src;
+        }else {
+           return 'https://via.placeholder.com/122x122';
+        }
+       
       },
       transFemaleImageSrcFilter(src){
-        return '../random-users/women/'+src;
+        if(src){
+          return '../random-users/women/'+src;
+        } else {
+           return 'https://via.placeholder.com/122x122';
+        }
+        
       }
     },
     data(){

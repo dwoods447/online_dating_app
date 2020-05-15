@@ -140,7 +140,7 @@ const UserSchema = new Schema({
     isProfileCompleted: {
         type: Boolean
     },
-   isPremiumUser: {
+    isPremiumUser: {
        type: Boolean
    },
    userMatches: {

@@ -12,7 +12,7 @@
   import UserProfileService from '../middleware/services/UserProfileService'
   import ProfilePreview from '../components/profile/preview/ProfilePreview'
   export default {
-    middleware: ['check-auth', 'auth', 'check-profile'],
+    middleware: ['check-auth', 'auth', 'check-profile', 'checkPremium'],
     components: {ProfilePreview},
     created(){
         this.getUserProfileViews();

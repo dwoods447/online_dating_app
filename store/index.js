@@ -50,6 +50,15 @@ export const getters = {
     return state.token !== null;
   },
 
+  isPremiumUser(state){
+    if(state.hasOwnProperty('isPremiumUser')){
+      return state.isPremiumUser !== null;
+    } else {
+      return false;
+    }
+    
+  },
+
   getLoggedInUser(state){
     return state.userId;
   },

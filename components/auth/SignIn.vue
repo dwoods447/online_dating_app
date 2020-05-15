@@ -18,21 +18,6 @@
         <br/>
         <div v-if="this.$store.state.error"> {{ this.$store.state.error }}</div>
       </form>
-
-     <div class="flexbox">
-         <div class="flex-item">
-        <h4>Login as guest01</h4>
-        <div>username: guest01</div>
-        <div>password: password</div>
-      </div>
-      <div class="flex-item" style="text-align:center;"><span style="font-size: 3em;"><strong>or</strong></span></div>
-     <div  class="flex-item">
-        <h4>Login as guest02</h4>
-        <div>username: guest02</div>
-        <div>password: password</div>
-      </div>
-      </div>
-
   </div>
 </template>
 

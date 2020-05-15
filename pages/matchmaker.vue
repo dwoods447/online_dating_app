@@ -12,7 +12,7 @@
 import UserProfileService from '../middleware/services/UserProfileService'
 import MatchMaker from '../components/profile/matchmaker/MatchMaker'
 export default {
-   // middleware: ['auth-user'],
+   middleware: ['check-auth', 'auth', 'check-profile', 'checkPremium'],
    components: { MatchMaker },
    created(){
     

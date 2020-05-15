@@ -273,8 +273,8 @@
           return res.status(200).json({message: "User's account has been removed.", deletedAccount: true})
         }
         let messagesThread;
-        const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
-        const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date", "recipient.imageSrc","sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadOne = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(msgSender._id), 'sender.id': mongoose.Types.ObjectId(user._id)}]}).select(["content", "date", "sender.id","recipient.id", "sender.imageSrc", "recipient.imageSrc", "sender.random", "recipient.gender", "recipient.random", "sender.gender", "unread", "sender.username", "recipient.username"]);
+        const messagesThreadTwo = await Message.find({$and: [{'recipient.id': mongoose.Types.ObjectId(user._id)}, {'sender.id': mongoose.Types.ObjectId(msgSender._id)}]}).select(["content", "date",  "sender.id","recipient.id","recipient.imageSrc", "sender.imageSrc", "sender.random","recipient.random", "sender.gender", "recipient.gender", "unread", "sender.username", "recipient.username"]);
         messagesThread = [...messagesThreadOne, ...messagesThreadTwo];
         messagesThread =  messagesThread.sort((a, b)=>{
           let aDate = new Date(a.date);
@@ -399,7 +399,7 @@
           transporter.sendMail({
                 to: 'dwoods447@gmail.com',
                 bcc: 'dwoods447@gmail.com',
-                from: 'mail@imseekinggeeks.com',
+                from: 'ImSeekingGeeks',
                 subject: 'New message recieved on ImSeekingGeeks',
                 html: `
                 <h1>Hello ${receiverOfMessage.username}, you have a new message from, ${sender.username}</h1>
