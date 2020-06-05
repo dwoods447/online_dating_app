@@ -35,6 +35,9 @@
     "vue-slide-toggle": "^1.1.1",
     "vuex-persist": "^2.2.0"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "devDependencies": {
     "nodemon": "^2.0.2",
     "pretty-checkbox-vue": "^1.1.9"
