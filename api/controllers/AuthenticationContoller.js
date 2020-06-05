@@ -132,9 +132,9 @@ module.exports = {
          return res.status(403).json({message: 'Invalid username/password. Please try again.',  statusCode: statusCode});
      }
      // Unecrypted password
-    // const passwordMatch = (password === user.password) ? true : false;
+    const passwordMatch = (password === user.password) ? true : false;
       // Ecrypted password
-     const passwordMatch = bcrypt.compareSync(password, user.password);
+     //const passwordMatch = bcrypt.compareSync(password, user.password);
      if(!passwordMatch){
          statusCode = 403;
          return res.status(403).json({message: 'Invalid username/password. Please try again.'});
