@@ -1,6 +1,6 @@
 <template>
     <div>
-        Upgrade Account...
+        Upgrade Account.....
     </div>
 </template>
 <script>
