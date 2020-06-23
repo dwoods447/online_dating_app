@@ -56,7 +56,7 @@ module.exports = {
          random: 'false',
          username: username,
          email: email,
-         password: hashedPassword,
+         password: password,
          gender: gender,
          birthdate: birthdate,
          age: moment(new Date(), 'MM/DD/YYYY').diff(moment(birthdate, 'MM/DD/YYYY'), 'years'),
@@ -189,7 +189,7 @@ module.exports = {
                 const updatedUser = await user.save();
                 let hostname = req.headers.host;
                 if(updatedUser){
-                    
+
                     transporter.sendMail({
                         to: user.email,
                         from: 'ImSeekingGeeks',
@@ -208,7 +208,7 @@ module.exports = {
              } catch(err){
                 console.log(err);
              }
-         
+
    },
 
 
@@ -224,7 +224,7 @@ module.exports = {
         user.password = hashedPassword;
         const savedPassword = await user.save();
         return res.status(200).json({message: "Password updated successfully!"});
-    }   
+    }
 
 
 }
