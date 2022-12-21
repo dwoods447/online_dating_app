@@ -8,6 +8,7 @@ const config = require('./config/config')
 const port = config.port;
 const host = config.host;
 const app = express();
+require('dotenv').config()
 
 const maxFileSize = (4 *(1000 * 1000));
 const fileStorage = multer.diskStorage({
@@ -98,7 +99,6 @@ try {
 } catch (error) {
   console.log('Error connecting with Mongoose')
 }
-
 
 module.exports = {
   path: '/api',
