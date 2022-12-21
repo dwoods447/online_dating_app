@@ -220,22 +220,24 @@ UserSchema.methods.addImageToProfile = function(imagePath){
     return this.save();
 }
 
-UserSchema.methods.removeImageFromProfile = function(imageId){
-
-    const targetImg = this.images.imagePaths.find(target =>{
-      return target.imageId.toString() === imageId;
+UserSchema.methods.removeImageFromProfile = function(targetImg){
+    const updatedImages = [...this.images.imagePaths];
+    const foundImage = updatedImages.find(({ imageId }) => {
+        return imageId == targetImg
     })
-     const imgPth = path.join(__dirname + '/./../../static/uploads/', targetImg.path);
-     try{
+    if(!foundImage) return // image does not exist
+    const imgPth = path.join(__dirname + '/./../../static/uploads/', foundImage.path);
+    try {
        fs.unlinkSync(imgPth);
-     } catch(err){
+    } catch(err){
        console.error(`Error deleting file: ${err}`);
-     }
-
-    const userImages = this.images.imagePaths.filter(image =>{
-        return image.imageId.toString() !== imageId;
+    }
+    const userImages = updatedImages.filter(image => {
+        return image.imageId != targetImg;
     })
-    this.images.imagePaths = userImages;
+
+    const newImages = [...userImages]
+    this.images.imagePaths = newImages;
     return this.save();
 }
 

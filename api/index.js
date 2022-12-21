@@ -7,7 +7,6 @@ const path = require('path')
 const config = require('./config/config')
 const port = config.port;
 const host = config.host;
-
 const app = express();
 
 const maxFileSize = (4 *(1000 * 1000));
@@ -23,9 +22,6 @@ const fileStorage = multer.diskStorage({
       cb(null, filename);
   }
 });
-
-
-
 
 const fileFilter = (req, file, cb) =>{
   // Set Allowed ext
@@ -52,22 +48,14 @@ router.use((req, res, next) => {
 
 router.use(multer({storage: fileStorage, fileFilter: fileFilter, limits: {fileSize: maxFileSize}}).single('image'));
 
-
-
-
-
-
 app.use(bodyParser.json());
-
 
 router.use('/images', express.static(path.join(__dirname, 'images')));
 const AuthenticationController = require('./controllers/AuthenticationContoller');
 const ProfileController = require('./controllers/ProfileController');
 const isAuthenticated = require('./server_middleware/isAuthenticated');
 const isPasswordRestValid = require('./server_middleware/isPasswordRestTokenValid');
-router.get('/test', (req, res, next) =>{
-  res.json({message: 'test router working'});
-});
+
 router.post('/login', AuthenticationController.userLogin);
 router.post('/register', AuthenticationController.userRegistration);
 router.post('/logout', AuthenticationController.userLogout)
@@ -99,23 +87,17 @@ router.post('/image/upload', isAuthenticated, ProfileController.uploadImage); //
 router.post('/remove/image/upload', isAuthenticated, ProfileController.deleteImage);
 router.post('/view/user', isAuthenticated,  ProfileController.getUserDetails); // tested
 
-
-
 app.use('*', (req, res, next)=>{
     res.status(404).send({message: 'Page Not Found '});
 })
+mongoose.set('bufferCommands', false);
 
-
-
-
-
-mongoose.connect(config.db.connectString, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result)=>{
-  console.log("MonGoose connection created!" + result);
-}).catch(()=>{
-        console.log('Error connecting with Mongoose')
-});
-
+try {
+  mongoose.connect(config.db.connectString, { useNewUrlParser: true, useUnifiedTopology: true })
+  console.log("Mongoose connection created!" + result);
+} catch (error) {
+  console.log('Error connecting with Mongoose')
+}
 
 
 module.exports = {

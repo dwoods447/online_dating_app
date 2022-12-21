@@ -75,7 +75,6 @@ export default {
         async addToMatches(){
              const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
              let userId = this.myusers[0]._id.toString();
-             console.log(`Sending user with an ID: ${userId}`);
              await UserProfileService.addUserToUserMatches({userProfileId: userId});
              this.skipToNextProfile();
         },

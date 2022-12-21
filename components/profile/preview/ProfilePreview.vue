@@ -51,7 +51,6 @@ import eventBus from '../../../middleware/eventBus/index'
   export default {
     props: ['profile'],
     created(){
-      console.log(`User profile: ${JSON.stringify(this.profile)}`);
     },
     data(){
       return {

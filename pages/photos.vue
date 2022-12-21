@@ -59,19 +59,19 @@
     },
     filters: {
       imageSrcFilter(src){
-         return 'uploads/'+src;
+         return './uploads/'+src;
       },
       maleImageSrcFilter(src){
-        return 'random-users/men/'+ src;
+        return './random-users/men/'+ src;
       },
       femaleImageSrcFilter(src){
-         return 'random-users/women/'+ src;
+         return './random-users/women/'+ src;
       },
       transMaleImageSrcFilter(src){
-         return 'random-users/men/'+ src;
+         return './random-users/men/'+ src;
       },
       transFemaleImageSrcFilter(src){
-        return 'random-users/women/'+ src;
+        return './random-users/women/'+ src;
       }
     },
     methods: {
@@ -84,6 +84,7 @@
         }
       },
       async removeImage(imageId){
+        if(!imageId) return
         const token = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
           const photoDeleted = await UserProfileService.removeUploadedImg({imageId: imageId});
           if(photoDeleted.data.message ==='Image removed successfully'){

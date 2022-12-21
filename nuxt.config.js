@@ -42,7 +42,7 @@ export default {
   ** Plugins to load before mounting the App
   */
 //  axios: {
-//    baseURL: 'http://localhost:3535/',
+//    baseURL: 'http://localhost:3000/',
 //    headers: {
 
 //    }
@@ -77,6 +77,9 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      config.node = {
+        fs: 'empty'
+      }
     }
   },
 

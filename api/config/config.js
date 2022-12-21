@@ -18,7 +18,7 @@ module.exports = {
       API_KEY: `tK6I0o3GZ1QCWCV6lhxiErBDFI2Ml9EQS5JX6z1YQJ3xTd5dv10zcpGEZ5jOcC41`,
   },
   db: {
-      connectString: 'mongodb+srv://dwoods447:B0nky2345@cluster0-ygpnr.mongodb.net/online_dating?retryWrites=true&w=majority'
+    connectString: 'mongodb+srv://dwoods447:B0nky2345@cluster0-ygpnr.mongodb.net/online_dating?retryWrites=true&w=majority'
   }
 
 }

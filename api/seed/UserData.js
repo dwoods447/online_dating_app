@@ -1,6 +1,9 @@
+/* const bcrypt = require('bcryptjs'); */
+
 const data = [
   {
     "username": "roakly0",
+    /* "password": bcrypt.hashSync("J8haeo7jD", 12), */
     "password": "J8haeo7jD",
     "email": "stroth0@yellowbook.com",
     "gender": "female",

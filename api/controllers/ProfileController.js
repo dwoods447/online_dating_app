@@ -685,7 +685,6 @@
        async deleteUserProfile(req, res, next){
        // const { username, userId } = req.body;
           let user = await User.findOne({_id: req.userId});
-          console.log(`Image array: ${JSON.stringify(user.images.imagePaths)}`);
           user.images.imagePaths.forEach(image =>{
                     const imgPth = path.join(__dirname + '/./../../static/uploads/', image.path);
                     try{
@@ -708,12 +707,10 @@
 
 
        async getRandomUserForMatchMaker(req, res, next){
-              console.log(`Getting Matchmaker....`);
               let selectedGenders = [];
               try {
                 const currentUser = await User.findById(req.userId);
                 selectedGenders  = currentUser.seekingGenders.genders;
-                console.log(`Selected Genders: ${JSON.stringify(selectedGenders)}`);
                    const users = await User.aggregate([
                     {
                       $match: {gender: {$in: selectedGenders}}
@@ -721,7 +718,6 @@
                     {$sample: {size: 1}},
                     { $project: { password: 0 } }
                     ]);
-                 console.log(`Random user returned: ${JSON.stringify(users)}`);   
                  let userToReturn = users.filter(user => {
                     return user._id.toString() !== req.userId
                   })

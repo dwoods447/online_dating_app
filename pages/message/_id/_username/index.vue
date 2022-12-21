@@ -94,7 +94,6 @@ import eventBus from '../../../../middleware/eventBus/index'
             let messageToFilter;
             const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
             const messageData = await UserProfileService.getUserMessages()
-             // console.log(`Message data returned: ${JSON.stringify(messageData, null, 2)}`);
             if(messageData.data.messages.length > 0 ){
                messageToFilter = messageData.data.messages;
                messageToFilter =  messageToFilter.filter(message =>{
@@ -117,7 +116,6 @@ import eventBus from '../../../../middleware/eventBus/index'
         async getSendersMessages(){
            const token  = await UserProfileService.setAuthHeaderToken(this.$store.state.token);
            const messageData = await UserProfileService.getSenderMessages(this.$route.params.id);
-           //console.log(`Message data returned: ${JSON.stringify(messageData, null, 2)}`);
            if(messageData.data.deletedAccount === true){
              this.$router.push({name: `deletedprofile`});
              return;

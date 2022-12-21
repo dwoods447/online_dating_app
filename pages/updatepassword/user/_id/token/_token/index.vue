@@ -9,7 +9,6 @@ import UpdatePasswordReset from '../../../../../../components/auth/UpdatePasswor
 export default {
  components: { UpdatePasswordReset },
  created(){
-   console.log(`UserId: ${this.$route.params.id},  Token: ${this.$route.params.token}`);
  },
  data(){
      return {
