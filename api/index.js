@@ -77,14 +77,14 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-app.use((req, res, next) => {
-  Object.setPrototypeOf(req, app.request)
-  Object.setPrototypeOf(res, app.response)
-  req.res = res
-  res.req = req
+// app.use((req, res, next) => {
+//   Object.setPrototypeOf(req, app.request)
+//   Object.setPrototypeOf(res, app.response)
+//   req.res = res
+//   res.req = req
 
-  next()
-})
+//   next()
+// })
 router.use((req, res, next) => {
   Object.setPrototypeOf(req, app.request)
   Object.setPrototypeOf(res, app.response)
@@ -95,7 +95,7 @@ router.use((req, res, next) => {
 })
 app.use(multer({ storage: fileStorage, fileFilter, limits: { fileSize: maxFileSize } }).single('image'))
 
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 app.use('/images', express.static(path.join(__dirname, 'images')))
 // router.get('/test/route-123', (req, res) => {

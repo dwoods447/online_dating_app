@@ -5,7 +5,12 @@ export default {
   /*
   ** Headers of the page
   */
-  envoirment: process.env.NODE_ENV,
+  target: 'static',
+  ssr: false,
+  environment: process.env.NODE_ENV,
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -42,7 +47,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   //  axios: {
-  //    baseURL: 'http://localhost:3000/',
+  //    baseURL: process.env.BASEURI,
   //    headers: {
 
   //    }
@@ -65,6 +70,9 @@ export default {
   ],
   router: {
 
+  },
+  generate: {
+    fallback: true
   },
   scripts: [
     'https://kit.fontawesome.com/b1f8671d0b.js'
