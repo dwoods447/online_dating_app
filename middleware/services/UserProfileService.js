@@ -97,7 +97,7 @@ export default {
   },
 
   addUserToUserMatches(userProfileId){
-    return api.post('/add/user/matchlist', userProfileId);
+    return api.post('/add-user/matchlist', userProfileId);
   },
 
 

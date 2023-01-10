@@ -1,82 +1,76 @@
-const mongoose = require('mongoose');
-const Schema  = mongoose.Schema;
-
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
 const MessageSchema = new Schema({
-    content: {
-        type: String,
-        required: true,
+  content: {
+    type: String,
+    required: true
+  },
+  sender: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+      // index: true
     },
-    sender: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            // index: true
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        imageSrc: {
-          type: String,
-       },
-        random:{
-          type: String,
-        },
-        gender: {
-          type: String,
-        },
-
-
+    username: {
+      type: String,
+      required: true
     },
-    recipient: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            // index: true
-        },
-        username: {
-          type: String,
-          required: true,
-       },
-       imageSrc: {
-        type: String,
-      },
-      random:{
-        type: String,
-      },
-      gender: {
-        type: String,
-      },
+    imageSrc: {
+      type: String
     },
-    date: {
-        type: Date,
-        required: true,
+    random: {
+      type: String
     },
-    unread: {
-        type: Boolean,
-        required: true
+    gender: {
+      type: String
     }
+
+  },
+  recipient: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+      // index: true
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    imageSrc: {
+      type: String
+    },
+    random: {
+      type: String
+    },
+    gender: {
+      type: String
+    }
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  unread: {
+    type: Boolean,
+    required: true
+  }
 })
 
-
-
-
-MessageSchema.methods.markUserMessageAsRead = function(messageId){
-  let readStatus  = this.unread;
-  readStatus  = false;
-  this.unread = readStatus;
-  return this.save();
+MessageSchema.methods.markUserMessageAsRead = function (messageId) {
+  let readStatus = this.unread
+  readStatus = false
+  this.unread = readStatus
+  return this.save()
 }
 
-MessageSchema.methods.markMessageAsUnRead = function(messageId){
-  let readStatus  = this.unread;
-  readStatus  = true;
-  this.unread = readStatus;
-  return this.save();
+MessageSchema.methods.markMessageAsUnRead = function (messageId) {
+  let readStatus = this.unread
+  readStatus = true
+  this.unread = readStatus
+  return this.save()
 }
 
+const Message = mongoose.model('Message', MessageSchema)
 
-
-
-module.exports = mongoose.model('Message', MessageSchema);
+export default Message

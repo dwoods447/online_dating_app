@@ -1,6 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config  = require('../config/config');
-module.exports = (req, res, next) => {
+import jwt from 'jsonwebtoken'
+import { defaultConfig } from '../config/default.js'
+
+export function isPasswordRestTokenValid(req, res, next) {
   const authorizedHeader = req.get('Authorization');
   if(!authorizedHeader){
     const error  = new Error('Not Authenticated.');
@@ -11,7 +12,7 @@ module.exports = (req, res, next) => {
   const token  = authorizedHeader.split(' ')[1];
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, config.authentication.jwtSecret);
+    decodedToken = jwt.verify(token, defaultConfig.authentication.jwtSecret);
   } catch(err){
     err.statusCode = 500;
     throw err;

@@ -1,7 +1,7 @@
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser'
 
 export default {
-  mode: 'universal',
+  // mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -19,9 +19,9 @@ export default {
       { rel: 'stylesheet', type: 'text/css', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css'},
-      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css'},
-      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap'}
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap' }
     ]
   },
   /*
@@ -35,23 +35,23 @@ export default {
     '~/assets/vendor/fontawesome-free/css/all.min.css',
     '~/assets/vendor/simple-line-icons/css/simple-line-icons.css',
     '~/assets/css/landing-page.css',
-    '~/assets/css/custom.css',
+    '~/assets/css/custom.css'
 
   ],
   /*
   ** Plugins to load before mounting the App
   */
-//  axios: {
-//    baseURL: 'http://localhost:3000/',
-//    headers: {
+  //  axios: {
+  //    baseURL: 'http://localhost:3000/',
+  //    headers: {
 
-//    }
-//  },
+  //    }
+  //  },
   plugins: [
     '~/plugins/moment',
     '~/plugins/vuepaginate',
     '~/plugins/prettycheckbox',
-    '~/plugins/vue-slide-toggle',
+    '~/plugins/vue-slide-toggle'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -63,12 +63,12 @@ export default {
   */
   modules: [
   ],
-  router :{
+  router: {
 
   },
   scripts: [
     'https://kit.fontawesome.com/b1f8671d0b.js'
-   ],
+  ],
   /*
   ** Build configuration
   */
@@ -80,16 +80,19 @@ export default {
       config.node = {
         fs: 'empty'
       }
-    }
+    },
+    standalone: true
+
   },
 
-  // server: {
-  //   port: 3000, // default: 3000
-  //   host: '0.0.0.0' // default: localhost
-  // },
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
 
   serverMiddleware: [
-    bodyParser.json({limit: '50mb'}),
-    '~/api'
+    bodyParser.json({ limit: '50mb' }),
+    // '~/api'
+    { path: '~/api', handler: '~/api/index' }
   ]
 }
