@@ -1,17 +1,15 @@
-FROM node:10.12.0
+FROM node:16
+
 ENV NODE_ENV=production
-WORKDIR /home/node
 
-ADD DWOODS
+WORKDIR /app
 
-RUN
+COPY package.json . 
 
+RUN npm install --force
 
-ADD
+COPY . /app
 
+EXPOSE 3000
 
-ENV
-
-EXPOSE
-
-CMD [""]
+CMD ["npm", "run", "dev"]
