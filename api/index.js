@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import multer from 'multer'
 import path from 'path'
 import { defaultConfig } from './config/default.js'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import {
   checkUserNameUnique,
@@ -49,6 +50,8 @@ dotenv.config()
 const router = express.Router();
 const app = createServer()
 
+app.use(cors())
+app.use(bodyParser.json())
 const maxFileSize = (4 * (1000 * 1000))
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -85,6 +88,7 @@ const fileFilter = (req, file, cb) => {
 
 //   next()
 // })
+router.use(cors())
 router.use((req, res, next) => {
   Object.setPrototypeOf(req, app.request)
   Object.setPrototypeOf(res, app.response)
@@ -95,12 +99,14 @@ router.use((req, res, next) => {
 })
 app.use(multer({ storage: fileStorage, fileFilter, limits: { fileSize: maxFileSize } }).single('image'))
 
-app.use(bodyParser.json())
+
 
 app.use('/images', express.static(path.join(__dirname, 'images')))
 // router.get('/test/route-123', (req, res) => {
 //   return res.status(200).json({ mesage: 'route works!' })
 // })
+
+
 router.post('/login', userLogin);
 router.post('/register', userRegistration);
 router.post('/logout', userLogout)

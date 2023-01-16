@@ -426,8 +426,5 @@ describe('ProfileController - addUserToFavorites', () => {
       expect(addUserToFavoriteMock).toHaveBeenCalled()
       expect(body).toHaveProperty('message', 'User added to favorites successfully!')
     })
-    // it('', async ()=> {
-    //   await supertest(app).post('/add/favorites').expect(401)
-    // })
   })
 })

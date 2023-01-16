@@ -9,7 +9,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt build && nuxt start",
-    "generate": "nuxt generate && nuxt build",
+    "generate": "nuxt generate && npm run start",
     "heroku-postbuild": "npm run build",
     "seed-db": "node ./api/seeders/faker-seeder.js",
     "test": "jest"

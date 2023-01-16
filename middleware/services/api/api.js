@@ -6,7 +6,7 @@ if(process.env.NODE_ENV !== 'production'){
   })
 } else {
   api = axios.create({
-    baseURL: process.env.baseUrl
+    baseURL: process.env.BASE_URL
   })
 }
 
