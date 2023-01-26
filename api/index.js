@@ -52,6 +52,8 @@ const app = createServer()
 
 app.use(cors())
 app.use(bodyParser.json())
+
+
 const maxFileSize = (4 * (1000 * 1000))
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {

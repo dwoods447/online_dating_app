@@ -12,7 +12,7 @@
     "generate": "nuxt generate && npm run start",
     "heroku-postbuild": "npm run build",
     "seed-db": "node ./api/seeders/faker-seeder.js",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js" 
   },
   "dependencies": {
     "axios": "^0.19.2",

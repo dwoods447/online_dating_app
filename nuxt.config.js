@@ -7,7 +7,7 @@ export default {
   */
   target: 'static',
   ssr: false,
-  environment: process.env.NODE_ENV,
+  environment: process.env.NODE_ENV || 'development',
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
