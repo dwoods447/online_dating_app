@@ -6,6 +6,19 @@ ImSeekingGeeks is an online dating platform only available in the US that lets y
 
 To view the application on Heroku, go to: [https://www.imseekinggeeks.com/](https://www.imseekinggeeks.com/)
 
+
+
+## Docker
+
+docker build -t im-seeking-geeks .      
+ 
+docker run -it -p 3000:3000 im-seeking-geeks
+
+## Run Tests
+
+npm run test
+
+
 ## Build Setup
 
 ``` bash
