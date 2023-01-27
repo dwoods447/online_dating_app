@@ -68,5 +68,8 @@
   },
   "mdSeed": {
     "seedersFolder": "./api/seeders/"
+  },
+  "resolutions": {
+    "jiti": "1.12.7"
   }
 }
