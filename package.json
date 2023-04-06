@@ -16,7 +16,7 @@
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "cookieparser": "^0.1.0",
