@@ -689,7 +689,7 @@ export const deleteUserProfile = async (req, res, next) => {
   user.images.imagePaths = emptyImages
   const userSaved = await user.save()
   if (userSaved) {
-    const userDeleted = await User.deleteOne({ _id: req.userId })
+    const userDeleted = await User.deleteOne({ _id: req.userId });
     if (userDeleted) {
       return res.json({ message: 'Account succesfully deleted' })
     }
