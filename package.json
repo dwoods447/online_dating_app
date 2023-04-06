@@ -35,8 +35,7 @@
     "pretty-checkbox": "^3.0.3",
     "vue-multiselect": "^2.1.6",
     "vue-paginate": "^3.6.0",
-    "vue-slide-toggle": "^1.1.1",
-    "vuex-persist": "^2.2.0"
+    "vue-slide-toggle": "^1.1.1"
   },
   "engines": {
     "node": "12.x"
@@ -46,12 +45,6 @@
     "@types/jest": "^29.2.5",
     "@types/supertest": "^2.0.12",
     "encoding": "^0.1.13",
-    "eslint": "^8.31.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.6.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-vue": "^9.8.0",
     "jest": "^29.3.1",
     "nodemon": "^2.0.4",
     "prettier": "2.8.1",
