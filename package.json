@@ -26,18 +26,13 @@
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.27.0",
-    "mongo-seeding": "^3.7.2",
-    "mongodb-memory-server": "^8.10.2",
     "mongoose": "^5.13.15",
-    "mongoose-data-seed": "^2.1.6",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.10",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nuxt": "^2.15.8",
-    "passport-jwt": "^4.0.0",
     "pretty-checkbox": "^3.0.3",
-    "sinon": "^15.0.1",
     "vue-multiselect": "^2.1.6",
     "vue-paginate": "^3.6.0",
     "vue-slide-toggle": "^1.1.1",
@@ -64,8 +59,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.9.4",
-    "webpack-bundle-analyzer": "^4.8.0"
+    "typescript": "^4.9.4"
   },
   "mdSeed": {
     "seedersFolder": "./api/seeders/"
